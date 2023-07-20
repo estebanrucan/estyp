@@ -19,7 +19,9 @@ classifiers = [
     "Development Status :: 1 - Planning"
 ]
 dependencies = [
+    "numpy >= 1.22.3",
     "scikit-learn >= 1.2.1",
+    "patsy >= 0.5.3",
     "statsmodels >= 0.13.5",
     "scipy >= 1.8.1"
 ]
