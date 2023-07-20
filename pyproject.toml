@@ -4,11 +4,11 @@ build-backend = "hatchling.build"
 
 [project]
 name = "estyp"
-version = "0.2.3"
+version = "0.2.4"
 authors = [
     { name="estebanrucan", email="errucan@gmail.com" },
 ]
-description = "Paquete con algunas necesidades que he tenido en python"
+description = "Extended Statistical Toolkit Yet Practical"
 readme = "README.md"
 license = { file="LICENSE" }
 requires-python = ">=3.9.12"
