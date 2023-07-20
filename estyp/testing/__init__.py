@@ -15,7 +15,7 @@ def var_test(
     """
 # F-ratio Test
 
-Performs an F-ratio test to compare the variances of two samples.
+Performs an F-ratio test to compare the variances of two samples. The output was inspired by the `var_test()` function in `R`.
 
 ## Arguments
 
