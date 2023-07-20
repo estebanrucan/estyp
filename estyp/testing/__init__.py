@@ -116,9 +116,3 @@ print(res)
     }
 
     return TestResults(res, names)
-
-
-x = np.random.normal(size=100)
-y = np.random.normal(size=100)
-
-var_test(x, y, alternative="two-sided", conf_level=0.9)
