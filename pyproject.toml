@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "estyp"
-version = "0.2.4"
+version = "0.2.5"
 authors = [
     { name="estebanrucan", email="errucan@gmail.com" },
 ]
@@ -23,7 +23,7 @@ dependencies = [
     "scikit-learn >= 1.2.1",
     "patsy >= 0.5.3",
     "statsmodels >= 0.13.5",
-    "scipy >= 1.8.1"
+    "scipy >= 1.11.1"
 ]
 
 [project.urls]

@@ -1,8 +1,5 @@
-import numpy as np
-from pandas import Series
-from scipy.stats import f as fisher
 from typing import Literal
-from __base import TestResults
+from __base import TestResults, __var_test, __t_test
 
 
 def var_test(
@@ -13,106 +10,123 @@ def var_test(
     conf_level=0.95,
 ) -> TestResults:
     """
-# F-ratio Test
+# F Test to Compare Two Variances
+## Description
+Performs an F test to compare the variances of two samples from normal populations. This function is inspired by the `var.test()` function of the software R.
 
-Performs an F-ratio test to compare the variances of two samples. The output was inspired by the `var_test()` function in `R`.
+## Usage
+
+```python
+var_test(x, y, ...)
+var_test(x, y, ratio = 1,
+        alternative = [two-sided", "less", "greater"],
+        conf_level = 0.95)
+```
 
 ## Arguments
+* `x`, `y`: numeric list, `np.array` or `pd.Series` of data values.
+* `ratio`: the hypothesized ratio of the population variances of x and y.
+* `alternative`: a character string specifying the alternative hypothesis, must be one of "two.sided" (default), "greater" or "less". You can specify just the initial letter.
+* `conf_level`: a number between 0 and 1 indicanting the confidence level of the interval.
 
-* `x`: The first sample.
-* `y`: The second sample.
-* `ratio`: The ratio of the two variances under the null hypothesis.
-* `alternative`: The alternative hypothesis. Can be one of "two-sided", "less", or "greater".
-* `conf_level`: The confidence level for the confidence interval.
 
-## Returns
+## Details
+The null hypothesis is that the ratio of the variances of the populations from which x and y were drawn, is equal to ratio.
 
-A `TestResults` instance containing the following attributes:
+## Value
+An instance of the `TestResults` class containing the following attributes:
 
-* `statistic`: The test statistic.
-* `p_value`: The p-value.
-* `ci`: The confidence interval for the ratio of variances.
-* `estimate`: The estimated ratio of variances.
-* `alternative`: The alternative hypothesis.
+* `statistic`: the value of the F test statistic.	
+* `df`: the degrees of freedom for the F test statistic.
+* `p_value`: the p-value for the test.
+* `ci`: a confidence interval for the ratio of the population variances.
+* `estimate`: the ratio of the sample variances of x and y.
+* `alternative`: a string describing the alternative hypothesis.
 
-## Example
+## Examples
 
 ```python
 import numpy as np
+np.random.seed(2023)
 x = np.random.normal(size=100)
 y = np.random.normal(size=100)
 
-res = var_test(x, y, alternative="two-sided", conf_level=0.9)
+print(var_test(x, y))
+print(var_test(x, y, alternative="less"))
+print(var_test(x, y, ratio = 0.9, alternative="greater"))
+```
+    """
+    return __var_test(x, y, ratio, alternative, conf_level)
 
-print(res)
+
+def t_test(
+    x,
+    y=None,
+    alternative: Literal["two-sided", "less", "greater"] = "two-sided",
+    mu:float    = 0,
+    paired      = False,
+    var_equal   = False,
+    conf_level  = 0.95
+):
     """
 
-    if not (isinstance(ratio, float) or isinstance(ratio, int)):
-        raise ValueError("'ratio' must be a single positive number")
-    else:
-        if not ratio > 0:
-            raise ValueError("'ratio' must be a single positive number")
+# Student's t-Test
+## Description
+Performs one and two sample t-tests on groups of data. This function is inspired by the `t.test()` function of the software R.
 
-    if alternative not in ["two-sided", "less", "greater"]:
-        raise ValueError(
-            "'alternative' must be one of 'two.sided', 'less', or 'greater'"
-        )
+## Usage
+```python
+t_test(x, ...)
+```
 
-    if not (isinstance(conf_level, float)):
-        raise ValueError("'conf_level' must be a single number between 0 and 1")
-    else:
-        if not (conf_level > 0 and conf_level < 1):
-            raise ValueError("'conf_level' must be a single number between 0 and 1")
+```python
+t_test(x, y = None,
+    alternative = ["two-sided", "less", "greater"],
+    mu = 0, paired = False, var_equal = False,
+    conf_level = 0.95)
+```
 
-    if isinstance(x, np.ndarray) or isinstance(x, Series):
-        df_x = x.shape[0] - 1
-        v_x = np.var(x)
-    else:
-        df_x = len(x) - 1
-        v_x = np.var(x)
 
-    if isinstance(y, np.ndarray) or isinstance(y, Series):
-        df_y = y.shape[0] - 1
-        v_y = np.var(y)
-    else:
-        df_y = len(y) - 1
-        v_y = np.var(y)
+## Arguments
+* `x`: a (non-empty) numeric container of data values.
+* `y`: an (optional) numeric container of data values.
+* `alternative`: a string specifying the alternative hypothesis, must be one of "two-sided" (default), "greater" or "less".
+* `mu`: a number indicating the true value of the mean (or difference in means if you are performing a two sample test).
+* `paired`: a logical indicating whether you want a paired t-test.
+* `var_equal`: a logical variable indicating whether to treat the two variances as being equal. If `True` then the pooled variance is used to estimate the variance otherwise the Welch (or Satterthwaite) approximation to the degrees of freedom is used.
+* `conf_level`: a number between 0 and 1 indicanting the confidence level of the interval.
 
-    est = v_x / v_y
-    stat = est / ratio
 
-    f = fisher(dfn=df_x, dfd=df_y)
-    pval = f.cdf(stat)
+## Details
+alternative = "greater" is the alternative that x has a larger mean than y. For the one-sample case: that the mean is positive.
 
-    if alternative == "two-sided":
-        pval = 2 * min([pval, 1 - pval])
-        beta = (1 - conf_level) / 2
-        ci = [est / f.ppf(1 - beta), est / f.ppf(beta)]
-    elif alternative == "greater":
-        pval = 1 - pval
-        ci = [est / f.ppf(conf_level), np.inf]
-    else:
-        ci = [0, est / f.ppf(1 - conf_level)]
+If `paired` is `True` then both x and y must be specified and they must be the same length. Missing values are silently removed (in pairs if `paired` is `True`). If `var_equal` is `True` then the pooled estimate of the variance is used. By default, if `var_equal` is `False` then the variance is estimated separately for both groups and the Welch modification to the degrees of freedom is used.
 
-    alternative_name = (
-        "not equal to" if alternative == "two-sided" else f"{alternative} than"
-    )
 
-    names = {
-        "statistic": "F",
-        "estimate": "ratio of variances",
-        "alternative": f"true ratio of variances is {alternative_name} {ratio}",
-    }
+### Value
+An instance of the `TestResults` class containing the following attributes:
 
-    res = {
-        "method": "F test to compare two variances",
-        "statistic": stat,
-        "estimate": est,
-        "df": {"x": df_x, "y": df_y},
-        "p_value": pval,
-        "conf_int": ci,
-        "conf_level": conf_level,
-        "alternative": alternative,
-    }
+* `statistic`: the value of the t-statistic.	
+* `df`: the degrees of freedom for the t-statistic.
+* `p_value`: the p-value for the test.
+* `ci`: a confidence interval for the mean appropriate to the specified alternative hypothesis.
+* `estimate`: the estimated mean or list of estimated means depending on whether it was a one-sample test or a two-sample test.
+* `alternative`: a character string describing the alternative hypothesis.
+* `mu`: the mean of the null hypothesis.
 
-    return TestResults(res, names)
+
+## Examples
+```python
+import numpy as np
+np.random.seed(2023)
+x = np.random.normal(size=100)
+y = np.random.normal(size=100)
+mu = 0.1
+
+print(t_test(x, mu=mu, alternative="less"))
+print(t_test(x, y, mu=mu))
+print(t_test(x, y, mu=mu, var_equal=True, alternative="greater"))
+print(t_test(x, y, mu=mu, paired=True))
+```
+    """
+    return __t_test(x, y, alternative, mu, paired, var_equal, conf_level)

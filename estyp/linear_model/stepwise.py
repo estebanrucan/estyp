@@ -34,9 +34,9 @@ data = pd.DataFrame({
 
 formula = "y ~ x1 + x2"
 
-model = sm.GLM(data=data, formula=formula, family=sm.families.Gaussian())
+model = sm.GLM
 
-final_formula = both_selection(formula=formula, data=data, model=model, max_iter=10000)
+final_formula = both_selection(formula=formula, data=data, model=model)
 
 print(final_formula)
     """
