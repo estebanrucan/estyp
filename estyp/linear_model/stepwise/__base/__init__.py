@@ -1,45 +1,11 @@
-import statsmodels.api as sm
-import warnings
-from pandas import DataFrame
-warnings.filterwarnings("ignore")
+from scipy.stats import f as fisher
+from estyp.testing.__base import __nested_models_test
 
-def both_selection(formula: str, data: DataFrame, model: sm.GLM, max_iter = 10000) -> str:
-    """
-# Both Forward and Backward Variable Selection for GLM's
 
-This function performs both forward and backward variable selection using the Akaike Information Criterion (AIC).
 
-## Parameters
 
-* `formula`: A string representing the initial model formula.
-* `data`: A Pandas DataFrame containing the data to be used for model fitting.
-* `model`: A statsmodels.GLM object that represents the type of model to be fit.
-* `max_iter`: The maximum number of iterations to perform.
-
-## Returns
-
-A string representing the final model formula.
-
-## Example
-
-```python
-import statsmodels.api as sm
-import pandas as pd
-
-data = pd.DataFrame({
-    "y": [1, 2, 3, 4, 5],
-    "x1": [1, 2, 3, 4, 5],
-    "x2": [6, 7, 8, 9, 10],
-})
-
-formula = "y ~ x1 + x2"
-
-model = sm.GLM
-
-final_formula = both_selection(formula=formula, data=data, model=model)
-
-print(final_formula)
-    """
+def __both_selection(formula, data, model, max_iter) -> str:
+    
     print("Este proceso tarda un buen tiempo ¡Paciencia! Momento de cuestionarte si eres feliz.")
     # Preparación
     fi = formula
@@ -66,7 +32,7 @@ print(final_formula)
             for p in preds:
                 # Crear formula
                 p0 = d.drop(columns=[p, vr]).columns.tolist()
-                f0 = f"{vr} ~ {' + '.join(p0)}"
+                f0 = f"{vr} ~ {' + '.join(p0) if p0 else 1}"
                 # Ajustar modelo y extraer AIC
                 m0 = model.from_formula(f0, d).fit()
                 aics.append(m0.aic)
@@ -76,7 +42,7 @@ print(final_formula)
                 var_min = preds[id_min_aic]
                 data0 = d.drop(columns=var_min)
                 preds0 = data0.drop(columns=vr).columns.tolist()
-                ff = f"{vr} ~ {' + '.join(preds0)}"
+                ff = f"{vr} ~ {' + '.join(preds0) if preds0 else 1}"
                 var_el.append(var_min)
             else:
                 print("No hay mejoras en el AIC, por lo que no se eliminarán variables.")
@@ -87,15 +53,15 @@ print(final_formula)
             aics_a = []
             for p in preds0:
                 p0 = data0.drop(columns=[p, vr]).columns.tolist()
-                f0 = f"{vr} ~ {' + '.join(p0)}"
+                f0 = f"{vr} ~ {' + '.join(p0) if p0 else 1}"
                 m0 = model.from_formula(f0, d).fit()
                 aics_a.append(m0.aic)
             # Añadir variable
             aics_b = []
             for p in preds:
-                f0 = f"{ff} + {p}"
-                m0 = model.from_formula(f0, d).fit()
-                aics_b.append(m0.aic)
+                f0 = f"{ff} {('+ ' + p) if p not in preds0 else ''}"
+                m0 = model.from_formula(f0, d).fit() if p not in preds0 else None
+                aics_b.append(m0.aic if p not in preds0 else aics_a[preds0.index(p)])
             min_a, min_b = min(aics_a), min(aics_b)
             aic0 = min_a if min_a < min_b else min_b
             if aic0 < aicf:
@@ -103,13 +69,13 @@ print(final_formula)
                     var_min = preds0[aics_a.index(min_a)]
                     data0.drop(columns=var_min, inplace=True)
                     preds0 = data0.drop(columns=vr).columns.tolist()
-                    ff = f"{vr} ~ {' + '.join(preds0)}"
+                    ff = f"{vr} ~ {' + '.join(preds0) if preds0 else 1}"
                     var_el.append(var_min)
                 else:
                     var_min = preds[aics_b.index(min_b)]
                     data0 = d[preds0 + [var_min, vr]]
                     preds0.append(var_min)
-                    ff = f"{vr} ~ {' + '.join(preds0)}"
+                    ff = f"{vr} ~ {' + '.join(preds0) if preds0 else 1}"
                     var_ag.append(var_min)
                 aicf = aic0
             else:
@@ -119,10 +85,44 @@ print(final_formula)
                 print(f"AIC Obtenido: {aicf:0.2f}")
                 print("Variables eliminadas:", var_el if var_el else "Ninguna")
                 print("Variables agregadas:", var_ag if var_ag else "Ninguna")
-                print("Formula obtenida:", ff)
+                print("Fórmula obtenida:", ff)
                 return ff
         print(f"Iteración {i + 1} Finalizada | AIC Actual: {aic0:0.2f}")
         if not preds0:
             return f"{vr} + 1"
     print("Máximas iteraciones alcanzadas")
     return ff
+
+def __forward_selection(y, data, model, alpha):
+    preds = data.columns.to_list()
+    preds.remove(y)
+
+    f_actual = f"{y} ~ 1"
+    m_actual = model.from_formula(f_actual, data).fit()
+    termino = False
+    
+    while not termino:
+        valores_p = []
+        for p in preds:
+            f_prueba = f"{f_actual} + {p}"
+            m_prueba = model.from_formula(f_prueba, data).fit()
+            pv = __nested_models_test(m_actual, m_prueba, data[y]).p_value
+            valores_p.append(pv)
+        min_vp = min(valores_p)
+        if min_vp >= alpha:
+            termino = True
+            f_actual = f_actual.replace(" 1 +", "")
+            m_actual = model.from_formula(f_actual, data).fit()
+        else:
+            var_min = preds[valores_p.index(min_vp)]
+            f_actual = f"{f_actual} + {var_min}"
+            m_actual = model.from_formula(f_actual, data).fit()
+            preds.remove(var_min)
+            termino = False if preds else True
+            vp = f"{min_vp:0.4f}" if min_vp >= 0.0001 else "<0.0001"
+            print(f"Variable agregada: {var_min:30} | valor-p: {vp}")
+    print("=========================")
+    print("|| Fin de la selección ||")
+    print("=========================")
+    print("Fórmula obtenida:", f_actual)
+    return f_actual

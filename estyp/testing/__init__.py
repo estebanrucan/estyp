@@ -1,6 +1,7 @@
 from typing import Literal
-from __base import TestResults, __var_test, __t_test
-
+from statsmodels.regression.linear_model import RegressionResultsWrapper
+from estyp.testing.__base import TestResults, __var_test, __t_test, __nested_models_test
+from pandas import Series
 
 def var_test(
     x,
@@ -130,3 +131,11 @@ print(t_test(x, y, mu=mu, paired=True))
 ```
     """
     return __t_test(x, y, alternative, mu, paired, var_equal, conf_level)
+
+
+def nested_models_test(
+    fitted_small_model: RegressionResultsWrapper, 
+    fitted_big_model: RegressionResultsWrapper, 
+    response: Series
+):
+    return __nested_models_test(fitted_small_model, fitted_big_model, response)

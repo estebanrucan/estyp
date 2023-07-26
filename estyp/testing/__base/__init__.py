@@ -3,6 +3,9 @@ from pandas import Series
 from scipy.stats import f as fisher
 from scipy.stats import ttest_1samp, ttest_ind, ttest_rel
 
+from statsmodels.regression.linear_model import RegressionResultsWrapper
+from statsmodels.genmod.families.family import Gaussian
+
 
 class TestResults:
     def __init__(self, res: dict, names: dict):
@@ -18,8 +21,9 @@ class TestResults:
             p_value = f"{p_value:0.4f}"
         # df
         df = self.df
-        if df == float(int(df)):
-            df = int(df)
+        if isinstance(df, (float, int)):
+            if df == float(int(df)):
+                df = int(df)
         elif isinstance(df, dict):
             df = {k: f"{v:0.2f}" for k, v in df.items()}
         elif isinstance(df, float):
@@ -189,6 +193,42 @@ def __t_test(x, y, alternative, mu, paired, var_equal, conf_level):
         "mu": mu,
         "conf_level": conf_level,
         "alternative": alternative,
+    }
+
+    return TestResults(res, names)
+
+
+def __deviance(fitted_model, response):
+    if isinstance(fitted_model, RegressionResultsWrapper):
+        return Gaussian().deviance(endog=response, mu=fitted_model.fittedvalues)
+    return fitted_model.deviance
+
+
+def __nested_models_test(fitted_small_model, fitted_big_model, response):
+    n = fitted_big_model.fittedvalues.shape[0]
+    p_big = fitted_big_model.params.shape[0] - 1
+    p_small = fitted_small_model.params.shape[0] - 1
+    d_big = __deviance(fitted_big_model, response)
+    d_small = __deviance(fitted_small_model, response)
+    df_num = p_big - p_small
+    df_den = n - p_big - 1
+    f_num = (d_small - d_big) / df_num
+    f_den = d_big / df_den
+    f_stat = f_num / f_den
+    p_value = fisher(dfn=df_num, dfd=df_den).sf(f_stat)
+
+    names = {
+        "statistic": "F",
+        "estimate": "Difference in deviances between models",
+        "alternative": "big model is true",
+    }
+
+    res = {
+        "method": "Nested models F-test",
+        "statistic": f_stat,
+        "estimate": d_small - d_big,
+        "df": {"df_num": df_num, "df_den": df_den},
+        "p_value": p_value,
     }
 
     return TestResults(res, names)
