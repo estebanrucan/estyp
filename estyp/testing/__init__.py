@@ -135,7 +135,70 @@ print(t_test(x, y, mu=mu, paired=True))
 
 def nested_models_test(
     fitted_small_model: RegressionResultsWrapper, 
-    fitted_big_model: RegressionResultsWrapper, 
-    response: Series
+    fitted_big_model: RegressionResultsWrapper
 ):
-    return __nested_models_test(fitted_small_model, fitted_big_model, response)
+    """
+    # Nested Models F-Test Function
+    
+    ## Description
+    
+    This function performs a nested models F-test using deviance from two fitted models from statsmodels library. The test compares two nested models: a larger or "big" model and a smaller or "small" model. The purpose of this test is to determine whether the larger model significantly improves the model fit compared to the smaller model by adding additional predictors.
+    
+    ## Parameters
+    * `fitted_small_model`: The fitted model representing the smaller/nested model. It have to come from statsmodels.
+    * `fitted_big_model`: : The fitted model representing the larger model, which includes all the predictors from the smaller model and potentially additional predictors. It have to come from statsmodels.
+    
+    ## Returns
+    
+    The function returns an object of class TestResults that contains the following information:
+
+    * `method`: A string indicating the name of the statistical test (Nested models F-test).
+    * `statistic`: The computed F-statistic value.
+    * `estimate`: The difference in deviances between the models.
+    * `df`: A dictionary with the degrees of freedom for the numerator and denominator of the F-statistic.
+    * p_value: The p-value associated with the F-statistic.
+    
+    ## Examples
+    ### Example 1: With OLS
+    ```python
+    import pandas as pd
+    import statsmodels.api as sm
+    data = pd.DataFrame({
+        "x": [2.01, 2.99, 4.01, 5.01, 6.89],
+        "y": [2, 3, 4, 5, 6]
+    })
+    
+    model_small = sm.OLS.from_formula("y ~ 1", data).fit()
+    model_big = sm.OLS.from_formula("y ~ x", data).fit()
+    
+    print(nested_models_test(model_small, model_big))
+    ```
+    ### Example 2: With Logit
+    ```python
+    import pandas as pd
+    import statsmodels.api as sm
+    data = pd.DataFrame({
+        "x": [2.01, 2.99, 4.01, 3.01, 4.89],
+        "y": [0, 1, 1, 0, 1]
+    })
+    
+    model_small = sm.Logit.from_formula("y ~ 1", data).fit()
+    model_big = sm.Logit.from_formula("y ~ x", data).fit()
+    
+    print(nested_models_test(model_small, model_big))
+    ```
+    ### Example 3: With GLM
+    ```python
+    import pandas as pd
+    import statsmodels.api as sm
+    data = pd.DataFrame({
+        "x": [2.01, 2.99, 4.01, 5.01, 6.89],
+        "y": [2, 3, 4, 5, 6]
+    })
+    model_small = sm.GLM.from_formula("y ~ 1", data, family = sm.families.Gamma()).fit()
+    model_big = sm.GLM.from_formula("y ~ x", data, family = sm.families.Gamma()).fit()
+
+    print(nested_models_test(model_small, model_big))
+    ```
+    """
+    return __nested_models_test(fitted_small_model, fitted_big_model)

@@ -2,7 +2,7 @@ from statsmodels.api import GLM, OLS
 from pandas import DataFrame
 from estyp.linear_model.stepwise.__base import __both_selection, __forward_selection
 
-def both_selection(formula: str, data: DataFrame, model: GLM, max_iter = 10000) -> str:
+def both_selection(formula: str, data: DataFrame, model: GLM, max_iter = 10000, **kwargs) -> str:
     """
 # Both Forward and Backward Variable Selection for GLM's
 
@@ -14,6 +14,7 @@ This function performs both forward and backward variable selection using the Ak
 * `data`: A Pandas DataFrame containing the data to be used for model fitting.
 * `model`: A statsmodels.GLM object that represents the type of model to be fit.
 * `max_iter`: The maximum number of iterations to perform.
+* `**kwargs`: Additional keyword arguments to be passed to the model.from_formula() method.
 
 ## Returns
 
@@ -39,13 +40,14 @@ final_formula = both_selection(formula=formula, data=data, model=model)
 
 print(final_formula)
     """
-    return __both_selection(formula, data, model, max_iter)
+    return __both_selection(formula, data, model, max_iter, **kwargs)
 
 def forward_selection(
     y: str, 
     data: DataFrame,
     model: GLM = OLS, 
-    alpha = 0.05
+    alpha = 0.05,
+    **kwargs
 ):
     """
 # Forward Variable Selection for GLM's
@@ -58,6 +60,7 @@ This function performs forward variable selection using p-values calculated from
 * data: The pandas DataFrame containing both the target variable 'y' and the        predictor variables for model training.
 * `model`: A statsmodels model class. The statistical model to be used for model fitting and evaluation. Defaults to `sm.OLS`.
 * `alpha`: A number between 0 and 1. The significance level for feature selection. A feature is added to the model if its p-value is less than this alpha value. Defaults to 0.05.
+* `**kwargs`: Additional keyword arguments to be passed to the model.from_formula() method.
 
 ## Returns
 
@@ -90,4 +93,4 @@ selected_model = sm.OLS.from_formula(formula, data).fit()
 print(selected_model.summary())
 ```
     """
-    return __forward_selection(y, data, model, alpha)
+    return __forward_selection(y, data, model, alpha, **kwargs)

@@ -3,7 +3,7 @@ from pandas import Series
 from scipy.stats import f as fisher
 from scipy.stats import ttest_1samp, ttest_ind, ttest_rel
 
-from statsmodels.regression.linear_model import RegressionResultsWrapper
+from statsmodels.api import OLS, GLM
 from statsmodels.genmod.families.family import Gaussian
 
 
@@ -199,12 +199,15 @@ def __t_test(x, y, alternative, mu, paired, var_equal, conf_level):
 
 
 def __deviance(fitted_model, response):
-    if isinstance(fitted_model, RegressionResultsWrapper):
+    if isinstance(fitted_model.model, OLS):
         return Gaussian().deviance(endog=response, mu=fitted_model.fittedvalues)
-    return fitted_model.deviance
+    elif isinstance(fitted_model.model, GLM):
+        return fitted_model.deviance
+    return sum(fitted_model.resid_dev ** 2) 
 
 
-def __nested_models_test(fitted_small_model, fitted_big_model, response):
+def __nested_models_test(fitted_small_model, fitted_big_model):
+    response = fitted_big_model.model.data.endog
     n = fitted_big_model.fittedvalues.shape[0]
     p_big = fitted_big_model.params.shape[0] - 1
     p_small = fitted_small_model.params.shape[0] - 1
