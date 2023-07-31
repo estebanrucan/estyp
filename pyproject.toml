@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "estyp"
-version = "0.3.0"
+version = "0.4.0"
 authors = [
     { name="estebanrucan", email="errucan@gmail.com" },
 ]
@@ -15,12 +15,12 @@ requires-python = ">=3.9.12"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
-    "Development Status :: 1 - Planning"
+    "Operating System :: OS Independent"
 ]
 dependencies = [
     "numpy >= 1.22.3",
     "scikit-learn >= 1.2.1",
+    "matplotlib >= 3.4.3",
     "patsy >= 0.5.3",
     "statsmodels >= 0.13.5",
     "scipy >= 1.10.1"

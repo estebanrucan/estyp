@@ -3,7 +3,8 @@ from pandas import Series, DataFrame, concat
 from patsy import dmatrices, build_design_matrices
 from typing import Literal
 from scipy.stats import norm
-from sklearn.linear_model import LogisticRegression
+from sklearn._typing import Int
+from sklearn.linear_model import LinearRegression, LogisticRegression
 
 
 class LogisticRegression(LogisticRegression):
