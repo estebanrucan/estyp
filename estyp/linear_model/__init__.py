@@ -1,13 +1,13 @@
-import numpy as np
-from pandas import Series, DataFrame, concat
-from patsy import dmatrices, build_design_matrices
 from typing import Literal
+
+import numpy as np
+from pandas import DataFrame, Series, concat
+from patsy import build_design_matrices, dmatrices
 from scipy.stats import norm
-from sklearn._typing import Int
-from sklearn.linear_model import LinearRegression, LogisticRegression
+from sklearn.linear_model import LogisticRegression as LogisticRegression_
 
 
-class LogisticRegression(LogisticRegression):
+class LogisticRegression(LogisticRegression_):
     """
 # Logistic Regression
 
@@ -55,7 +55,8 @@ This class implements a logistic regression model. It inherits from the `sklearn
 import numpy as np
 import pandas as pd
 
-data = DataFrame({
+np.random.seed(123)
+data = pd.DataFrame({
     "y": np.random.randint(2, size=100),
     "x1": np.random.uniform(-1, 1, size=100),
     "x2": np.random.uniform(-1, 1, size=100),
@@ -67,9 +68,10 @@ spec = LogisticRegression.from_formula(formula, data)
 model = spec.fit()
 
 print(model.summary())
+```
     """
     
-    def __init__(self, penalty: Literal['l1', 'l2', 'elasticnet'] = "none", *, dual = False, tol = 0.0001, C = 1, fit_intercept = False, intercept_scaling = 1, class_weight = None, random_state = 2023, solver: Literal['lbfgs', 'liblinear', 'newton-cg', 'newton-cholesky', 'sag', 'saga'] = "lbfgs", max_iter = 100, multi_class: Literal['auto', 'ovr', 'multinomial'] = "auto", verbose = 0, warm_start: bool = False, n_jobs = -1, l1_ratio = 0.5):
+    def __init__(self, penalty: Literal['l1', 'l2', 'elasticnet'] = None, *, dual = False, tol = 0.0001, C = 1, fit_intercept = False, intercept_scaling = 1, class_weight = None, random_state = 2023, solver: Literal['lbfgs', 'liblinear', 'newton-cg', 'newton-cholesky', 'sag', 'saga'] = "lbfgs", max_iter = 100, multi_class: Literal['auto', 'ovr', 'multinomial'] = "auto", verbose = 0, warm_start: bool = False, n_jobs = -1, l1_ratio = None):
         super().__init__(penalty=penalty, dual=dual, tol=tol, C=C, fit_intercept=fit_intercept, intercept_scaling=intercept_scaling, class_weight=class_weight, random_state=random_state, solver=solver, max_iter=max_iter, multi_class=multi_class, verbose=verbose, warm_start=warm_start, n_jobs=n_jobs, l1_ratio=l1_ratio)
 
     @classmethod

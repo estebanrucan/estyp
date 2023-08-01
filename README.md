@@ -1,6 +1,6 @@
 # ESTYP: Extended Statistical Toolkit Yet Practical
 
-[![PyPI version](https://badge.fury.io/py/estyp.svg)](https://badge.fury.io/py/estyp) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Contributions](https://img.shields.io/badge/Contributions-welcome-blue.svg)](https://github.com/estebanrucan/estyp/issues) [![Chilean](https://img.shields.io/badge/Made_in-%F0%9F%87%A8%F0%9F%87%B1_Chile-blue.svg)](https://es.wikipedia.org/wiki/Chile)
+[![Downloads](https://static.pepy.tech/badge/estyp)](https://pepy.tech/project/estyp) [![PyPI version](https://badge.fury.io/py/estyp.svg)](https://badge.fury.io/py/estyp) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Contributions](https://img.shields.io/badge/Contributions-welcome-blue.svg)](https://github.com/estebanrucan/estyp/issues) [![Chilean](https://img.shields.io/badge/Made_in-%F0%9F%87%A8%F0%9F%87%B1_Chile-blue.svg)](https://es.wikipedia.org/wiki/Chile)
 
 ## Description
 
@@ -9,6 +9,12 @@ This library is a collection of statistical functions for Python.
 Actually, the name comes from the way my friends call me (Esti), plus "p" which is the initial of `python`.
 
 ## Changelog 
+
+### V0.4.1
+
+* Bug fixes in `linear_model.LogisticRegression()` class.
+* Added downloads badge to README.
+* Changed `sklearn>=1.2.1` to `scipy>=1.3.0` as a depedency of the library.
 
 ### V0.4.0
 
