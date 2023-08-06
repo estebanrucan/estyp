@@ -5,11 +5,20 @@ import numpy as np
 from pandas import Series
 from statsmodels.regression.linear_model import RegressionResultsWrapper
 
-from estyp.testing.__base import (TestResults, _CheckHomocedasticity,
-                                    _CheckIndependence,
-                                    _CheckMulticollinearity, _CheckNormality,
-                                    __nested_models_test, __prop_test, __t_test,
-                                    __var_test)
+from estyp.testing.__base import (
+    TestResults,
+    _CheckHomocedasticity,
+    _CheckIndependence,
+    _CheckMulticollinearity,
+    _CheckNormality,
+    __nested_models_test,
+    __prop_test,
+    __t_test,
+    __var_test,
+    __cor_test,
+    __chisq_test,
+)
+
 
 class CheckModel:
     """
@@ -84,7 +93,7 @@ class CheckModel:
     def check_homocedasticity(self, alpha=0.05, plot=True, return_pvals=False):
         """
         Checks the homoscedasticity assumption (equal variance of residuals) using several statistical tests.
-        
+
         Parameters
         ----------
         `alpha` : float, optional
@@ -93,12 +102,12 @@ class CheckModel:
             If `True`, a plot is shown for visual inspection of homoscedasticity, by default `True`.
         `return_pvals` : bool, optional
             If `True`, the p-values of the statistical tests are returned, by default `False`.
-        
+
         Returns
         -------
         dict
             A dictionary of p-values of the statistical tests if `return_pvals=True`.
-            
+
         Example
         -------
         >>> cm.check_homocedasticity()
@@ -114,7 +123,7 @@ class CheckModel:
     def check_independence(self, alpha=0.05, plot=True, return_vals=False):
         """
         Checks the independence assumption of the residuals using several statistical tests.
-        
+
         Parameters
         ----------
         alpha : float, optional
@@ -123,12 +132,12 @@ class CheckModel:
             If `True`, a plot is shown for visual inspection of independence, by default `True`.
         return_pvals : bool, optional
             If `True`, the p-values of the statistical tests are returned, by default `False`.
-        
+
         Returns
         -------
         dict
             A dictionary of values of the statistical tests if `return_vals=True`.
-            
+
         Example
         -------
         >>> cm.check_independence()
@@ -144,19 +153,19 @@ class CheckModel:
     def check_multicollinearity(self, plot=True, return_cm=False):
         """
         Checks the multicollinearity assumption among predictors using the variance inflation factor (VIF).
-        
+
         Parameters
         ----------
         `plot` : bool, optional
             If True, a plot is shown for visual inspection of multicollinearity, by default True.
         `return_cm` : bool, optional
             Returns the condition number of the model if True, by default False.
-            
+
         Returns
         -------
         float
             The condition number of the model if `return_cm=True`.
-        
+
         Example
         -------
         >>> cm.check_multicollinearity()
@@ -172,7 +181,7 @@ class CheckModel:
     def check_all(self, alpha=0.05, plot=True, return_vals=False):
         """
         Checks all the assumptions of the linear regression model.
-        
+
         Parameters
         ----------
         `alpha` : float, optional
@@ -181,12 +190,12 @@ class CheckModel:
             If `True`, a plot is shown for visual inspection of each assumption, by default `True`.
         `return_vals` : bool, optional
             If `True`, the values of the statistical tests are returned, by default `False`.
-        
+
         Returns
         -------
         dict
             A dictionary of values of the statistical tests if `return_vals=True`.
-            
+
         Example
         -------
         >>> cm.check_all()
@@ -226,7 +235,7 @@ class CheckModel:
 def var_test(
     x: Union[List, np.ndarray, Series],
     y: Union[List, np.ndarray, Series],
-    ratio: Union[float, int]=1,
+    ratio: Union[float, int] = 1,
     alternative: Literal["two-sided", "less", "greater"] = "two-sided",
     conf_level=0.95,
 ) -> TestResults:
@@ -508,3 +517,198 @@ def prop_test(
     """
     return __prop_test(x, n, p, alternative, conf_level, correct)
 
+
+def cor_test(
+    x: Union[List, np.ndarray, Series],
+    y: Union[List, np.ndarray, Series],
+    method: Literal["pearson", "kendall", "spearman"] = "pearson",
+    alternative: Literal["two-sided", "less", "greater"] = "two-sided",
+    conf_level: float = 0.95,
+    continuity: bool = False,
+) -> TestResults:
+    """
+    # Test for Association/Correlation Between Paired Samples
+
+    Description
+    -----------
+    Test for association between paired samples, using one of Pearson's product moment correlation coefficient, Kendall's
+    tau or Spearman's rho.
+
+    Usage
+    -----
+    ```python
+    cor_test(x, y, ...)
+    cor_test(x, y, alternative="two-sided", method="pearson", conf_level=0.95, continuity=False)
+    ```
+
+    Arguments
+    ---------
+    `x`, `y` : array_like
+        Numeric one-dimensional `arrays`, `lists` or `pd.Series` of data values. `x` and `y` must have the same length.
+
+    `alternative` : str, optional
+        Indicates the alternative hypothesis and must be one of "two-sided", "greater" or "less".
+        "greater" corresponds to positive association, "less" to negative association.
+
+    `method` : str, optional
+        A string indicating which correlation coefficient is to be used for the test.
+        One of "pearson", "kendall", or "spearman".
+
+    `conf_level` : float, optional
+        Confidence level for the returned confidence interval. Currently only used for the
+        Pearson product moment correlation coefficient if there are at least 4 complete pairs of observations.
+
+    `continuity` : bool, optional
+        If `True`, a continuity correction is used for Kendall's tau.
+
+    Returns
+    -------
+    A `TestResults` instance containing the following atributes:
+        - `statistic`: the value of the test statistic.
+        - `df` (if applicable): the degrees of freedom of the test statistic.
+        - `p_value`: the p-value of the test.
+        - `estimate`: the estimated measure of association.
+        - `null_value`: the value of the association measure under the null hypothesis, always 0.
+        - `alternative`: a string describing the alternative hypothesis.
+        - `method`: a string indicating how the association was measured.
+        - `conf_int` (if applicable): a confidence interval for the measure of association.
+
+    Details
+    -------
+    The three methods each estimate the association between paired samples and compute a test of the value being zero.
+    They use different measures of association, all in the range [-1, 1] with 0 indicating no association.
+    These are sometimes referred to as tests of no correlation, but that term is often confined to the default method.
+
+    References
+    ----------
+    [1] D. J. Best & D. E. Roberts (1975). Algorithm AS 89: The Upper Tail Probabilities of Spearman's rho.
+        Applied Statistics, 24, 377--379. 10.2307/2347111.
+
+    [2] Myles Hollander & Douglas A. Wolfe (1973), Nonparametric Statistical Methods.
+        New York: John Wiley & Sons. Pages 185--194 (Kendall and Spearman tests).
+
+    Example
+    -------
+    Using the iris dataset to test the association between sepal length and petal length using Pearson's correlation:
+
+    ```python
+    from sklearn import datasets
+    iris = datasets.load_iris()
+
+    sepal_length = iris.data[:, 0]
+    petal_length = iris.data[:, 2]
+
+    result = cor_test(sepal_length, petal_length, method="pearson")
+    print(result)
+    """
+    return __cor_test(x, y, method, alternative, conf_level, continuity)
+
+
+def chisq_test(
+    x: Union[List, np.ndarray, Series],
+    y: Union[List, np.ndarray, Series, None] = None,
+    p: Union[List, np.ndarray, Series, None] = None,
+    correct: bool = True,
+    rescale_p: bool = False
+):
+    """
+# Pearson's Chi-squared Test for Count Data
+
+
+Description
+-----------
+`chisq_test()` performs chi-squared contingency table tests and goodness-of-fit tests.
+
+Usage
+------
+```python
+chisq_test(x, ...)
+chisq_test(x, y=None, correct=True, p=None, rescale_p=False)
+```
+
+Arguments
+---------
+`x`: arrat_like
+    A numeric list or 2D list (matrix). x and y can also both be lists.
+    
+`y`: array_like
+    A numeric data ; ignored if x is a matrix. If x is a list, y should be a list of the same length. The default is None.
+
+`p`: array_like
+    A list of probabilities of the same length as x. An error is raised if any entry of p is negative.
+
+`correct`: 
+    A boolean indicating whether to apply continuity correction when computing the test statistic for 2x2 tables: 
+    one half is subtracted from all |O-E| differences; however, the correction will not be bigger than the differences themselves. The default is True.
+
+`rescale_p`: boolean
+    A boolean; if True then p is rescaled (if necessary) to sum to 1. If rescale_p is False, and p does not sum to 1, an error is raised.
+
+Details
+-------
+    If x is a matrix with one row or column, or if x is a list and y is not given, then a goodness-of-fit test is performed 
+    (x is treated as a one-dimensional contingency table). The entries of x must be non-negative integers. In this case, the hypothesis 
+    tested is whether the population probabilities equal those in p, or are all equal if p is not given.
+
+    If x is a matrix with at least two rows and columns, it is taken as a two-dimensional contingency table: the entries of x must be 
+    non-negative integers. Otherwise, x and y must be lists of the same length; cases with None values are removed, the lists are 
+    treated as factors, and the contingency table is computed from these. Then Pearson's chi-squared test is performed of the null 
+    hypothesis that the joint distribution of the cell counts in a 2-dimensional contingency table is the product of the row and column marginals.
+
+    The p-value is computed from the asymptotic chi-squared distribution of the test statistic; continuity correction is only used in 
+    the 2-by-2 case (if correct is True, the default).
+
+Returns
+-------
+    A `TestResults` instance containing the following attributes:
+
+    `statistic`: 
+        The value of the chi-squared test statistic.
+
+    `df`: 
+        The degrees of freedom of the approximate chi-squared distribution of the test statistic.
+
+    `p_value`:
+        The p-value for the test.
+
+    `method`:
+        A string indicating the type of test performed, and whether continuity correction was used.
+
+    `expected`:
+        The expected counts under the null hypothesis.
+
+
+Examples
+--------
+```python
+## From Agresti(2007) p.39
+M = [[762, 327, 468], [484, 239, 477]]
+result1 = chisq_test(M)
+print(result1)
+
+## Effect of rescale_p
+x = [12, 5, 7, 7]
+p = [0.4, 0.4, 0.2, 0.2]
+result2 = chisq_test(x, p=p, rescale_p=True)
+print(result2)
+
+## Testing for population probabilities
+x = [20, 15, 25]
+result31 = chisq_test(x)
+print(result31)
+
+x = [89,37,30,28,2]
+p = [0.40,0.20,0.20,0.19,0.01]
+result32 = chisq_test(x, p=p)
+print(result32)
+
+
+# Goodness of fit
+x = [1, 2, 3, 4, 5, 6]
+y = [6, 1, 2, 3, 4, 5]
+result4 = chisq_test(x, y)
+print(result4)
+```
+    """
+
+    return __chisq_test(x, y, p, correct, rescale_p)

@@ -1,7 +1,10 @@
+import warnings
+
 import matplotlib.pyplot as plt
 import numpy as np
+import scipy.stats as stats
 import statsmodels.api as sm
-from pandas import DataFrame, Series
+from pandas import DataFrame, Series, crosstab
 from scipy.stats import chi2
 from scipy.stats import f as fisher
 from scipy.stats import (kstest, norm, probplot, shapiro, ttest_1samp,
@@ -281,27 +284,32 @@ class TestResults:
         else:
             p_value = f"{p_value:0.4f}"
         # df
-        df = self.df
-        if isinstance(df, (float, int)):
-            if df == float(int(df)):
-                df = int(df)
-        elif isinstance(df, dict):
-            df = {k: f"{v:0.2f}" for k, v in df.items()}
-        elif isinstance(df, float):
-            df = f"{df:0.2f}"
+        if self.__dict__.get("df"):
+            df = self.df
+            if isinstance(df, (float, int)):
+                if df == float(int(df)):
+                    df = int(df)
+                else:
+                    df = f"{df:0.2f}"
+            elif isinstance(df, dict):
+                df = {k: round(v, 2) for k, v in df.items()}
+            elif isinstance(df, float):
+                df = f"{df:0.2f}"
+        else:
+            df = None
         # estimates
-        estimate = self.estimate
-        if isinstance(estimate, (list, np.ndarray)):
-            estimate = [float(f"{e:0.6f}") for e in estimate]
-        elif estimate == float(int(estimate)):
-            estimate = int(estimate)
-        elif isinstance(estimate, float):
-            estimate = f"{estimate:0.6f}"
+        if self.__dict__.get("estimate"):
+            estimate = self.estimate
+            if isinstance(estimate, (list, np.ndarray)):
+                estimate = [float(f"{e:0.6f}") for e in estimate]
+            elif estimate == float(int(estimate)):
+                estimate = int(estimate)
+            elif isinstance(estimate, float):
+                estimate = f"{estimate:0.6f}"
 
         string = f"""
-    {self.method}
-    {len(self.method) * "-"}
-    {self.__names['statistic']} = {self.statistic:0.4f} | df: {df} | p-value = {p_value}
+    {bcolors.BOLD + bcolors.UNDERLINE + self.method + bcolors.ENDC}
+    {self.__names['statistic']} = {self.statistic:0.4f} |{' df: ' + str(df) + ' |' if df is not None else ''} p-value = {p_value}
     alternative hypothesis: {self.__names["alternative"]}"""
         if self.__dict__.get("conf_int"):
             if self.conf_int is not None:
@@ -309,9 +317,10 @@ class TestResults:
                 if cl == float(int(cl)):
                     cl = int(cl)
                 string += f"""
-        {cl} percent confidence interval:
-        {" "}{self.conf_int[0]:0.6f} {self.conf_int[1]:0.6f}"""
-        string += f"""
+    {cl} percent confidence interval:
+    {" "}{self.conf_int[0]:0.6f} {self.conf_int[1]:0.6f}"""
+        if self.__dict__.get("estimate"):
+            string += f"""
     sample estimates:
     {" " * 2}{self.__names["estimate"]}: {estimate}
     """
@@ -644,5 +653,243 @@ def __prop_test(x, n, p, alternative, conf_level, correct):
         "conf_level": conf_level,
         "alternative": alternative,
     }
-    #return res
+    return TestResults(res, names)
+
+
+def __cor_test(x, y, method, alternative, conf_level, continuity):
+    
+    if not isinstance(x, (list, np.ndarray, Series)):
+        raise TypeError("'x' must be a list, numpy array, or pandas Series")
+    if isinstance(x, (Series, np.ndarray)):
+        if len(x.shape) != 1:
+            raise ValueError("'x' must be one-dimensional")
+    if isinstance(y, (Series, np.ndarray)):
+        if len(y.shape) != 1:
+            raise ValueError("'x' must be one-dimensional")
+    if len(x) != len(y):
+        raise ValueError("'x' and 'y' must have the same length")
+    
+    res = {
+        "conf_level": conf_level,
+        "alternative": alternative,
+        "null_value": 0
+    }
+
+    
+    direction = "not equal to" if alternative == "two-sided" else f"{alternative} than"
+    
+    n = len(x)
+    
+    if method == "pearson":
+        if n < 3:
+            raise ValueError("not enough finite observations")
+        
+        r = np.corrcoef(x, y)[0, 1]
+        df = n - 2
+        
+        t_statistic = np.sqrt(df) * r / np.sqrt(1 - r ** 2)
+        
+        # Confidence interval calculation following R's logic
+        if n > 3:
+            z = np.arctanh(r)
+            sigma = 1 / np.sqrt(n - 3)
+            
+            if alternative == "less":
+                lo_z, hi_z = -np.inf, z + sigma * stats.norm.ppf(conf_level)
+            elif alternative == "greater":
+                lo_z, hi_z = z - sigma * stats.norm.ppf(conf_level), np.inf
+            else:  # two-sided
+                z_crit = sigma * stats.norm.ppf((1 + conf_level) / 2)
+                lo_z, hi_z = z - z_crit, z + z_crit
+                
+            lo, hi = np.tanh((lo_z, hi_z))
+        else:
+            lo, hi = None, None
+        
+        # P-value
+        if alternative == "less":
+            p_value = stats.t.cdf(t_statistic, df)
+        elif alternative == "greater":
+            p_value = 1 - stats.t.cdf(t_statistic, df)
+        else:  # two-sided
+            p_value = 2 * min(stats.t.cdf(t_statistic, df), 1 - stats.t.cdf(t_statistic, df))
+        
+        
+        names = {
+            "statistic": "t",
+            "estimate": "cor",
+            "alternative": f"true correlation is {direction} 0"
+        }
+        
+        res.update({
+            "method": "Pearson's product-moment correlation",
+            "estimate": r,
+            "statistic": t_statistic,
+            "df": df,
+            "p_value": p_value,
+            "conf_int": (lo, hi)
+        })
+        
+        return TestResults(res, names)
+    
+    elif method == "spearman":
+        r, p_value = stats.spearmanr(x, y, alternative=alternative)
+        
+        # Calculate S statistic
+        S = (n ** 3 - n) * (1 - r)/6
+        
+        names = {
+            "statistic": "S",
+            "estimate": "rho",
+            "alternative": f"true rho is {direction} 0"
+        }
+        
+        res.update({
+            "method": "Spearman's rank correlation rho",
+            "estimate": r,
+            "statistic": S,
+            "p_value": p_value
+        })
+        
+        return TestResults(res, names)
+    
+    
+    elif method == "kendall":
+        tau, p_value = stats.kendalltau(x, y, alternative=alternative)
+        
+        xties = np.array([k for k in np.unique(x, return_counts=True)[1] if k > 1])
+        yties = np.array([k for k in np.unique(y, return_counts=True)[1] if k > 1])
+
+        T0 = n * (n - 1) / 2
+        T1 = sum(xties * (xties - 1)) / 2
+        T2 = sum(yties * (yties - 1)) / 2
+        S = tau * np.sqrt((T0 - T1) * (T0 - T2))
+        
+        v0 = n * (n - 1) * (2 * n + 5)
+        vt = sum(xties * (xties - 1) * (2 * xties + 5))
+        vu = sum(yties * (yties - 1) * (2 * yties + 5))
+        v1 = sum(xties * (xties - 1)) * sum(yties * (yties - 1))
+        v2 = sum(xties * (xties - 1) * (xties - 2)) * sum(yties * (yties - 1) * (yties - 2))
+        
+        var_S = (v0 - vt - vu) / 18 + v1 / (2 * n * (n - 1)) + v2 / (9 * n * (n - 1) * (n - 2))
+        
+        if continuity:
+            S = np.sign(S) * (np.abs(S) - 1)
+        
+        z_statistic = S / np.sqrt(var_S)
+        
+        names = {
+            "statistic": "z",
+            "estimate": "tau",
+            "alternative": f"true tau is {direction} 0"
+        }
+        
+        res.update({
+            "method": "Kendall's rank correlation tau",
+            "estimate": tau,
+            "statistic": z_statistic,
+            "p_value": p_value
+        })
+        
+        
+        return TestResults(res, names)
+
+    else:
+        raise ValueError("Invalid method")
+
+def __chisq_test(x, y, p, correct, rescale_p):
+        
+    names = {
+        "statistic": "X-squared",
+        "estimate": "expected frequencies",
+        "alternative": "true frequencies are not equal to expected frequencies"
+    }
+    
+    # Convert x to a numpy array if it's a list
+    if isinstance(x, list):
+        x = np.array(x)
+    if isinstance(x, Series):
+        x = x.values
+    
+    if not (isinstance(x, np.ndarray) and len(x.shape) == 2) and y is not None:
+        if len(x) != len(y):
+            raise ValueError("'x' and 'y' must have the same length")
+    # If x is a matrix
+    if isinstance(x, np.ndarray) and len(x.shape) == 2:
+        observed = x 
+    # If x and y are provided as vectors
+    elif y is not None:
+        observed = crosstab(np.array(x), np.array(y)).values
+    # If only x is provided (goodness-of-fit test)
+    elif y is None:
+        observed = np.array(x).reshape(-1)
+        method = "Chi-squared test for given probabilities"
+        if p is not None:
+            if rescale_p:
+                total_p = sum(p)
+                p = [prob/total_p for prob in p]
+            p = np.array(p)
+            if abs(p.sum() - 1) >= 1e-5:
+                raise ValueError("Elements of 'p' must sum to 1")
+            if np.any(p <= 0):
+                raise ValueError("Elements of 'p' must be positive")
+            expected = p * np.sum(observed)
+            chi2_statistic = np.sum((observed - expected)**2 / expected)
+            df = len(x) - 1
+            if np.any(expected < 5) and np.isfinite(df):
+                warnings.warn("Chi-squared approximation may be incorrect")
+            p_value = 1 - stats.chi2.cdf(chi2_statistic, df)
+            res = {
+                "method": method,
+                "statistic": chi2_statistic,
+                "df": df,
+                "expected": expected,
+                "p": p,
+                "p_value": p_value
+            }
+            
+            return TestResults(res, names)
+        else:
+            p = [1/len(x)] * len(x)
+            expected = np.array(p) * np.sum(observed)
+            chi2_statistic = np.sum((observed - expected)**2 / expected)
+            df = len(x) - 1
+            if np.any(expected < 5) and np.isfinite(df):
+                warnings.warn("Chi-squared approximation may be incorrect")
+            p_value = 1 - stats.chi2.cdf(chi2_statistic, df)
+            res = {
+                "method": method,
+                "statistic": chi2_statistic,
+                "df": df,
+                "expected": expected,
+                "p": p,
+                "p_value": p_value
+            }
+            
+            return TestResults(res, names)
+    else:
+        raise ValueError("Invalid input. Provide either a matrix or two vectors.")
+
+    n = np.sum(observed)
+    if observed.shape == (2, 2) and correct:
+        # Applying Yates' continuity correction for 2x2 table
+        expected = np.outer(np.sum(observed, axis=1), np.sum(observed, axis=0)) / n
+        chi2_statistic = np.sum((np.abs(observed - expected) - 0.5)**2 / expected)
+        add_correct = True
+    else:
+        add_correct = False
+        expected = np.outer(np.sum(observed, axis=1), np.sum(observed, axis=0)) / n
+        chi2_statistic = np.sum((observed - expected)**2 / expected)
+
+    df = (observed.shape[0] - 1) * (observed.shape[1] - 1)
+    p_value = 1 - stats.chi2.cdf(chi2_statistic, df)
+    
+    res = {
+        "method": "Pearson's Chi-squared test" + (" with Yates' continuity correction" if add_correct else ""),
+        "statistic": chi2_statistic,
+        "df": df,
+        "expected": expected,
+        "p_value": p_value
+    }
+    
     return TestResults(res, names)

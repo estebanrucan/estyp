@@ -10,11 +10,21 @@ Actually, the name comes from the way my friends call me (Esti), plus "p" which 
 
 ## Changelog 
 
+### V0.5.0
+
+* Added `testing.chisq_test()` function to perform a chi-squared test.
+* Added `testing.cor_test()` function to perform a correlation test.
+* Added `cluster.NClusterSearch()` class to identify the optimal number of clusters for clustering algorithms with elbow or silhuette methods.
+* Added `kmodes >= 0.12.2` as a depedency of the library.
+* Added `__version__` atribute to the library.
+* Changed method displaying in `TestResults` class.
+* Minor changes in README.
+
 ### V0.4.1
 
 * Bug fixes in `linear_model.LogisticRegression()` class.
 * Added downloads badge to README.
-* Changed `sklearn>=1.2.1` to `scipy>=1.3.0` as a depedency of the library.
+* Changed `sklearn>=1.2.1` to `sklearn>=1.3.0` as a depedency of the library.
 
 ### V0.4.0
 
@@ -41,14 +51,26 @@ Actually, the name comes from the way my friends call me (Esti), plus "p" which 
 
 ## Features
 
-* `linear_model.LogisticRegression()`: This class implements a logistic regression model. It inherits from the `LogisticRegression()` class from `scikit-learn`, but adds additional methods for calculating confidence intervals, p-values, and model summaries like `Logit` class in `statsmodels`.
-* `linear_model.stepwise.both_selection()`: This function performs both forward and backward variable selection using the Akaike Information Criterion (AIC). 
-* `linear_model.stepwise.forward_selection()`: This function performs forward variable selection based on p-values.
+### `testing` module
+
 * `testing.CheckModel()`: This class provides methods to test the assumptions of the linear regression model., inspired by the `performance::check_model()` function of the R software.
 * `testing.t_test()`: Performs one and two sample t-tests on groups of data. This function is inspired by the `t.test()` function of the R software.
 * `testing.var_test()`: Performs an F test to compare the variances of two samples from normal populations. This function is inspired by the `var.test()` function of the R software.
 * `testing.prop_test()`: it can be used for testing the null that the proportions (probabilities of success) in several groups are the same, or that they equal certain given values. This function is inspired by the `prop.test()` function of the R software.
+* `testing.chisq_test()`: Performs a chi-squared test of independence of variables in a contingency table. This function is inspired by the `chisq.test()` function of the R software.
+* `testing.cor_test()`: Performs a correlation test with Pearson, Spearman or Kendall method. This function is inspired by the `cor.test()` function of the R software.
 * `testing.nested_models_test()`: Performs a nested models test to compare two nested models using deviance criterion.
+
+### `linear_model` module
+
+* `linear_model.LogisticRegression()`: This class implements a logistic regression model. It inherits from the `LogisticRegression()` class from `scikit-learn`, but adds additional methods for calculating confidence intervals, p-values, and model summaries like `Logit` class in `statsmodels`.
+* `linear_model.stepwise.both_selection()`: This function performs both forward and backward variable selection using the Akaike Information Criterion (AIC). 
+* `linear_model.stepwise.forward_selection()`: This function performs forward variable selection based on p-values.
+
+### `cluster` module
+
+* `cluster.NClusterSearch`: A helper class to identify the optimal number of clusters for clustering algorithms with elbow or silhuette methods.
+
 
 ## Installation
 
