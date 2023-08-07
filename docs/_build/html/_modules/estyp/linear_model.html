@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>estyp.linear_model &mdash; ESTYP Documentation 0.1.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            ESTYP Documentation
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">estyp</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">ESTYP Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">estyp.linear_model</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for estyp.linear_model</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Literal</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">Series</span><span class="p">,</span> <span class="n">concat</span>
+<span class="kn">from</span> <span class="nn">patsy</span> <span class="kn">import</span> <span class="n">build_design_matrices</span><span class="p">,</span> <span class="n">dmatrices</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span> <span class="k">as</span> <span class="n">LogisticRegression_</span>
+
+
+<div class="viewcode-block" id="LogisticRegression"><a class="viewcode-back" href="../../estyp.linear_model.html#estyp.linear_model.LogisticRegression">[docs]</a><span class="k">class</span> <span class="nc">LogisticRegression</span><span class="p">(</span><span class="n">LogisticRegression_</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd"># Logistic Regression</span>
+
+<span class="sd">This class implements a logistic regression model. It inherits from the `sklearn.linear_model.LogisticRegression` class, but adds additional methods for calculating confidence intervals, p-values, and model summaries.</span>
+
+<span class="sd">## Parameters</span>
+
+<span class="sd">* `penalty`: The type of penalty to use. Can be one of `&quot;none&quot;` (default). `&quot;l1&quot;`, `&quot;l2&quot;`, or `&quot;elasticnet&quot;`.</span>
+<span class="sd">* `dual`: Whether to use the dual formulation of the problem.</span>
+<span class="sd">* `tol`: The tolerance for convergence.</span>
+<span class="sd">* `C`: The regularization strength.</span>
+<span class="sd">* `fit_intercept`: Whether to fit an intercept term.</span>
+<span class="sd">* `intercept_scaling`: The scaling factor for the intercept term.</span>
+<span class="sd">* `class_weight`: None (default), &quot;balanced&quot; or a dictionary that maps class labels to weights.</span>
+<span class="sd">* `random_state`: The random seed.</span>
+<span class="sd">* `solver`: The solver to use. Can be one of `&quot;lbfgs&quot;` (default), `&quot;liblinear&quot;`, `&quot;newton-cg&quot;`, `&quot;newton-cholesky&quot;`, `&quot;sag&quot;`, or `&quot;saga&quot;`.</span>
+<span class="sd">* `max_iter`: The maximum number of iterations.</span>
+<span class="sd">* `multi_class`: The type of multi-class classification to use. Can be one of `&quot;auto&quot;`, `&quot;ovr&quot;`, or `&quot;multinomial&quot;`.</span>
+<span class="sd">* `verbose`: The verbosity level.</span>
+<span class="sd">* `warm_start`: Whether to use the warm start.</span>
+<span class="sd">* `n_jobs`: The number of jobs to use for parallel processing.</span>
+<span class="sd">* `l1_ratio`: The l1_ratio parameter for elasticnet regularization.</span>
+
+<span class="sd">## Properties</span>
+
+<span class="sd">* `params`: Returns the estimated values for model parameters.</span>
+<span class="sd">* `aic`: Calculates the Akaike information criterion (AIC) for the model.</span>
+<span class="sd">* `bic`: Calculates the Bayesian information criterion (BIC) for the model.</span>
+<span class="sd">* `cov_matrix`: Returns the covariance matrix for model parámetres.</span>
+
+<span class="sd">## Methods</span>
+
+<span class="sd">* `fit()`: Fits the model to the data.</span>
+<span class="sd">* `predict()`: Predicts the class labels for new data.</span>
+<span class="sd">* `conf_int()`: Calculates the confidence intervals for the model coefficients.</span>
+<span class="sd">* `se()`: Calculates the standard errors for the model coefficients.</span>
+<span class="sd">* `z_values()`: Calculates the z-scores for the model coefficients.</span>
+<span class="sd">* `p_values()`: Calculates the p-values for the model coefficients.</span>
+<span class="sd">* `summary()`: Prints a summary of the model.</span>
+
+
+<span class="sd">## Examples</span>
+
+<span class="sd">```python</span>
+<span class="sd">import numpy as np</span>
+<span class="sd">import pandas as pd</span>
+
+<span class="sd">np.random.seed(123)</span>
+<span class="sd">data = pd.DataFrame({</span>
+<span class="sd">    &quot;y&quot;: np.random.randint(2, size=100),</span>
+<span class="sd">    &quot;x1&quot;: np.random.uniform(-1, 1, size=100),</span>
+<span class="sd">    &quot;x2&quot;: np.random.uniform(-1, 1, size=100),</span>
+<span class="sd">})</span>
+
+<span class="sd">formula = &quot;y ~ x1 + x2&quot;</span>
+
+<span class="sd">spec = LogisticRegression.from_formula(formula, data)</span>
+<span class="sd">model = spec.fit()</span>
+
+<span class="sd">print(model.summary())</span>
+<span class="sd">```</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">penalty</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;l1&#39;</span><span class="p">,</span> <span class="s1">&#39;l2&#39;</span><span class="p">,</span> <span class="s1">&#39;elasticnet&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">dual</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">tol</span> <span class="o">=</span> <span class="mf">0.0001</span><span class="p">,</span> <span class="n">C</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">fit_intercept</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">intercept_scaling</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">class_weight</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">2023</span><span class="p">,</span> <span class="n">solver</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;lbfgs&#39;</span><span class="p">,</span> <span class="s1">&#39;liblinear&#39;</span><span class="p">,</span> <span class="s1">&#39;newton-cg&#39;</span><span class="p">,</span> <span class="s1">&#39;newton-cholesky&#39;</span><span class="p">,</span> <span class="s1">&#39;sag&#39;</span><span class="p">,</span> <span class="s1">&#39;saga&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;lbfgs&quot;</span><span class="p">,</span> <span class="n">max_iter</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">multi_class</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="s1">&#39;ovr&#39;</span><span class="p">,</span> <span class="s1">&#39;multinomial&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">warm_start</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">n_jobs</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">l1_ratio</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">penalty</span><span class="o">=</span><span class="n">penalty</span><span class="p">,</span> <span class="n">dual</span><span class="o">=</span><span class="n">dual</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="n">tol</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="n">C</span><span class="p">,</span> <span class="n">fit_intercept</span><span class="o">=</span><span class="n">fit_intercept</span><span class="p">,</span> <span class="n">intercept_scaling</span><span class="o">=</span><span class="n">intercept_scaling</span><span class="p">,</span> <span class="n">class_weight</span><span class="o">=</span><span class="n">class_weight</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="n">solver</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">,</span> <span class="n">multi_class</span><span class="o">=</span><span class="n">multi_class</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span> <span class="n">warm_start</span><span class="o">=</span><span class="n">warm_start</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span> <span class="n">l1_ratio</span><span class="o">=</span><span class="n">l1_ratio</span><span class="p">)</span>
+
+<div class="viewcode-block" id="LogisticRegression.from_formula"><a class="viewcode-back" href="../../estyp.linear_model.html#estyp.linear_model.LogisticRegression.from_formula">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_formula</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">y</span><span class="p">,</span> <span class="n">X</span> <span class="o">=</span> <span class="n">dmatrices</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">formula</span> <span class="o">=</span> <span class="n">formula</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">X</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">__log_likelihood</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span>
+        <span class="n">log_likelihood</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">z</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">z</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="n">log_likelihood</span>
+
+
+<div class="viewcode-block" id="LogisticRegression.fit"><a class="viewcode-back" href="../../estyp.linear_model.html#estyp.linear_model.LogisticRegression.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+    
+<div class="viewcode-block" id="LogisticRegression.conf_int"><a class="viewcode-back" href="../../estyp.linear_model.html#estyp.linear_model.LogisticRegression.conf_int">[docs]</a>    <span class="k">def</span> <span class="nf">conf_int</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf_level</span> <span class="o">=</span> <span class="mf">0.95</span><span class="p">):</span>
+        <span class="n">z_score</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">conf_level</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">standard_errors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cov_matrix</span><span class="p">))</span>
+        <span class="n">lower_limits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">z_score</span> <span class="o">*</span> <span class="n">standard_errors</span>
+        <span class="n">upper_limits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">z_score</span> <span class="o">*</span> <span class="n">standard_errors</span>
+        <span class="n">ci</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">({</span>
+            <span class="s2">&quot;[Lower,&quot;</span><span class="p">:</span> <span class="n">lower_limits</span><span class="p">,</span>
+            <span class="s2">&quot;Upper]&quot;</span><span class="p">:</span> <span class="n">upper_limits</span>
+        <span class="p">},</span> <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">design_info</span><span class="o">.</span><span class="n">column_names</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ci</span></div>
+    
+<div class="viewcode-block" id="LogisticRegression.se"><a class="viewcode-back" href="../../estyp.linear_model.html#estyp.linear_model.LogisticRegression.se">[docs]</a>    <span class="k">def</span> <span class="nf">se</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cov_matrix</span><span class="p">)),</span> <span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">design_info</span><span class="o">.</span><span class="n">column_names</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;S.E.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LogisticRegression.z_values"><a class="viewcode-back" href="../../estyp.linear_model.html#estyp.linear_model.LogisticRegression.z_values">[docs]</a>    <span class="k">def</span> <span class="nf">z_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">z_est</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">se</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">Series</span><span class="p">(</span><span class="n">z_est</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">design_info</span><span class="o">.</span><span class="n">column_names</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;z&quot;</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="LogisticRegression.p_values"><a class="viewcode-back" href="../../estyp.linear_model.html#estyp.linear_model.LogisticRegression.p_values">[docs]</a>    <span class="k">def</span> <span class="nf">p_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">p_values</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">z_values</span><span class="p">()))</span>
+        <span class="k">return</span> <span class="n">Series</span><span class="p">(</span><span class="n">p_values</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">design_info</span><span class="o">.</span><span class="n">column_names</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Pr(&gt;|z|)&quot;</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="LogisticRegression.summary"><a class="viewcode-back" href="../../estyp.linear_model.html#estyp.linear_model.LogisticRegression.summary">[docs]</a>    <span class="k">def</span> <span class="nf">summary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf_level</span> <span class="o">=</span> <span class="mf">0.95</span><span class="p">):</span>
+        <span class="n">summary</span> <span class="o">=</span> <span class="n">concat</span><span class="p">(</span>
+            <span class="n">objs</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">se</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">z_values</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">p_values</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">conf_int</span><span class="p">(</span><span class="n">conf_level</span><span class="p">)],</span> 
+            <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">summary</span></div>
+    
+<div class="viewcode-block" id="LogisticRegression.predict"><a class="viewcode-back" href="../../estyp.linear_model.html#estyp.linear_model.LogisticRegression.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_data</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">):</span>
+        <span class="n">dsg</span> <span class="o">=</span> <span class="n">build_design_matrices</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">design_info</span><span class="p">],</span> <span class="n">new_data</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">view</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">dsg</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span></div>
+
+        
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">cov_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">hess_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p</span><span class="p">)),</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">))</span>
+        <span class="n">cov_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">hess_matrix</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cov_matrix</span>
+    
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Series</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">design_info</span><span class="o">.</span><span class="n">column_names</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Estimate&quot;</span><span class="p">)</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">aic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">aic</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">__log_likelihood</span><span class="p">()</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">aic</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">bic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">bic</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">__log_likelihood</span><span class="p">()</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">bic</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+    
+    
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;LogisticRegression()&quot;</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Esteban Rucán Carrasco.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

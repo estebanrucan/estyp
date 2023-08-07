@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>estyp.testing package &mdash; ESTYP Documentation 0.1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="estyp.linear_model.stepwise package" href="estyp.linear_model.stepwise.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ESTYP Documentation
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">estyp</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="estyp.html">estyp package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="estyp.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="estyp.cluster.html">estyp.cluster package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="estyp.linear_model.html">estyp.linear_model package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">estyp.testing package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="estyp.html#module-estyp">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ESTYP Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">estyp</a></li>
+          <li class="breadcrumb-item"><a href="estyp.html">estyp package</a></li>
+      <li class="breadcrumb-item active">estyp.testing package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/estyp.testing.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="estyp-testing-package">
+<h1>estyp.testing package<a class="headerlink" href="#estyp-testing-package" title="Permalink to this heading"></a></h1>
+<section id="module-estyp.testing">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-estyp.testing" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="estyp.testing.CheckModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">estyp.testing.</span></span><span class="sig-name descname"><span class="pre">CheckModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fitted_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">RegressionResultsWrapper</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/estyp/testing.html#CheckModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#estyp.testing.CheckModel" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p># Check Linear Regression Assumptions</p>
+<p>The <cite>CheckModel</cite> class provides methods to test the assumptions of the linear regression model.
+These assumptions are:</p>
+<ul class="simple">
+<li><p>Normality of residuals</p></li>
+<li><p>Homoscedasticity (equal variance) of residuals</p></li>
+<li><p>Independence of residuals</p></li>
+<li><p>No Multicollinearity among predictors</p></li>
+</ul>
+<section id="parameters">
+<h3>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h3>
+<dl>
+<dt><cite>fitted_model</cite><span class="classifier"><cite>RegressionResultsWrapper</cite></span></dt><dd><p>The fitted linear regression model which is an instance of RegressionResultsWrapper.</p>
+</dd>
+</dl>
+</section>
+<section id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">`python</span>
+<span class="pre">import</span> <span class="pre">statsmodels.api</span> <span class="pre">as</span> <span class="pre">sm</span>
+<span class="pre">from</span> <span class="pre">sklearn.datasets</span> <span class="pre">import</span> <span class="pre">load_diabetes</span>
+<span class="pre">diabetes</span> <span class="pre">=</span> <span class="pre">load_diabetes()</span>
+<span class="pre">X</span> <span class="pre">=</span> <span class="pre">diabetes[&quot;data&quot;]</span>
+<span class="pre">y</span> <span class="pre">=</span> <span class="pre">diabetes[&quot;target&quot;]</span>
+<span class="pre">X</span> <span class="pre">=</span> <span class="pre">sm.add_constant(X)</span>
+<span class="pre">model</span> <span class="pre">=</span> <span class="pre">sm.OLS(y,</span> <span class="pre">X)</span>
+<span class="pre">fitted_model</span> <span class="pre">=</span> <span class="pre">model.fit()</span>
+<span class="pre">cm</span> <span class="pre">=</span> <span class="pre">CheckModel(fitted_model)</span>
+<span class="pre">cm.check_all()</span>
+<span class="pre">`</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="estyp.testing.CheckModel.check_all">
+<span class="sig-name descname"><span class="pre">check_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_vals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/estyp/testing.html#CheckModel.check_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#estyp.testing.CheckModel.check_all" title="Permalink to this definition"></a></dt>
+<dd><p>Checks all the assumptions of the linear regression model.</p>
+<section id="id1">
+<h4>Parameters<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt><cite>alpha</cite><span class="classifier">float, optional</span></dt><dd><p>The significance level used by the statistical tests, by default 0.05.</p>
+</dd>
+<dt><cite>plot</cite><span class="classifier">bool, optional</span></dt><dd><p>If <cite>True</cite>, a plot is shown for visual inspection of each assumption, by default <cite>True</cite>.</p>
+</dd>
+<dt><cite>return_vals</cite><span class="classifier">bool, optional</span></dt><dd><p>If <cite>True</cite>, the values of the statistical tests are returned, by default <cite>False</cite>.</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h4>Returns<a class="headerlink" href="#returns" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>dict</dt><dd><p>A dictionary of values of the statistical tests if <cite>return_vals=True</cite>.</p>
+</dd>
+</dl>
+</section>
+<section id="id2">
+<h4>Example<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h4>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cm</span><span class="o">.</span><span class="n">check_all</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="estyp.testing.CheckModel.check_homocedasticity">
+<span class="sig-name descname"><span class="pre">check_homocedasticity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_pvals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/estyp/testing.html#CheckModel.check_homocedasticity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#estyp.testing.CheckModel.check_homocedasticity" title="Permalink to this definition"></a></dt>
+<dd><p>Checks the homoscedasticity assumption (equal variance of residuals) using several statistical tests.</p>
+<section id="id3">
+<h4>Parameters<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt><cite>alpha</cite><span class="classifier">float, optional</span></dt><dd><p>The significance level used by the statistical tests, by default 0.05.</p>
+</dd>
+<dt><cite>plot</cite><span class="classifier">bool, optional</span></dt><dd><p>If <cite>True</cite>, a plot is shown for visual inspection of homoscedasticity, by default <cite>True</cite>.</p>
+</dd>
+<dt><cite>return_pvals</cite><span class="classifier">bool, optional</span></dt><dd><p>If <cite>True</cite>, the p-values of the statistical tests are returned, by default <cite>False</cite>.</p>
+</dd>
+</dl>
+</section>
+<section id="id4">
+<h4>Returns<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>dict</dt><dd><p>A dictionary of p-values of the statistical tests if <cite>return_pvals=True</cite>.</p>
+</dd>
+</dl>
+</section>
+<section id="id5">
+<h4>Example<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h4>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cm</span><span class="o">.</span><span class="n">check_homocedasticity</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="estyp.testing.CheckModel.check_independence">
+<span class="sig-name descname"><span class="pre">check_independence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_vals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/estyp/testing.html#CheckModel.check_independence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#estyp.testing.CheckModel.check_independence" title="Permalink to this definition"></a></dt>
+<dd><p>Checks the independence assumption of the residuals using several statistical tests.</p>
+<section id="id6">
+<h4>Parameters<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>alpha<span class="classifier">float, optional</span></dt><dd><p>The significance level used by the statistical tests, by default 0.05.</p>
+</dd>
+<dt>plot<span class="classifier">bool, optional</span></dt><dd><p>If <cite>True</cite>, a plot is shown for visual inspection of independence, by default <cite>True</cite>.</p>
+</dd>
+<dt>return_pvals<span class="classifier">bool, optional</span></dt><dd><p>If <cite>True</cite>, the p-values of the statistical tests are returned, by default <cite>False</cite>.</p>
+</dd>
+</dl>
+</section>
+<section id="id7">
+<h4>Returns<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>dict</dt><dd><p>A dictionary of values of the statistical tests if <cite>return_vals=True</cite>.</p>
+</dd>
+</dl>
+</section>
+<section id="id8">
+<h4>Example<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h4>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cm</span><span class="o">.</span><span class="n">check_independence</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="estyp.testing.CheckModel.check_multicollinearity">
+<span class="sig-name descname"><span class="pre">check_multicollinearity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_cm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/estyp/testing.html#CheckModel.check_multicollinearity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#estyp.testing.CheckModel.check_multicollinearity" title="Permalink to this definition"></a></dt>
+<dd><p>Checks the multicollinearity assumption among predictors using the variance inflation factor (VIF).</p>
+<section id="id9">
+<h4>Parameters<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt><cite>plot</cite><span class="classifier">bool, optional</span></dt><dd><p>If True, a plot is shown for visual inspection of multicollinearity, by default True.</p>
+</dd>
+<dt><cite>return_cm</cite><span class="classifier">bool, optional</span></dt><dd><p>Returns the condition number of the model if True, by default False.</p>
+</dd>
+</dl>
+</section>
+<section id="id10">
+<h4>Returns<a class="headerlink" href="#id10" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>float</dt><dd><p>The condition number of the model if <cite>return_cm=True</cite>.</p>
+</dd>
+</dl>
+</section>
+<section id="id11">
+<h4>Example<a class="headerlink" href="#id11" title="Permalink to this heading"></a></h4>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cm</span><span class="o">.</span><span class="n">check_multicollinearity</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="estyp.testing.CheckModel.check_normality">
+<span class="sig-name descname"><span class="pre">check_normality</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_pvals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/estyp/testing.html#CheckModel.check_normality"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#estyp.testing.CheckModel.check_normality" title="Permalink to this definition"></a></dt>
+<dd><p>Checks the normality assumption of the residuals using several statistical tests.</p>
+<section id="id12">
+<h4>Parameters<a class="headerlink" href="#id12" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt><cite>alpha</cite><span class="classifier">float, optional</span></dt><dd><p>The significance level used by the statistical tests, by default 0.05.</p>
+</dd>
+<dt><cite>plot</cite><span class="classifier">bool, optional</span></dt><dd><p>If <cite>True</cite>, a plot is shown for visual inspection of normality, by default <cite>True</cite>.</p>
+</dd>
+<dt><cite>return_pvals</cite><span class="classifier">bool, optional</span></dt><dd><p>If <cite>True</cite>, the p-values of the statistical tests are returned, by default <cite>False</cite>.</p>
+</dd>
+</dl>
+</section>
+<section id="id13">
+<h4>Returns<a class="headerlink" href="#id13" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>dict</dt><dd><p>A dictionary of p-values of the statistical tests if <cite>return_pvals=True</cite>.</p>
+</dd>
+</dl>
+</section>
+<section id="id14">
+<h4>Example<a class="headerlink" href="#id14" title="Permalink to this heading"></a></h4>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cm</span><span class="o">.</span><span class="n">check_normality</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="estyp.testing.chisq_test">
+<span class="sig-prename descclassname"><span class="pre">estyp.testing.</span></span><span class="sig-name descname"><span class="pre">chisq_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Series</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Series</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">correct</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rescale_p</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/estyp/testing.html#chisq_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#estyp.testing.chisq_test" title="Permalink to this definition"></a></dt>
+<dd><p># Pearson’s Chi-squared Test for Count Data</p>
+<section id="description">
+<h3>Description<a class="headerlink" href="#description" title="Permalink to this heading"></a></h3>
+<p><cite>chisq_test()</cite> performs chi-squared contingency table tests and goodness-of-fit tests.</p>
+</section>
+<section id="usage">
+<h3>Usage<a class="headerlink" href="#usage" title="Permalink to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">`python</span>
+<span class="pre">chisq_test(x,</span> <span class="pre">...)</span>
+<span class="pre">chisq_test(x,</span> <span class="pre">y=None,</span> <span class="pre">correct=True,</span> <span class="pre">p=None,</span> <span class="pre">rescale_p=False)</span>
+<span class="pre">`</span></code></p>
+</section>
+<section id="arguments">
+<h3>Arguments<a class="headerlink" href="#arguments" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt><cite>x</cite>: arrat_like</dt><dd><p>A numeric list or 2D list (matrix). x and y can also both be lists.</p>
+</dd>
+<dt><cite>y</cite>: array_like</dt><dd><p>A numeric data ; ignored if x is a matrix. If x is a list, y should be a list of the same length. The default is None.</p>
+</dd>
+<dt><cite>p</cite>: array_like</dt><dd><p>A list of probabilities of the same length as x. An error is raised if any entry of p is negative.</p>
+</dd>
+<dt><cite>correct</cite>: </dt><dd><p>A boolean indicating whether to apply continuity correction when computing the test statistic for 2x2 tables: 
+one half is subtracted from all <a href="#id89"><span class="problematic" id="id90">|O-E|</span></a> differences; however, the correction will not be bigger than the differences themselves. The default is True.</p>
+</dd>
+<dt><cite>rescale_p</cite>: boolean</dt><dd><p>A boolean; if True then p is rescaled (if necessary) to sum to 1. If rescale_p is False, and p does not sum to 1, an error is raised.</p>
+</dd>
+</dl>
+</section>
+<section id="details">
+<h3>Details<a class="headerlink" href="#details" title="Permalink to this heading"></a></h3>
+<blockquote>
+<div><p>If x is a matrix with one row or column, or if x is a list and y is not given, then a goodness-of-fit test is performed 
+(x is treated as a one-dimensional contingency table). The entries of x must be non-negative integers. In this case, the hypothesis 
+tested is whether the population probabilities equal those in p, or are all equal if p is not given.</p>
+<p>If x is a matrix with at least two rows and columns, it is taken as a two-dimensional contingency table: the entries of x must be 
+non-negative integers. Otherwise, x and y must be lists of the same length; cases with None values are removed, the lists are 
+treated as factors, and the contingency table is computed from these. Then Pearson’s chi-squared test is performed of the null 
+hypothesis that the joint distribution of the cell counts in a 2-dimensional contingency table is the product of the row and column marginals.</p>
+<p>The p-value is computed from the asymptotic chi-squared distribution of the test statistic; continuity correction is only used in 
+the 2-by-2 case (if correct is True, the default).</p>
+</div></blockquote>
+</section>
+<section id="id15">
+<h3>Returns<a class="headerlink" href="#id15" title="Permalink to this heading"></a></h3>
+<blockquote>
+<div><p>A <cite>TestResults</cite> instance containing the following attributes:</p>
+<dl class="simple">
+<dt><cite>statistic</cite>: </dt><dd><p>The value of the chi-squared test statistic.</p>
+</dd>
+<dt><cite>df</cite>: </dt><dd><p>The degrees of freedom of the approximate chi-squared distribution of the test statistic.</p>
+</dd>
+<dt><cite>p_value</cite>:</dt><dd><p>The p-value for the test.</p>
+</dd>
+<dt><cite>method</cite>:</dt><dd><p>A string indicating the type of test performed, and whether continuity correction was used.</p>
+</dd>
+<dt><cite>expected</cite>:</dt><dd><p>The expected counts under the null hypothesis.</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+<section id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h3>
+<p><a href="#id16"><span class="problematic" id="id17">``</span></a><a href="#id18"><span class="problematic" id="id19">`</span></a>python
+## From Agresti(2007) p.39
+M = [[762, 327, 468], [484, 239, 477]]
+result1 = chisq_test(M)
+print(result1)</p>
+<p>## Effect of rescale_p
+x = [12, 5, 7, 7]
+p = [0.4, 0.4, 0.2, 0.2]
+result2 = chisq_test(x, p=p, rescale_p=True)
+print(result2)</p>
+<p>## Testing for population probabilities
+x = [20, 15, 25]
+result31 = chisq_test(x)
+print(result31)</p>
+<p>x = [89,37,30,28,2]
+p = [0.40,0.20,0.20,0.19,0.01]
+result32 = chisq_test(x, p=p)
+print(result32)</p>
+<p># Goodness of fit
+x = [1, 2, 3, 4, 5, 6]
+y = [6, 1, 2, 3, 4, 5]
+result4 = chisq_test(x, y)
+print(result4)
+<a href="#id20"><span class="problematic" id="id21">``</span></a><a href="#id22"><span class="problematic" id="id23">`</span></a></p>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="estyp.testing.cor_test">
+<span class="sig-prename descclassname"><span class="pre">estyp.testing.</span></span><span class="sig-name descname"><span class="pre">cor_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'pearson'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'kendall'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'spearman'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'pearson'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alternative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'two-sided'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'less'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'greater'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'two-sided'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conf_level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.95</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">continuity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">TestResults</span></span></span><a class="reference internal" href="_modules/estyp/testing.html#cor_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#estyp.testing.cor_test" title="Permalink to this definition"></a></dt>
+<dd><p># Test for Association/Correlation Between Paired Samples</p>
+<section id="id24">
+<h3>Description<a class="headerlink" href="#id24" title="Permalink to this heading"></a></h3>
+<p>Test for association between paired samples, using one of Pearson’s product moment correlation coefficient, Kendall’s
+tau or Spearman’s rho.</p>
+</section>
+<section id="id25">
+<h3>Usage<a class="headerlink" href="#id25" title="Permalink to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">`python</span>
+<span class="pre">cor_test(x,</span> <span class="pre">y,</span> <span class="pre">...)</span>
+<span class="pre">cor_test(x,</span> <span class="pre">y,</span> <span class="pre">alternative=&quot;two-sided&quot;,</span> <span class="pre">method=&quot;pearson&quot;,</span> <span class="pre">conf_level=0.95,</span> <span class="pre">continuity=False)</span>
+<span class="pre">`</span></code></p>
+</section>
+<section id="id26">
+<h3>Arguments<a class="headerlink" href="#id26" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt><cite>x</cite>, <cite>y</cite><span class="classifier">array_like</span></dt><dd><p>Numeric one-dimensional <cite>arrays</cite>, <cite>lists</cite> or <cite>pd.Series</cite> of data values. <cite>x</cite> and <cite>y</cite> must have the same length.</p>
+</dd>
+<dt><cite>alternative</cite><span class="classifier">str, optional</span></dt><dd><p>Indicates the alternative hypothesis and must be one of “two-sided”, “greater” or “less”.
+“greater” corresponds to positive association, “less” to negative association.</p>
+</dd>
+<dt><cite>method</cite><span class="classifier">str, optional</span></dt><dd><p>A string indicating which correlation coefficient is to be used for the test.
+One of “pearson”, “kendall”, or “spearman”.</p>
+</dd>
+<dt><cite>conf_level</cite><span class="classifier">float, optional</span></dt><dd><p>Confidence level for the returned confidence interval. Currently only used for the
+Pearson product moment correlation coefficient if there are at least 4 complete pairs of observations.</p>
+</dd>
+<dt><cite>continuity</cite><span class="classifier">bool, optional</span></dt><dd><p>If <cite>True</cite>, a continuity correction is used for Kendall’s tau.</p>
+</dd>
+</dl>
+</section>
+<section id="id27">
+<h3>Returns<a class="headerlink" href="#id27" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>A <cite>TestResults</cite> instance containing the following atributes:</dt><dd><ul class="simple">
+<li><p><cite>statistic</cite>: the value of the test statistic.</p></li>
+<li><p><cite>df</cite> (if applicable): the degrees of freedom of the test statistic.</p></li>
+<li><p><cite>p_value</cite>: the p-value of the test.</p></li>
+<li><p><cite>estimate</cite>: the estimated measure of association.</p></li>
+<li><p><cite>null_value</cite>: the value of the association measure under the null hypothesis, always 0.</p></li>
+<li><p><cite>alternative</cite>: a string describing the alternative hypothesis.</p></li>
+<li><p><cite>method</cite>: a string indicating how the association was measured.</p></li>
+<li><p><cite>conf_int</cite> (if applicable): a confidence interval for the measure of association.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="id28">
+<h3>Details<a class="headerlink" href="#id28" title="Permalink to this heading"></a></h3>
+<p>The three methods each estimate the association between paired samples and compute a test of the value being zero.
+They use different measures of association, all in the range [-1, 1] with 0 indicating no association.
+These are sometimes referred to as tests of no correlation, but that term is often confined to the default method.</p>
+</section>
+<section id="references">
+<h3>References<a class="headerlink" href="#references" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>[1] D. J. Best &amp; D. E. Roberts (1975). Algorithm AS 89: The Upper Tail Probabilities of Spearman’s rho.</dt><dd><p>Applied Statistics, 24, 377–379. 10.2307/2347111.</p>
+</dd>
+<dt>[2] Myles Hollander &amp; Douglas A. Wolfe (1973), Nonparametric Statistical Methods.</dt><dd><p>New York: John Wiley &amp; Sons. Pages 185–194 (Kendall and Spearman tests).</p>
+</dd>
+</dl>
+</section>
+<section id="id29">
+<h3>Example<a class="headerlink" href="#id29" title="Permalink to this heading"></a></h3>
+<p>Using the iris dataset to test the association between sepal length and petal length using Pearson’s correlation:</p>
+<p><a href="#id30"><span class="problematic" id="id31">``</span></a><a href="#id32"><span class="problematic" id="id33">`</span></a>python
+from sklearn import datasets
+iris = datasets.load_iris()</p>
+<p>sepal_length = iris.data[:, 0]
+petal_length = iris.data[:, 2]</p>
+<p>result = cor_test(sepal_length, petal_length, method=”pearson”)
+print(result)</p>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="estyp.testing.nested_models_test">
+<span class="sig-prename descclassname"><span class="pre">estyp.testing.</span></span><span class="sig-name descname"><span class="pre">nested_models_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fitted_small_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">RegressionResultsWrapper</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fitted_big_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">RegressionResultsWrapper</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">TestResults</span></span></span><a class="reference internal" href="_modules/estyp/testing.html#nested_models_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#estyp.testing.nested_models_test" title="Permalink to this definition"></a></dt>
+<dd><p># Nested Models F-Test Function</p>
+<p>## Description</p>
+<p>This function performs a nested models F-test using deviance from two fitted models from statsmodels library. The test compares two nested models: a larger or “big” model and a smaller or “small” model. The purpose of this test is to determine whether the larger model significantly improves the model fit compared to the smaller model by adding additional predictors.</p>
+<p>## Parameters
+* <cite>fitted_small_model</cite>: The fitted model representing the smaller/nested model. It have to come from statsmodels.
+* <cite>fitted_big_model</cite>: : The fitted model representing the larger model, which includes all the predictors from the smaller model and potentially additional predictors. It have to come from statsmodels.</p>
+<p>## Returns</p>
+<p>The function returns an object of class TestResults that contains the following information:</p>
+<ul class="simple">
+<li><p><cite>method</cite>: A string indicating the name of the statistical test (Nested models F-test).</p></li>
+<li><p><cite>statistic</cite>: The computed F-statistic value.</p></li>
+<li><p><cite>estimate</cite>: The difference in deviances between the models.</p></li>
+<li><p><cite>df</cite>: A dictionary with the degrees of freedom for the numerator and denominator of the F-statistic.</p></li>
+<li><p>p_value: The p-value associated with the F-statistic.</p></li>
+</ul>
+<p>## Examples
+### Example 1: With OLS
+<a href="#id34"><span class="problematic" id="id35">``</span></a><a href="#id36"><span class="problematic" id="id37">`</span></a>python
+import pandas as pd
+import statsmodels.api as sm
+data = pd.DataFrame({</p>
+<blockquote>
+<div><p>“x”: [2.01, 2.99, 4.01, 5.01, 6.89],
+“y”: [2, 3, 4, 5, 6]</p>
+</div></blockquote>
+<p>})</p>
+<p>model_small = sm.OLS.from_formula(“y ~ 1”, data).fit()
+model_big = sm.OLS.from_formula(“y ~ x”, data).fit()</p>
+<p>print(nested_models_test(model_small, model_big))
+<a href="#id38"><span class="problematic" id="id39">``</span></a>`
+### Example 2: With Logit
+<a href="#id40"><span class="problematic" id="id41">``</span></a><a href="#id42"><span class="problematic" id="id43">`</span></a>python
+import pandas as pd
+import statsmodels.api as sm
+data = pd.DataFrame({</p>
+<blockquote>
+<div><p>“x”: [2.01, 2.99, 4.01, 3.01, 4.89],
+“y”: [0, 1, 1, 0, 1]</p>
+</div></blockquote>
+<p>})</p>
+<p>model_small = sm.Logit.from_formula(“y ~ 1”, data).fit()
+model_big = sm.Logit.from_formula(“y ~ x”, data).fit()</p>
+<p>print(nested_models_test(model_small, model_big))
+<a href="#id44"><span class="problematic" id="id45">``</span></a>`
+### Example 3: With GLM
+<a href="#id46"><span class="problematic" id="id47">``</span></a><a href="#id48"><span class="problematic" id="id49">`</span></a>python
+import pandas as pd
+import statsmodels.api as sm
+data = pd.DataFrame({</p>
+<blockquote>
+<div><p>“x”: [2.01, 2.99, 4.01, 5.01, 6.89],
+“y”: [2, 3, 4, 5, 6]</p>
+</div></blockquote>
+<p>})
+model_small = sm.GLM.from_formula(“y ~ 1”, data, family = sm.families.Gamma()).fit()
+model_big = sm.GLM.from_formula(“y ~ x”, data, family = sm.families.Gamma()).fit()</p>
+<p>print(nested_models_test(model_small, model_big))
+<a href="#id50"><span class="problematic" id="id51">``</span></a><a href="#id52"><span class="problematic" id="id53">`</span></a></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="estyp.testing.prop_test">
+<span class="sig-prename descclassname"><span class="pre">estyp.testing.</span></span><span class="sig-name descname"><span class="pre">prop_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Series</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alternative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'two-sided'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conf_level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.95</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">correct</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">TestResults</span></span></span><a class="reference internal" href="_modules/estyp/testing.html#prop_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#estyp.testing.prop_test" title="Permalink to this definition"></a></dt>
+<dd><p># Test of Equal or Given Proportions.</p>
+<p><cite>prop_test()</cite> can be used for testing the null that the proportions
+(probabilities of success) in several groups are the same, or that they equal
+certain given values.</p>
+<section id="id54">
+<h3>Parameters<a class="headerlink" href="#id54" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt><cite>x</cite><span class="classifier">array_like</span></dt><dd><p>a vector of counts of successes, a one-dimensional table with two entries,
+or a two-dimensional table (or matrix) with 2 columns, giving the counts of
+successes and failures, respectively.</p>
+</dd>
+<dt><cite>n</cite><span class="classifier">array_like, optional</span></dt><dd><p>a vector of counts of trials; ignored if x is a matrix or a table.
+If not provided, it is calculated as the sum of the elements in x.</p>
+</dd>
+<dt><cite>p</cite><span class="classifier">array_like, optional</span></dt><dd><p>a vector of probabilities of success. The length of p must be the same as
+the number of groups specified by x, and its elements must be greater than
+0 and less than 1.</p>
+</dd>
+<dt>alternative<span class="classifier">str, optional</span></dt><dd><p>a character string specifying the alternative hypothesis, must be one of
+“two.sided” (default), “greater” or “less”. You can specify just the
+initial letter. Only used for testing the null that a single proportion
+equals a given value, or that two proportions are equal; ignored otherwise.</p>
+</dd>
+<dt><cite>conf_level</cite><span class="classifier">float, optional</span></dt><dd><p>confidence level of the returned confidence interval. Must be a single
+number between 0 and 1. Only used when testing the null that a single
+proportion equals a given value, or that two proportions are equal;
+ignored otherwise.</p>
+</dd>
+<dt><cite>correct</cite><span class="classifier">bool, optional</span></dt><dd><p>a logical indicating whether Yates’ continuity correction should be
+applied where possible.</p>
+</dd>
+</dl>
+</section>
+<section id="id55">
+<h3>Returns<a class="headerlink" href="#id55" title="Permalink to this heading"></a></h3>
+<dl>
+<dt><cite>TestResult</cite></dt><dd><p>A data class with the following attributes:</p>
+<dl class="simple">
+<dt><cite>statistic</cite><span class="classifier">float</span></dt><dd><p>the value of Pearson’s chi-squared test statistic.</p>
+</dd>
+<dt><cite>df</cite><span class="classifier">int</span></dt><dd><p>the degrees of freedom of the approximate chi-squared distribution of
+the test statistic.</p>
+</dd>
+<dt><cite>p_value</cite><span class="classifier">float</span></dt><dd><p>the p-value of the test.</p>
+</dd>
+<dt><cite>estimate</cite><span class="classifier">array_like</span></dt><dd><p>a vector with the sample proportions x/n.</p>
+</dd>
+<dt><cite>null_value</cite><span class="classifier">float or array_like</span></dt><dd><p>the value of p if specified by the null hypothesis.</p>
+</dd>
+<dt><cite>conf_int</cite><span class="classifier">array_like</span></dt><dd><p>a confidence interval for the true proportion if there is one group,
+or for the difference in proportions if there are 2 groups and p is
+not given, or None otherwise. In the cases where it is not None, the
+returned confidence interval has an asymptotic confidence level as
+specified by conf_level, and is appropriate to the specified
+alternative hypothesis.</p>
+</dd>
+<dt><cite>alternative</cite><span class="classifier">str</span></dt><dd><p>a character string describing the alternative.</p>
+</dd>
+<dt><cite>method</cite><span class="classifier">str</span></dt><dd><p>a character string indicating the method used, and whether Yates’
+continuity correction was applied.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+<section id="id56">
+<h3>Example<a class="headerlink" href="#id56" title="Permalink to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">`python</span>
+<span class="pre">import</span> <span class="pre">numpy</span> <span class="pre">as</span> <span class="pre">np</span>
+<span class="pre">from</span> <span class="pre">scipy</span> <span class="pre">import</span> <span class="pre">stats</span>
+<span class="pre">x</span> <span class="pre">=</span> <span class="pre">np.array([83,</span> <span class="pre">90,</span> <span class="pre">129,</span> <span class="pre">70])</span>
+<span class="pre">n</span> <span class="pre">=</span> <span class="pre">np.array([86,</span> <span class="pre">93,</span> <span class="pre">136,</span> <span class="pre">82])</span>
+<span class="pre">result</span> <span class="pre">=</span> <span class="pre">prop_test(x,</span> <span class="pre">n)</span>
+<span class="pre">print(result)</span>
+<span class="pre">`</span></code></p>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="estyp.testing.t_test">
+<span class="sig-prename descclassname"><span class="pre">estyp.testing.</span></span><span class="sig-name descname"><span class="pre">t_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Series</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alternative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'two-sided'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'less'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'greater'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'two-sided'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">paired</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_equal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conf_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.95</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">TestResults</span></span></span><a class="reference internal" href="_modules/estyp/testing.html#t_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#estyp.testing.t_test" title="Permalink to this definition"></a></dt>
+<dd><p># Student’s t-Test
+## Description
+Performs one and two sample t-tests on groups of data. This function is inspired by the <cite>t.test()</cite> function of the software R.</p>
+<p>## Usage
+<code class="docutils literal notranslate"><span class="pre">`python</span>
+<span class="pre">t_test(x,</span> <span class="pre">...)</span>
+<span class="pre">`</span></code></p>
+<p><a href="#id57"><span class="problematic" id="id58">``</span></a><a href="#id59"><span class="problematic" id="id60">`</span></a>python
+t_test(x, y = None,</p>
+<blockquote>
+<div><p>alternative = [“two-sided”, “less”, “greater”],
+mu = 0, paired = False, var_equal = False,
+conf_level = 0.95)</p>
+</div></blockquote>
+<p><a href="#id61"><span class="problematic" id="id62">``</span></a><a href="#id63"><span class="problematic" id="id64">`</span></a></p>
+<p>## Arguments
+* <cite>x</cite>: a (non-empty) numeric container of data values.
+* <cite>y</cite>: an (optional) numeric container of data values.
+* <cite>alternative</cite>: a string specifying the alternative hypothesis, must be one of “two-sided” (default), “greater” or “less”.
+* <cite>mu</cite>: a number indicating the true value of the mean (or difference in means if you are performing a two sample test).
+* <cite>paired</cite>: a logical indicating whether you want a paired t-test.
+* <cite>var_equal</cite>: a logical variable indicating whether to treat the two variances as being equal. If <cite>True</cite> then the pooled variance is used to estimate the variance otherwise the Welch (or Satterthwaite) approximation to the degrees of freedom is used.
+* <cite>conf_level</cite>: a number between 0 and 1 indicanting the confidence level of the interval.</p>
+<p>## Details
+alternative = “greater” is the alternative that x has a larger mean than y. For the one-sample case: that the mean is positive.</p>
+<p>If <cite>paired</cite> is <cite>True</cite> then both x and y must be specified and they must be the same length. Missing values are silently removed (in pairs if <cite>paired</cite> is <cite>True</cite>). If <cite>var_equal</cite> is <cite>True</cite> then the pooled estimate of the variance is used. By default, if <cite>var_equal</cite> is <cite>False</cite> then the variance is estimated separately for both groups and the Welch modification to the degrees of freedom is used.</p>
+<p>### Value
+An instance of the <cite>TestResults</cite> class containing the following attributes:</p>
+<ul class="simple">
+<li><p><cite>statistic</cite>: the value of the t-statistic.</p></li>
+<li><p><cite>df</cite>: the degrees of freedom for the t-statistic.</p></li>
+<li><p><cite>p_value</cite>: the p-value for the test.</p></li>
+<li><p><cite>ci</cite>: a confidence interval for the mean appropriate to the specified alternative hypothesis.</p></li>
+<li><p><cite>estimate</cite>: the estimated mean or list of estimated means depending on whether it was a one-sample test or a two-sample test.</p></li>
+<li><p><cite>alternative</cite>: a character string describing the alternative hypothesis.</p></li>
+<li><p><cite>mu</cite>: the mean of the null hypothesis.</p></li>
+</ul>
+<p>## Examples
+<a href="#id65"><span class="problematic" id="id66">``</span></a><a href="#id67"><span class="problematic" id="id68">`</span></a>python
+import numpy as np
+np.random.seed(2023)
+x = np.random.normal(size=100)
+y = np.random.normal(size=100)
+mu = 0.1</p>
+<p>print(t_test(x, mu=mu, alternative=”less”))
+print(t_test(x, y, mu=mu))
+print(t_test(x, y, mu=mu, var_equal=True, alternative=”greater”))
+print(t_test(x, y, mu=mu, paired=True))
+<a href="#id69"><span class="problematic" id="id70">``</span></a><a href="#id71"><span class="problematic" id="id72">`</span></a></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="estyp.testing.var_test">
+<span class="sig-prename descclassname"><span class="pre">estyp.testing.</span></span><span class="sig-name descname"><span class="pre">var_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alternative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'two-sided'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'less'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'greater'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'two-sided'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conf_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.95</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">TestResults</span></span></span><a class="reference internal" href="_modules/estyp/testing.html#var_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#estyp.testing.var_test" title="Permalink to this definition"></a></dt>
+<dd><p># F Test to Compare Two Variances
+## Description
+Performs an F test to compare the variances of two samples from normal populations. This function is inspired by the <cite>var.test()</cite> function of the software R.</p>
+<p>## Usage</p>
+<p><a href="#id73"><span class="problematic" id="id74">``</span></a><a href="#id75"><span class="problematic" id="id76">`</span></a>python
+var_test(x, y, …)
+var_test(x, y, ratio = 1,</p>
+<blockquote>
+<div><p>alternative = [two-sided”, “less”, “greater”],
+conf_level = 0.95)</p>
+</div></blockquote>
+<p><a href="#id77"><span class="problematic" id="id78">``</span></a><a href="#id79"><span class="problematic" id="id80">`</span></a></p>
+<p>## Arguments
+* <cite>x</cite>, <cite>y</cite>: numeric list, <cite>np.array</cite> or <cite>pd.Series</cite> of data values.
+* <cite>ratio</cite>: the hypothesized ratio of the population variances of x and y.
+* <cite>alternative</cite>: a character string specifying the alternative hypothesis, must be one of “two.sided” (default), “greater” or “less”. You can specify just the initial letter.
+* <cite>conf_level</cite>: a number between 0 and 1 indicanting the confidence level of the interval.</p>
+<p>## Details
+The null hypothesis is that the ratio of the variances of the populations from which x and y were drawn, is equal to ratio.</p>
+<p>## Value
+An instance of the <cite>TestResults</cite> class containing the following attributes:</p>
+<ul class="simple">
+<li><p><cite>statistic</cite>: the value of the F test statistic.</p></li>
+<li><p><cite>df</cite>: the degrees of freedom for the F test statistic.</p></li>
+<li><p><cite>p_value</cite>: the p-value for the test.</p></li>
+<li><p><cite>ci</cite>: a confidence interval for the ratio of the population variances.</p></li>
+<li><p><cite>estimate</cite>: the ratio of the sample variances of x and y.</p></li>
+<li><p><cite>alternative</cite>: a string describing the alternative hypothesis.</p></li>
+</ul>
+<p>## Examples</p>
+<p><a href="#id81"><span class="problematic" id="id82">``</span></a><a href="#id83"><span class="problematic" id="id84">`</span></a>python
+import numpy as np
+np.random.seed(2023)
+x = np.random.normal(size=100)
+y = np.random.normal(size=100)</p>
+<p>print(var_test(x, y))
+print(var_test(x, y, alternative=”less”))
+print(var_test(x, y, ratio = 0.9, alternative=”greater”))
+<a href="#id85"><span class="problematic" id="id86">``</span></a><a href="#id87"><span class="problematic" id="id88">`</span></a></p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="estyp.linear_model.stepwise.html" class="btn btn-neutral float-left" title="estyp.linear_model.stepwise package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Esteban Rucán Carrasco.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
