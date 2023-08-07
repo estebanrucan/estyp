@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>estyp.linear_model.stepwise package &mdash; ESTYP Documentation 0.1.0 documentation</title>
+  <title>The linear_model.stepwise module &mdash; ESTYP Documentation 0.1.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/jupyter-sphinx.css" type="text/css" />
@@ -24,8 +24,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="estyp.testing package" href="estyp.testing.html" />
-    <link rel="prev" title="estyp.linear_model package" href="estyp.linear_model.html" /> 
+    <link rel="next" title="The testing module" href="estyp.testing.html" />
+    <link rel="prev" title="The linear_model module" href="estyp.linear_model.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -49,19 +49,16 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="estyp.cluster.html">estyp.cluster package</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="estyp.linear_model.html">estyp.linear_model package</a><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="estyp.cluster.html">The <cite>cluster</cite> module</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="estyp.linear_model.html">The <cite>linear_model</cite> module</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="estyp.linear_model.html#subpackages">Subpackages</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">estyp.linear_model.stepwise package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#module-estyp.linear_model.stepwise">Module contents</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">The <cite>linear_model.stepwise</cite> module</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="estyp.linear_model.html#module-contents">Module contents</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="estyp.linear_model.html#module-estyp.linear_model">Module contents</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="estyp.testing.html">estyp.testing package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="estyp.testing.html">The <cite>testing</cite> module</a></li>
 </ul>
 
         </div>
@@ -78,8 +75,8 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="estyp.linear_model.html">estyp.linear_model package</a></li>
-      <li class="breadcrumb-item active">estyp.linear_model.stepwise package</li>
+          <li class="breadcrumb-item"><a href="estyp.linear_model.html">The <cite>linear_model</cite> module</a></li>
+      <li class="breadcrumb-item active">The <cite>linear_model.stepwise</cite> module</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/estyp.linear_model.stepwise.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -89,111 +86,16 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="estyp-linear-model-stepwise-package">
-<h1>estyp.linear_model.stepwise package<a class="headerlink" href="#estyp-linear-model-stepwise-package" title="Permalink to this heading"></a></h1>
-<section id="module-estyp.linear_model.stepwise">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-estyp.linear_model.stepwise" title="Permalink to this heading"></a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="estyp.linear_model.stepwise.both_selection">
-<span class="sig-prename descclassname"><span class="pre">estyp.linear_model.stepwise.</span></span><span class="sig-name descname"><span class="pre">both_selection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">formula</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GLM</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10000</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/estyp/linear_model/stepwise.html#both_selection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#estyp.linear_model.stepwise.both_selection" title="Permalink to this definition"></a></dt>
-<dd><section id="both-forward-and-backward-variable-selection-for-glm-s">
-<h3>Both Forward and Backward Variable Selection for GLM’s<a class="headerlink" href="#both-forward-and-backward-variable-selection-for-glm-s" title="Permalink to this heading"></a></h3>
-</section>
-<section id="description">
-<h3>Description<a class="headerlink" href="#description" title="Permalink to this heading"></a></h3>
-<p>This function performs both forward and backward variable selection using the Akaike Information Criterion (AIC).</p>
-</section>
-<section id="parameters">
-<h3>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h3>
-<ul class="simple">
-<li><p><cite>formula</cite>: A string representing the initial model formula.</p></li>
-<li><p><cite>data</cite>: A Pandas DataFrame containing the data to be used for model fitting.</p></li>
-<li><p><cite>model</cite>: A statsmodels.GLM object that represents the type of model to be fit.</p></li>
-<li><p><cite>max_iter</cite>: The maximum number of iterations to perform.</p></li>
-<li><p><cite>**kwargs</cite>: Additional keyword arguments to be passed to the model.from_formula() method.</p></li>
-</ul>
-</section>
-<section id="returns">
-<h3>Returns<a class="headerlink" href="#returns" title="Permalink to this heading"></a></h3>
-<p>A string representing the final model formula.</p>
-</section>
-<section id="examples">
-<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h3>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-<span class="go">    &quot;y&quot;: [1, 2, 3, 4, 5],</span>
-<span class="go">    &quot;x1&quot;: [1, 2, 3, 4, 5],</span>
-<span class="go">    &quot;x2&quot;: [6, 7, 8, 9, 10],</span>
-<span class="go">})</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">formula</span> <span class="o">=</span> <span class="s2">&quot;y ~ x1 + x2&quot;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">final_formula</span> <span class="o">=</span> <span class="n">both_selection</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">final_formula</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="estyp.linear_model.stepwise.forward_selection">
-<span class="sig-prename descclassname"><span class="pre">estyp.linear_model.stepwise.</span></span><span class="sig-name descname"><span class="pre">forward_selection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y:</span> <span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data:</span> <span class="pre">~pandas.core.frame.DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model:</span> <span class="pre">~statsmodels.genmod.generalized_linear_model.GLM</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'statsmodels.regression.linear_model.OLS'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha=0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/estyp/linear_model/stepwise.html#forward_selection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#estyp.linear_model.stepwise.forward_selection" title="Permalink to this definition"></a></dt>
-<dd><section id="forward-variable-selection-for-glm-s">
-<h3>Forward Variable Selection for GLM’s<a class="headerlink" href="#forward-variable-selection-for-glm-s" title="Permalink to this heading"></a></h3>
-</section>
-<section id="id1">
-<h3>Description<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
-<p>This function performs forward variable selection using p-values calculated from nested models testing.</p>
-</section>
-<section id="id2">
-<h3>Parameters<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
-<ul class="simple">
-<li><p><cite>y</cite>: A string containing the name of the dependent variable (target) to be predicted.</p></li>
-<li><p>data: The pandas DataFrame containing both the target variable ‘y’ and the        predictor variables for model training.</p></li>
-<li><p><cite>model</cite>: A statsmodels model class. The statistical model to be used for model fitting and evaluation. Defaults to <cite>sm.OLS</cite>.</p></li>
-<li><p><cite>alpha</cite>: A number between 0 and 1. The significance level for feature selection. A feature is added to the model if its p-value is less than this alpha value. Defaults to 0.05.</p></li>
-<li><p><cite>**kwargs</cite>: Additional keyword arguments to be passed to the model.from_formula() method.</p></li>
-</ul>
-</section>
-<section id="id3">
-<h3>Returns<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
-<p>A string representing the final model formula.</p>
-</section>
-<section id="id4">
-<h3>Examples<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h3>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create sample DataFrame</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-<span class="go">    &#39;y&#39;: [1, 2, 3, 4, 5],</span>
-<span class="go">    &#39;X1&#39;: [2, 4, 5, 7, 9],</span>
-<span class="go">    &#39;X2&#39;: [3, 1, 6, 8, 4],</span>
-<span class="go">    &#39;X3&#39;: [1, 5, 9, 2, 3]</span>
-<span class="go">})</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Perform the forward variable selection</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">formula</span> <span class="o">=</span> <span class="n">forward_selection</span><span class="p">(</span>
-<span class="go">    y = &quot;y&quot;, ,</span>
-<span class="go">    data = data, </span>
-<span class="go">    model = sm.OLS, </span>
-<span class="go">    alpha = 0.05</span>
-<span class="go">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Fit the model using the selected formula</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">selected_model</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">selected_model</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
-</pre></div>
-</div>
-</section>
-</dd></dl>
-
-</section>
+  <section id="the-linear-model-stepwise-module">
+<h1>The <cite>linear_model.stepwise</cite> module<a class="headerlink" href="#the-linear-model-stepwise-module" title="Permalink to this heading"></a></h1>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="estyp.linear_model.html" class="btn btn-neutral float-left" title="estyp.linear_model package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="estyp.testing.html" class="btn btn-neutral float-right" title="estyp.testing package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="estyp.linear_model.html" class="btn btn-neutral float-left" title="The linear_model module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="estyp.testing.html" class="btn btn-neutral float-right" title="The testing module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

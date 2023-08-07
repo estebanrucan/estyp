@@ -1,18 +1,21 @@
-estyp.linear\_model package
+The `linear\_model` module
 ===========================
 
 Subpackages
 -----------
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 2
 
    estyp.linear_model.stepwise
+
 
 Module contents
 ---------------
 
-.. automodule:: estyp.linear_model
-   :members:
-   :undoc-members:
-   :show-inheritance:
+.. jupyter-execute::
+
+   import matplotlib.pyplot as plt
+   plt.plot([1,2,3,4])
+
+

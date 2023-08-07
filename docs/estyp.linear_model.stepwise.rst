@@ -1,10 +1,3 @@
-estyp.linear\_model.stepwise package
+The `linear\_model.stepwise` module
 ====================================
 
-Module contents
----------------
-
-.. automodule:: estyp.linear_model.stepwise
-   :members:
-   :undoc-members:
-   :show-inheritance:

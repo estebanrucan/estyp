@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>estyp.linear_model package &mdash; ESTYP Documentation 0.1.0 documentation</title>
+  <title>The linear_model module &mdash; ESTYP Documentation 0.1.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/jupyter-sphinx.css" type="text/css" />
@@ -24,8 +24,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="estyp.linear_model.stepwise package" href="estyp.linear_model.stepwise.html" />
-    <link rel="prev" title="estyp.cluster package" href="estyp.cluster.html" /> 
+    <link rel="next" title="The linear_model.stepwise module" href="estyp.linear_model.stepwise.html" />
+    <link rel="prev" title="The cluster module" href="estyp.cluster.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -49,35 +49,16 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="estyp.cluster.html">estyp.cluster package</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">estyp.linear_model package</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="estyp.cluster.html">The <cite>cluster</cite> module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">The <cite>linear_model</cite> module</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="estyp.linear_model.stepwise.html">estyp.linear_model.stepwise package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="estyp.linear_model.stepwise.html">The <cite>linear_model.stepwise</cite> module</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#module-estyp.linear_model">Module contents</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#estyp.linear_model.LogisticRegression"><code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#estyp.linear_model.LogisticRegression.aic"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.aic</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#estyp.linear_model.LogisticRegression.bic"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.bic</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#estyp.linear_model.LogisticRegression.conf_int"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.conf_int()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#estyp.linear_model.LogisticRegression.cov_matrix"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.cov_matrix</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#estyp.linear_model.LogisticRegression.fit"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.fit()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#estyp.linear_model.LogisticRegression.from_formula"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.from_formula()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#estyp.linear_model.LogisticRegression.p_values"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.p_values()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#estyp.linear_model.LogisticRegression.params"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.params</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#estyp.linear_model.LogisticRegression.predict"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.predict()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#estyp.linear_model.LogisticRegression.se"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.se()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#estyp.linear_model.LogisticRegression.set_predict_request"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.set_predict_request()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#estyp.linear_model.LogisticRegression.set_score_request"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.set_score_request()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#estyp.linear_model.LogisticRegression.summary"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.summary()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#estyp.linear_model.LogisticRegression.z_values"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.z_values()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-contents">Module contents</a></li>
 </ul>
 </li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="estyp.testing.html">estyp.testing package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="estyp.testing.html">The <cite>testing</cite> module</a></li>
 </ul>
 
         </div>
@@ -94,7 +75,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">estyp.linear_model package</li>
+      <li class="breadcrumb-item active">The <cite>linear_model</cite> module</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/estyp.linear_model.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -104,285 +85,32 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="estyp-linear-model-package">
-<h1>estyp.linear_model package<a class="headerlink" href="#estyp-linear-model-package" title="Permalink to this heading"></a></h1>
+  <section id="the-linear-model-module">
+<h1>The <cite>linear_model</cite> module<a class="headerlink" href="#the-linear-model-module" title="Permalink to this heading"></a></h1>
 <section id="subpackages">
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="estyp.linear_model.stepwise.html">estyp.linear_model.stepwise package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="estyp.linear_model.stepwise.html#module-estyp.linear_model.stepwise">Module contents</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="estyp.linear_model.stepwise.html#estyp.linear_model.stepwise.both_selection"><code class="docutils literal notranslate"><span class="pre">both_selection()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="estyp.linear_model.stepwise.html#estyp.linear_model.stepwise.forward_selection"><code class="docutils literal notranslate"><span class="pre">forward_selection()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="estyp.linear_model.stepwise.html">The <cite>linear_model.stepwise</cite> module</a></li>
 </ul>
 </div>
 </section>
-<section id="module-estyp.linear_model">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-estyp.linear_model" title="Permalink to this heading"></a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="estyp.linear_model.LogisticRegression">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">estyp.linear_model.</span></span><span class="sig-name descname"><span class="pre">LogisticRegression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">penalty</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'l1'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'l2'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'elasticnet'</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dual</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fit_intercept</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intercept_scaling</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2023</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'lbfgs'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'liblinear'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'newton-cg'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'newton-cholesky'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'sag'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'saga'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'lbfgs'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multi_class</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'auto'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'ovr'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'multinomial'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">warm_start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l1_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/estyp/linear_model.html#LogisticRegression"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#estyp.linear_model.LogisticRegression" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">LogisticRegression</span></code></p>
-<section id="logistic-regression">
-<h3>Logistic Regression<a class="headerlink" href="#logistic-regression" title="Permalink to this heading"></a></h3>
-</section>
-<section id="description">
-<h3>Description<a class="headerlink" href="#description" title="Permalink to this heading"></a></h3>
-<p>This class implements a logistic regression model. It inherits from the <cite>sklearn.linear_model.LogisticRegression</cite> class, but adds additional methods for calculating confidence intervals, p-values, and model summaries.</p>
-</section>
-<section id="parameters">
-<h3>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h3>
-<ul class="simple">
-<li><p><cite>penalty</cite>: The type of penalty to use. Can be one of <cite>“none”</cite> (default). <cite>“l1”</cite>, <cite>“l2”</cite>, or <cite>“elasticnet”</cite>.</p></li>
-<li><p><cite>dual</cite>: Whether to use the dual formulation of the problem.</p></li>
-<li><p><cite>tol</cite>: The tolerance for convergence.</p></li>
-<li><p><cite>C</cite>: The regularization strength.</p></li>
-<li><p><cite>fit_intercept</cite>: Whether to fit an intercept term.</p></li>
-<li><p><cite>intercept_scaling</cite>: The scaling factor for the intercept term.</p></li>
-<li><p><cite>class_weight</cite>: None (default), “balanced” or a dictionary that maps class labels to weights.</p></li>
-<li><p><cite>random_state</cite>: The random seed.</p></li>
-<li><p><cite>solver</cite>: The solver to use. Can be one of <cite>“lbfgs”</cite> (default), <cite>“liblinear”</cite>, <cite>“newton-cg”</cite>, <cite>“newton-cholesky”</cite>, <cite>“sag”</cite>, or <cite>“saga”</cite>.</p></li>
-<li><p><cite>max_iter</cite>: The maximum number of iterations.</p></li>
-<li><p><cite>multi_class</cite>: The type of multi-class classification to use. Can be one of <cite>“auto”</cite>, <cite>“ovr”</cite>, or <cite>“multinomial”</cite>.</p></li>
-<li><p><cite>verbose</cite>: The verbosity level.</p></li>
-<li><p><cite>warm_start</cite>: Whether to use the warm start.</p></li>
-<li><p><cite>n_jobs</cite>: The number of jobs to use for parallel processing.</p></li>
-<li><p><cite>l1_ratio</cite>: The l1_ratio parameter for elasticnet regularization.</p></li>
-</ul>
-</section>
-<section id="properties">
-<h3>Properties<a class="headerlink" href="#properties" title="Permalink to this heading"></a></h3>
-<ul class="simple">
-<li><p><cite>params</cite>: Returns the estimated values for model parameters.</p></li>
-<li><p><cite>aic</cite>: Calculates the Akaike information criterion (AIC) for the model.</p></li>
-<li><p><cite>bic</cite>: Calculates the Bayesian information criterion (BIC) for the model.</p></li>
-<li><p><cite>cov_matrix</cite>: Returns the covariance matrix for model parámetres.</p></li>
-</ul>
-</section>
-<section id="methods">
-<h3>Methods<a class="headerlink" href="#methods" title="Permalink to this heading"></a></h3>
-<ul class="simple">
-<li><p><cite>fit()</cite>: Fits the model to the data.</p></li>
-<li><p><cite>predict()</cite>: Predicts the class labels for new data.</p></li>
-<li><p><cite>conf_int()</cite>: Calculates the confidence intervals for the model coefficients.</p></li>
-<li><p><cite>se()</cite>: Calculates the standard errors for the model coefficients.</p></li>
-<li><p><cite>z_values()</cite>: Calculates the z-scores for the model coefficients.</p></li>
-<li><p><cite>p_values()</cite>: Calculates the p-values for the model coefficients.</p></li>
-<li><p><cite>summary()</cite>: Prints a summary of the model.</p></li>
-</ul>
-</section>
-<section id="examples">
-<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h3>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-<span class="go">        &quot;y&quot;: np.random.randint(2, size=100),</span>
-<span class="go">        &quot;x1&quot;: np.random.uniform(-1, 1, size=100),</span>
-<span class="go">        &quot;x2&quot;: np.random.uniform(-1, 1, size=100),</span>
-<span class="go">    })</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">formula</span> <span class="o">=</span> <span class="s2">&quot;y ~ x1 + x2&quot;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">spec</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">spec</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+<section id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this heading"></a></h2>
+<div class="jupyter_cell jupyter_container docutils container">
+<div class="cell_input code_cell docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
 </pre></div>
 </div>
-<dl class="py property">
-<dt class="sig sig-object py" id="estyp.linear_model.LogisticRegression.aic">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">aic</span></span><a class="headerlink" href="#estyp.linear_model.LogisticRegression.aic" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="estyp.linear_model.LogisticRegression.bic">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">bic</span></span><a class="headerlink" href="#estyp.linear_model.LogisticRegression.bic" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="estyp.linear_model.LogisticRegression.conf_int">
-<span class="sig-name descname"><span class="pre">conf_int</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conf_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.95</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/estyp/linear_model.html#LogisticRegression.conf_int"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#estyp.linear_model.LogisticRegression.conf_int" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="estyp.linear_model.LogisticRegression.cov_matrix">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cov_matrix</span></span><a class="headerlink" href="#estyp.linear_model.LogisticRegression.cov_matrix" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="estyp.linear_model.LogisticRegression.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/estyp/linear_model.html#LogisticRegression.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#estyp.linear_model.LogisticRegression.fit" title="Permalink to this definition"></a></dt>
-<dd><p>Fit the model according to the given training data.</p>
-<section id="id1">
-<h4>Parameters<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h4>
-<dl>
-<dt>X<span class="classifier">{array-like, sparse matrix} of shape (n_samples, n_features)</span></dt><dd><p>Training vector, where <cite>n_samples</cite> is the number of samples and
-<cite>n_features</cite> is the number of features.</p>
-</dd>
-<dt>y<span class="classifier">array-like of shape (n_samples,)</span></dt><dd><p>Target vector relative to X.</p>
-</dd>
-<dt>sample_weight<span class="classifier">array-like of shape (n_samples,) default=None</span></dt><dd><p>Array of weights that are assigned to individual samples.
-If not provided, then each sample is given unit weight.</p>
-<div class="versionadded">
-<p><span class="versionmodified added">New in version 0.17: </span><em>sample_weight</em> support to LogisticRegression.</p>
 </div>
-</dd>
-</dl>
-</section>
-<section id="returns">
-<h4>Returns<a class="headerlink" href="#returns" title="Permalink to this heading"></a></h4>
-<dl class="simple">
-<dt>self</dt><dd><p>Fitted estimator.</p>
-</dd>
-</dl>
-</section>
-<section id="notes">
-<h4>Notes<a class="headerlink" href="#notes" title="Permalink to this heading"></a></h4>
-<p>The SAGA solver supports both float64 and float32 bit arrays.</p>
-</section>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="estyp.linear_model.LogisticRegression.from_formula">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_formula</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">formula</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/estyp/linear_model.html#LogisticRegression.from_formula"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#estyp.linear_model.LogisticRegression.from_formula" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="estyp.linear_model.LogisticRegression.p_values">
-<span class="sig-name descname"><span class="pre">p_values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/estyp/linear_model.html#LogisticRegression.p_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#estyp.linear_model.LogisticRegression.p_values" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="estyp.linear_model.LogisticRegression.params">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">params</span></span><a class="headerlink" href="#estyp.linear_model.LogisticRegression.params" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="estyp.linear_model.LogisticRegression.predict">
-<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/estyp/linear_model.html#LogisticRegression.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#estyp.linear_model.LogisticRegression.predict" title="Permalink to this definition"></a></dt>
-<dd><p>Predict class labels for samples in X.</p>
-<section id="id2">
-<h4>Parameters<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h4>
-<dl class="simple">
-<dt>X<span class="classifier">{array-like, sparse matrix} of shape (n_samples, n_features)</span></dt><dd><p>The data matrix for which we want to get the predictions.</p>
-</dd>
-</dl>
-</section>
-<section id="id3">
-<h4>Returns<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h4>
-<dl class="simple">
-<dt>y_pred<span class="classifier">ndarray of shape (n_samples,)</span></dt><dd><p>Vector containing the class labels for each sample.</p>
-</dd>
-</dl>
-</section>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="estyp.linear_model.LogisticRegression.se">
-<span class="sig-name descname"><span class="pre">se</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/estyp/linear_model.html#LogisticRegression.se"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#estyp.linear_model.LogisticRegression.se" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="estyp.linear_model.LogisticRegression.set_predict_request">
-<span class="sig-name descname"><span class="pre">set_predict_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'$UNCHANGED$'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#estyp.linear_model.LogisticRegression" title="estyp.linear_model.LogisticRegression"><span class="pre">LogisticRegression</span></a></span></span><a class="headerlink" href="#estyp.linear_model.LogisticRegression.set_predict_request" title="Permalink to this definition"></a></dt>
-<dd><p>Request metadata passed to the <code class="docutils literal notranslate"><span class="pre">predict</span></code> method.</p>
-<p>Note that this method is only relevant if
-<code class="docutils literal notranslate"><span class="pre">enable_metadata_routing=True</span></code> (see <code class="xref py py-func docutils literal notranslate"><span class="pre">sklearn.set_config()</span></code>).
-Please see <span class="xref std std-ref">User Guide</span> on how the routing
-mechanism works.</p>
-<p>The options for each parameter are:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">True</span></code>: metadata is requested, and passed to <code class="docutils literal notranslate"><span class="pre">predict</span></code> if provided. The request is ignored if metadata is not provided.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">False</span></code>: metadata is not requested and the meta-estimator will not pass it to <code class="docutils literal notranslate"><span class="pre">predict</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">None</span></code>: metadata is not requested, and the meta-estimator will raise an error if the user provides it.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">str</span></code>: metadata should be passed to the meta-estimator with this given alias instead of the original name.</p></li>
-</ul>
-<p>The default (<code class="docutils literal notranslate"><span class="pre">sklearn.utils.metadata_routing.UNCHANGED</span></code>) retains the
-existing request. This allows you to change the request for some
-parameters and not others.</p>
-<div class="versionadded">
-<p><span class="versionmodified added">New in version 1.3.</span></p>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x22ae5aafe80&gt;]
+</pre></div>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This method is only relevant if this estimator is used as a
-sub-estimator of a meta-estimator, e.g. used inside a
-<code class="xref py py-class docutils literal notranslate"><span class="pre">pipeline.Pipeline</span></code>. Otherwise it has no effect.</p>
+<img alt="_images/estyp.linear_model_0_1.png" src="_images/estyp.linear_model_0_1.png" />
 </div>
-<section id="id4">
-<h4>Parameters<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h4>
-<dl class="simple">
-<dt>new_data<span class="classifier">str, True, False, or None,                     default=sklearn.utils.metadata_routing.UNCHANGED</span></dt><dd><p>Metadata routing for <code class="docutils literal notranslate"><span class="pre">new_data</span></code> parameter in <code class="docutils literal notranslate"><span class="pre">predict</span></code>.</p>
-</dd>
-</dl>
-</section>
-<section id="id5">
-<h4>Returns<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h4>
-<dl class="simple">
-<dt>self<span class="classifier">object</span></dt><dd><p>The updated object.</p>
-</dd>
-</dl>
-</section>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="estyp.linear_model.LogisticRegression.set_score_request">
-<span class="sig-name descname"><span class="pre">set_score_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_weight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'$UNCHANGED$'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#estyp.linear_model.LogisticRegression" title="estyp.linear_model.LogisticRegression"><span class="pre">LogisticRegression</span></a></span></span><a class="headerlink" href="#estyp.linear_model.LogisticRegression.set_score_request" title="Permalink to this definition"></a></dt>
-<dd><p>Request metadata passed to the <code class="docutils literal notranslate"><span class="pre">score</span></code> method.</p>
-<p>Note that this method is only relevant if
-<code class="docutils literal notranslate"><span class="pre">enable_metadata_routing=True</span></code> (see <code class="xref py py-func docutils literal notranslate"><span class="pre">sklearn.set_config()</span></code>).
-Please see <span class="xref std std-ref">User Guide</span> on how the routing
-mechanism works.</p>
-<p>The options for each parameter are:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">True</span></code>: metadata is requested, and passed to <code class="docutils literal notranslate"><span class="pre">score</span></code> if provided. The request is ignored if metadata is not provided.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">False</span></code>: metadata is not requested and the meta-estimator will not pass it to <code class="docutils literal notranslate"><span class="pre">score</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">None</span></code>: metadata is not requested, and the meta-estimator will raise an error if the user provides it.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">str</span></code>: metadata should be passed to the meta-estimator with this given alias instead of the original name.</p></li>
-</ul>
-<p>The default (<code class="docutils literal notranslate"><span class="pre">sklearn.utils.metadata_routing.UNCHANGED</span></code>) retains the
-existing request. This allows you to change the request for some
-parameters and not others.</p>
-<div class="versionadded">
-<p><span class="versionmodified added">New in version 1.3.</span></p>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This method is only relevant if this estimator is used as a
-sub-estimator of a meta-estimator, e.g. used inside a
-<code class="xref py py-class docutils literal notranslate"><span class="pre">pipeline.Pipeline</span></code>. Otherwise it has no effect.</p>
-</div>
-<section id="id6">
-<h4>Parameters<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h4>
-<dl class="simple">
-<dt>sample_weight<span class="classifier">str, True, False, or None,                     default=sklearn.utils.metadata_routing.UNCHANGED</span></dt><dd><p>Metadata routing for <code class="docutils literal notranslate"><span class="pre">sample_weight</span></code> parameter in <code class="docutils literal notranslate"><span class="pre">score</span></code>.</p>
-</dd>
-</dl>
-</section>
-<section id="id7">
-<h4>Returns<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h4>
-<dl class="simple">
-<dt>self<span class="classifier">object</span></dt><dd><p>The updated object.</p>
-</dd>
-</dl>
-</section>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="estyp.linear_model.LogisticRegression.summary">
-<span class="sig-name descname"><span class="pre">summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conf_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.95</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/estyp/linear_model.html#LogisticRegression.summary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#estyp.linear_model.LogisticRegression.summary" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="estyp.linear_model.LogisticRegression.z_values">
-<span class="sig-name descname"><span class="pre">z_values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/estyp/linear_model.html#LogisticRegression.z_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#estyp.linear_model.LogisticRegression.z_values" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-</section>
-</dd></dl>
-
 </section>
 </section>
 
@@ -390,8 +118,8 @@ sub-estimator of a meta-estimator, e.g. used inside a
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="estyp.cluster.html" class="btn btn-neutral float-left" title="estyp.cluster package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="estyp.linear_model.stepwise.html" class="btn btn-neutral float-right" title="estyp.linear_model.stepwise package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="estyp.cluster.html" class="btn btn-neutral float-left" title="The cluster module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="estyp.linear_model.stepwise.html" class="btn btn-neutral float-right" title="The linear_model.stepwise module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
