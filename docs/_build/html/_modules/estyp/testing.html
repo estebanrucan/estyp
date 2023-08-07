@@ -41,7 +41,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../modules.html">estyp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../estyp.html">estyp package</a></li>
 </ul>
 
         </div>
@@ -76,11 +76,20 @@
 <span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">Series</span>
 <span class="kn">from</span> <span class="nn">statsmodels.regression.linear_model</span> <span class="kn">import</span> <span class="n">RegressionResultsWrapper</span>
 
-<span class="kn">from</span> <span class="nn">estyp.testing.__base</span> <span class="kn">import</span> <span class="p">(</span><span class="n">TestResults</span><span class="p">,</span> <span class="n">_CheckHomocedasticity</span><span class="p">,</span>
-                                    <span class="n">_CheckIndependence</span><span class="p">,</span>
-                                    <span class="n">_CheckMulticollinearity</span><span class="p">,</span> <span class="n">_CheckNormality</span><span class="p">,</span>
-                                    <span class="n">__nested_models_test</span><span class="p">,</span> <span class="n">__prop_test</span><span class="p">,</span> <span class="n">__t_test</span><span class="p">,</span>
-                                    <span class="n">__var_test</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">estyp.testing.__base</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">TestResults</span><span class="p">,</span>
+    <span class="n">_CheckHomocedasticity</span><span class="p">,</span>
+    <span class="n">_CheckIndependence</span><span class="p">,</span>
+    <span class="n">_CheckMulticollinearity</span><span class="p">,</span>
+    <span class="n">_CheckNormality</span><span class="p">,</span>
+    <span class="n">__nested_models_test</span><span class="p">,</span>
+    <span class="n">__prop_test</span><span class="p">,</span>
+    <span class="n">__t_test</span><span class="p">,</span>
+    <span class="n">__var_test</span><span class="p">,</span>
+    <span class="n">__cor_test</span><span class="p">,</span>
+    <span class="n">__chisq_test</span><span class="p">,</span>
+<span class="p">)</span>
+
 
 <div class="viewcode-block" id="CheckModel"><a class="viewcode-back" href="../../estyp.testing.html#estyp.testing.CheckModel">[docs]</a><span class="k">class</span> <span class="nc">CheckModel</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -155,7 +164,7 @@
 <div class="viewcode-block" id="CheckModel.check_homocedasticity"><a class="viewcode-back" href="../../estyp.testing.html#estyp.testing.CheckModel.check_homocedasticity">[docs]</a>    <span class="k">def</span> <span class="nf">check_homocedasticity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_pvals</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Checks the homoscedasticity assumption (equal variance of residuals) using several statistical tests.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        `alpha` : float, optional</span>
@@ -164,12 +173,12 @@
 <span class="sd">            If `True`, a plot is shown for visual inspection of homoscedasticity, by default `True`.</span>
 <span class="sd">        `return_pvals` : bool, optional</span>
 <span class="sd">            If `True`, the p-values of the statistical tests are returned, by default `False`.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        dict</span>
 <span class="sd">            A dictionary of p-values of the statistical tests if `return_pvals=True`.</span>
-<span class="sd">            </span>
+
 <span class="sd">        Example</span>
 <span class="sd">        -------</span>
 <span class="sd">        &gt;&gt;&gt; cm.check_homocedasticity()</span>
@@ -185,7 +194,7 @@
 <div class="viewcode-block" id="CheckModel.check_independence"><a class="viewcode-back" href="../../estyp.testing.html#estyp.testing.CheckModel.check_independence">[docs]</a>    <span class="k">def</span> <span class="nf">check_independence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_vals</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Checks the independence assumption of the residuals using several statistical tests.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        alpha : float, optional</span>
@@ -194,12 +203,12 @@
 <span class="sd">            If `True`, a plot is shown for visual inspection of independence, by default `True`.</span>
 <span class="sd">        return_pvals : bool, optional</span>
 <span class="sd">            If `True`, the p-values of the statistical tests are returned, by default `False`.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        dict</span>
 <span class="sd">            A dictionary of values of the statistical tests if `return_vals=True`.</span>
-<span class="sd">            </span>
+
 <span class="sd">        Example</span>
 <span class="sd">        -------</span>
 <span class="sd">        &gt;&gt;&gt; cm.check_independence()</span>
@@ -215,19 +224,19 @@
 <div class="viewcode-block" id="CheckModel.check_multicollinearity"><a class="viewcode-back" href="../../estyp.testing.html#estyp.testing.CheckModel.check_multicollinearity">[docs]</a>    <span class="k">def</span> <span class="nf">check_multicollinearity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_cm</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Checks the multicollinearity assumption among predictors using the variance inflation factor (VIF).</span>
-<span class="sd">        </span>
+
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        `plot` : bool, optional</span>
 <span class="sd">            If True, a plot is shown for visual inspection of multicollinearity, by default True.</span>
 <span class="sd">        `return_cm` : bool, optional</span>
 <span class="sd">            Returns the condition number of the model if True, by default False.</span>
-<span class="sd">            </span>
+
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
 <span class="sd">            The condition number of the model if `return_cm=True`.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Example</span>
 <span class="sd">        -------</span>
 <span class="sd">        &gt;&gt;&gt; cm.check_multicollinearity()</span>
@@ -243,7 +252,7 @@
 <div class="viewcode-block" id="CheckModel.check_all"><a class="viewcode-back" href="../../estyp.testing.html#estyp.testing.CheckModel.check_all">[docs]</a>    <span class="k">def</span> <span class="nf">check_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_vals</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Checks all the assumptions of the linear regression model.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        `alpha` : float, optional</span>
@@ -252,12 +261,12 @@
 <span class="sd">            If `True`, a plot is shown for visual inspection of each assumption, by default `True`.</span>
 <span class="sd">        `return_vals` : bool, optional</span>
 <span class="sd">            If `True`, the values of the statistical tests are returned, by default `False`.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        dict</span>
 <span class="sd">            A dictionary of values of the statistical tests if `return_vals=True`.</span>
-<span class="sd">            </span>
+
 <span class="sd">        Example</span>
 <span class="sd">        -------</span>
 <span class="sd">        &gt;&gt;&gt; cm.check_all()</span>
@@ -297,7 +306,7 @@
 <div class="viewcode-block" id="var_test"><a class="viewcode-back" href="../../estyp.testing.html#estyp.testing.var_test">[docs]</a><span class="k">def</span> <span class="nf">var_test</span><span class="p">(</span>
     <span class="n">x</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Series</span><span class="p">],</span>
     <span class="n">y</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Series</span><span class="p">],</span>
-    <span class="n">ratio</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">ratio</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
     <span class="n">alternative</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;two-sided&quot;</span><span class="p">,</span> <span class="s2">&quot;less&quot;</span><span class="p">,</span> <span class="s2">&quot;greater&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;two-sided&quot;</span><span class="p">,</span>
     <span class="n">conf_level</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TestResults</span><span class="p">:</span>
@@ -579,6 +588,201 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">__prop_test</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">alternative</span><span class="p">,</span> <span class="n">conf_level</span><span class="p">,</span> <span class="n">correct</span><span class="p">)</span></div>
 
+
+<div class="viewcode-block" id="cor_test"><a class="viewcode-back" href="../../estyp.testing.html#estyp.testing.cor_test">[docs]</a><span class="k">def</span> <span class="nf">cor_test</span><span class="p">(</span>
+    <span class="n">x</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Series</span><span class="p">],</span>
+    <span class="n">y</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Series</span><span class="p">],</span>
+    <span class="n">method</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;pearson&quot;</span><span class="p">,</span> <span class="s2">&quot;kendall&quot;</span><span class="p">,</span> <span class="s2">&quot;spearman&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;pearson&quot;</span><span class="p">,</span>
+    <span class="n">alternative</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;two-sided&quot;</span><span class="p">,</span> <span class="s2">&quot;less&quot;</span><span class="p">,</span> <span class="s2">&quot;greater&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;two-sided&quot;</span><span class="p">,</span>
+    <span class="n">conf_level</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.95</span><span class="p">,</span>
+    <span class="n">continuity</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TestResults</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    # Test for Association/Correlation Between Paired Samples</span>
+
+<span class="sd">    Description</span>
+<span class="sd">    -----------</span>
+<span class="sd">    Test for association between paired samples, using one of Pearson&#39;s product moment correlation coefficient, Kendall&#39;s</span>
+<span class="sd">    tau or Spearman&#39;s rho.</span>
+
+<span class="sd">    Usage</span>
+<span class="sd">    -----</span>
+<span class="sd">    ```python</span>
+<span class="sd">    cor_test(x, y, ...)</span>
+<span class="sd">    cor_test(x, y, alternative=&quot;two-sided&quot;, method=&quot;pearson&quot;, conf_level=0.95, continuity=False)</span>
+<span class="sd">    ```</span>
+
+<span class="sd">    Arguments</span>
+<span class="sd">    ---------</span>
+<span class="sd">    `x`, `y` : array_like</span>
+<span class="sd">        Numeric one-dimensional `arrays`, `lists` or `pd.Series` of data values. `x` and `y` must have the same length.</span>
+
+<span class="sd">    `alternative` : str, optional</span>
+<span class="sd">        Indicates the alternative hypothesis and must be one of &quot;two-sided&quot;, &quot;greater&quot; or &quot;less&quot;.</span>
+<span class="sd">        &quot;greater&quot; corresponds to positive association, &quot;less&quot; to negative association.</span>
+
+<span class="sd">    `method` : str, optional</span>
+<span class="sd">        A string indicating which correlation coefficient is to be used for the test.</span>
+<span class="sd">        One of &quot;pearson&quot;, &quot;kendall&quot;, or &quot;spearman&quot;.</span>
+
+<span class="sd">    `conf_level` : float, optional</span>
+<span class="sd">        Confidence level for the returned confidence interval. Currently only used for the</span>
+<span class="sd">        Pearson product moment correlation coefficient if there are at least 4 complete pairs of observations.</span>
+
+<span class="sd">    `continuity` : bool, optional</span>
+<span class="sd">        If `True`, a continuity correction is used for Kendall&#39;s tau.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    A `TestResults` instance containing the following atributes:</span>
+<span class="sd">        - `statistic`: the value of the test statistic.</span>
+<span class="sd">        - `df` (if applicable): the degrees of freedom of the test statistic.</span>
+<span class="sd">        - `p_value`: the p-value of the test.</span>
+<span class="sd">        - `estimate`: the estimated measure of association.</span>
+<span class="sd">        - `null_value`: the value of the association measure under the null hypothesis, always 0.</span>
+<span class="sd">        - `alternative`: a string describing the alternative hypothesis.</span>
+<span class="sd">        - `method`: a string indicating how the association was measured.</span>
+<span class="sd">        - `conf_int` (if applicable): a confidence interval for the measure of association.</span>
+
+<span class="sd">    Details</span>
+<span class="sd">    -------</span>
+<span class="sd">    The three methods each estimate the association between paired samples and compute a test of the value being zero.</span>
+<span class="sd">    They use different measures of association, all in the range [-1, 1] with 0 indicating no association.</span>
+<span class="sd">    These are sometimes referred to as tests of no correlation, but that term is often confined to the default method.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    [1] D. J. Best &amp; D. E. Roberts (1975). Algorithm AS 89: The Upper Tail Probabilities of Spearman&#39;s rho.</span>
+<span class="sd">        Applied Statistics, 24, 377--379. 10.2307/2347111.</span>
+
+<span class="sd">    [2] Myles Hollander &amp; Douglas A. Wolfe (1973), Nonparametric Statistical Methods.</span>
+<span class="sd">        New York: John Wiley &amp; Sons. Pages 185--194 (Kendall and Spearman tests).</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    Using the iris dataset to test the association between sepal length and petal length using Pearson&#39;s correlation:</span>
+
+<span class="sd">    ```python</span>
+<span class="sd">    from sklearn import datasets</span>
+<span class="sd">    iris = datasets.load_iris()</span>
+
+<span class="sd">    sepal_length = iris.data[:, 0]</span>
+<span class="sd">    petal_length = iris.data[:, 2]</span>
+
+<span class="sd">    result = cor_test(sepal_length, petal_length, method=&quot;pearson&quot;)</span>
+<span class="sd">    print(result)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">__cor_test</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">alternative</span><span class="p">,</span> <span class="n">conf_level</span><span class="p">,</span> <span class="n">continuity</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="chisq_test"><a class="viewcode-back" href="../../estyp.testing.html#estyp.testing.chisq_test">[docs]</a><span class="k">def</span> <span class="nf">chisq_test</span><span class="p">(</span>
+    <span class="n">x</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Series</span><span class="p">],</span>
+    <span class="n">y</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Series</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">p</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Series</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">correct</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">rescale_p</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd"># Pearson&#39;s Chi-squared Test for Count Data</span>
+
+
+<span class="sd">Description</span>
+<span class="sd">-----------</span>
+<span class="sd">`chisq_test()` performs chi-squared contingency table tests and goodness-of-fit tests.</span>
+
+<span class="sd">Usage</span>
+<span class="sd">------</span>
+<span class="sd">```python</span>
+<span class="sd">chisq_test(x, ...)</span>
+<span class="sd">chisq_test(x, y=None, correct=True, p=None, rescale_p=False)</span>
+<span class="sd">```</span>
+
+<span class="sd">Arguments</span>
+<span class="sd">---------</span>
+<span class="sd">`x`: arrat_like</span>
+<span class="sd">    A numeric list or 2D list (matrix). x and y can also both be lists.</span>
+<span class="sd">    </span>
+<span class="sd">`y`: array_like</span>
+<span class="sd">    A numeric data ; ignored if x is a matrix. If x is a list, y should be a list of the same length. The default is None.</span>
+
+<span class="sd">`p`: array_like</span>
+<span class="sd">    A list of probabilities of the same length as x. An error is raised if any entry of p is negative.</span>
+
+<span class="sd">`correct`: </span>
+<span class="sd">    A boolean indicating whether to apply continuity correction when computing the test statistic for 2x2 tables: </span>
+<span class="sd">    one half is subtracted from all |O-E| differences; however, the correction will not be bigger than the differences themselves. The default is True.</span>
+
+<span class="sd">`rescale_p`: boolean</span>
+<span class="sd">    A boolean; if True then p is rescaled (if necessary) to sum to 1. If rescale_p is False, and p does not sum to 1, an error is raised.</span>
+
+<span class="sd">Details</span>
+<span class="sd">-------</span>
+<span class="sd">    If x is a matrix with one row or column, or if x is a list and y is not given, then a goodness-of-fit test is performed </span>
+<span class="sd">    (x is treated as a one-dimensional contingency table). The entries of x must be non-negative integers. In this case, the hypothesis </span>
+<span class="sd">    tested is whether the population probabilities equal those in p, or are all equal if p is not given.</span>
+
+<span class="sd">    If x is a matrix with at least two rows and columns, it is taken as a two-dimensional contingency table: the entries of x must be </span>
+<span class="sd">    non-negative integers. Otherwise, x and y must be lists of the same length; cases with None values are removed, the lists are </span>
+<span class="sd">    treated as factors, and the contingency table is computed from these. Then Pearson&#39;s chi-squared test is performed of the null </span>
+<span class="sd">    hypothesis that the joint distribution of the cell counts in a 2-dimensional contingency table is the product of the row and column marginals.</span>
+
+<span class="sd">    The p-value is computed from the asymptotic chi-squared distribution of the test statistic; continuity correction is only used in </span>
+<span class="sd">    the 2-by-2 case (if correct is True, the default).</span>
+
+<span class="sd">Returns</span>
+<span class="sd">-------</span>
+<span class="sd">    A `TestResults` instance containing the following attributes:</span>
+
+<span class="sd">    `statistic`: </span>
+<span class="sd">        The value of the chi-squared test statistic.</span>
+
+<span class="sd">    `df`: </span>
+<span class="sd">        The degrees of freedom of the approximate chi-squared distribution of the test statistic.</span>
+
+<span class="sd">    `p_value`:</span>
+<span class="sd">        The p-value for the test.</span>
+
+<span class="sd">    `method`:</span>
+<span class="sd">        A string indicating the type of test performed, and whether continuity correction was used.</span>
+
+<span class="sd">    `expected`:</span>
+<span class="sd">        The expected counts under the null hypothesis.</span>
+
+
+<span class="sd">Examples</span>
+<span class="sd">--------</span>
+<span class="sd">```python</span>
+<span class="sd">## From Agresti(2007) p.39</span>
+<span class="sd">M = [[762, 327, 468], [484, 239, 477]]</span>
+<span class="sd">result1 = chisq_test(M)</span>
+<span class="sd">print(result1)</span>
+
+<span class="sd">## Effect of rescale_p</span>
+<span class="sd">x = [12, 5, 7, 7]</span>
+<span class="sd">p = [0.4, 0.4, 0.2, 0.2]</span>
+<span class="sd">result2 = chisq_test(x, p=p, rescale_p=True)</span>
+<span class="sd">print(result2)</span>
+
+<span class="sd">## Testing for population probabilities</span>
+<span class="sd">x = [20, 15, 25]</span>
+<span class="sd">result31 = chisq_test(x)</span>
+<span class="sd">print(result31)</span>
+
+<span class="sd">x = [89,37,30,28,2]</span>
+<span class="sd">p = [0.40,0.20,0.20,0.19,0.01]</span>
+<span class="sd">result32 = chisq_test(x, p=p)</span>
+<span class="sd">print(result32)</span>
+
+
+<span class="sd"># Goodness of fit</span>
+<span class="sd">x = [1, 2, 3, 4, 5, 6]</span>
+<span class="sd">y = [6, 1, 2, 3, 4, 5]</span>
+<span class="sd">result4 = chisq_test(x, y)</span>
+<span class="sd">print(result4)</span>
+<span class="sd">```</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">return</span> <span class="n">__chisq_test</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">correct</span><span class="p">,</span> <span class="n">rescale_p</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

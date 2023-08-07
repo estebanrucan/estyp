@@ -47,7 +47,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="estyp.html">estyp package</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="estyp.html#subpackages">Subpackages</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">estyp.cluster package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-estyp.cluster">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="estyp.linear_model.html">estyp.linear_model package</a></li>
@@ -86,8 +86,211 @@
              
   <section id="estyp-cluster-package">
 <h1>estyp.cluster package<a class="headerlink" href="#estyp-cluster-package" title="Permalink to this heading"></a></h1>
-<section id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this heading"></a></h2>
+<section id="module-estyp.cluster">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-estyp.cluster" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="estyp.cluster.NClusterSearch">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">estyp.cluster.</span></span><span class="sig-name descname"><span class="pre">NClusterSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">estimator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'elbow'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'silhouette'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'elbow'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_clusters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_clusters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">123</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/estyp/cluster.html#NClusterSearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#estyp.cluster.NClusterSearch" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p># Optimal Number of Clusters Searcher</p>
+<section id="description">
+<h3>Description<a class="headerlink" href="#description" title="Permalink to this heading"></a></h3>
+<p>A helper class to identify the optimal number of clusters for clustering algorithms.</p>
+<p>This class offers methods like the elbow method and silhouette method to evaluate
+and suggest the best number of clusters for the provided data. The class currently
+supports KMeans, KMedoids, KModes, and KPrototypes as estimators.</p>
+</section>
+<section id="parameters">
+<h3>Parameters:<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt><cite>estimator</cite><span class="classifier">instance of clustering model</span></dt><dd><p>The clustering algorithm for which you want to find the optimal number of clusters.
+Supported estimators: <cite>KMeans</cite>, <cite>KMedoids</cite>, <cite>KModes</cite>, <cite>KPrototypes</cite>.</p>
+</dd>
+<dt><cite>method</cite><span class="classifier">str, optional (default = ‘elbow’)</span></dt><dd><p>The method used to determine the optimal number of clusters.
+Accepted values: ‘elbow’, ‘silhouette’.</p>
+</dd>
+<dt><cite>min_clusters</cite><span class="classifier">int, optional (default = 1)</span></dt><dd><p>The minimum number of clusters to consider.</p>
+</dd>
+<dt><cite>max_clusters</cite><span class="classifier">int, optional (default = 10)</span></dt><dd><p>The maximum number of clusters to consider.</p>
+</dd>
+<dt><cite>step</cite><span class="classifier">int, optional (default = 1)</span></dt><dd><p>The step size for increasing the number of clusters during the search.</p>
+</dd>
+<dt><cite>random_state</cite><span class="classifier">int, optional (default = 123)</span></dt><dd><p>Random seed for reproducibility.</p>
+</dd>
+<dt><cite>verbose</cite><span class="classifier">bool, optional (default = False)</span></dt><dd><p>If True, the process will print details as it proceeds.</p>
+</dd>
+</dl>
+</section>
+<section id="examples">
+<h3>Examples:<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h3>
+<p>#### Example 1: Using the elbow method with KMeans</p>
+<p><code class="docutils literal notranslate"><span class="pre">`python</span>
+<span class="pre">from</span> <span class="pre">sklearn.cluster</span> <span class="pre">import</span> <span class="pre">KMeans</span>
+<span class="pre">searcher</span> <span class="pre">=</span> <span class="pre">NClusterSearch(estimator=KMeans(),</span> <span class="pre">method='elbow')</span>
+<span class="pre">searcher.fit(data)</span>
+<span class="pre">searcher.plot()</span>
+<span class="pre">labels</span> <span class="pre">=</span> <span class="pre">searcher.labels_</span>
+<span class="pre">predicted_labels</span> <span class="pre">=</span> <span class="pre">searcher.predict(new_data)</span>
+<span class="pre">optimal_model</span> <span class="pre">=</span> <span class="pre">searcher.best_estimator_</span>
+<span class="pre">optimal_clusters</span> <span class="pre">=</span> <span class="pre">searcher.optimal_clusters_</span>
+<span class="pre">`</span></code></p>
+<p>#### Example 2: Using KModes with custom arguments</p>
+<p><code class="docutils literal notranslate"><span class="pre">`python</span>
+<span class="pre">from</span> <span class="pre">kmodes.kmodes</span> <span class="pre">import</span> <span class="pre">KModes</span>
+<span class="pre">kmodes</span> <span class="pre">=</span> <span class="pre">KModes(init='Huang',</span> <span class="pre">n_init=5,</span> <span class="pre">verbose=1)</span>
+<span class="pre">searcher</span> <span class="pre">=</span> <span class="pre">NClusterSearch(estimator=km,</span> <span class="pre">method='elbow')</span>
+<span class="pre">searcher.fit(data)</span>
+<span class="pre">`</span></code></p>
+<p>#### Example 3: Using the silhouette method with KMedoids</p>
+<p><code class="docutils literal notranslate"><span class="pre">`python</span>
+<span class="pre">from</span> <span class="pre">sklearn_extra.cluster</span> <span class="pre">import</span> <span class="pre">KMedoids</span>
+<span class="pre">searcher</span> <span class="pre">=</span> <span class="pre">NClusterSearch(estimator=KMedoids(),</span> <span class="pre">method='silhouette')</span>
+<span class="pre">searcher.fit(data)</span>
+<span class="pre">searcher.plot()</span>
+<span class="pre">`</span></code></p>
+<p>#### Example 4: Using the silhouette method with KPrototypes</p>
+<p><code class="docutils literal notranslate"><span class="pre">`python</span>
+<span class="pre">from</span> <span class="pre">kmodes.kprototypes</span> <span class="pre">import</span> <span class="pre">KPrototypes</span>
+<span class="pre">searcher</span> <span class="pre">=</span> <span class="pre">NClusterSearch(estimator=KPrototypes(),</span> <span class="pre">method='silhouette',</span> <span class="pre">verbose=True)</span>
+<span class="pre">searcher.fit(data,</span> <span class="pre">categorical=[0,</span> <span class="pre">1])</span>
+<span class="pre">searcher.plot()</span>
+<span class="pre">`</span></code></p>
+<p>#### Example 5: Using the silhouette method with KPrototypes and custom alpha for distance calculation</p>
+<p><code class="docutils literal notranslate"><span class="pre">`python</span>
+<span class="pre">from</span> <span class="pre">kmodes.kprototypes</span> <span class="pre">import</span> <span class="pre">KPrototypes</span>
+<span class="pre">searcher</span> <span class="pre">=</span> <span class="pre">NClusterSearch(estimator=KPrototypes(),</span> <span class="pre">method='silhouette')</span>
+<span class="pre">searcher.fit(data,</span> <span class="pre">categorical=[0,</span> <span class="pre">1],</span> <span class="pre">alpha=0.1)</span>
+<span class="pre">searcher.plot()</span>
+<span class="pre">`</span></code></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="estyp.cluster.NClusterSearch.best_estimator_">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">best_estimator_</span></span><a class="headerlink" href="#estyp.cluster.NClusterSearch.best_estimator_" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the estimator with the optimal number of clusters.</p>
+<p>This property can be accessed only after calling the fit method.</p>
+<section id="returns">
+<h4>Returns:<a class="headerlink" href="#returns" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>best_estimator<span class="classifier">instance of clustering model</span></dt><dd><p>Estimator set to the optimal number of clusters and trained with the data.</p>
+</dd>
+</dl>
+</section>
+<section id="example">
+<h4>Example:<a class="headerlink" href="#example" title="Permalink to this heading"></a></h4>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">NClusterSearch</span><span class="p">(</span><span class="n">estimator</span><span class="o">=</span><span class="n">KMeans</span><span class="p">(),</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;elbow&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">optimal_model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">best_estimator_</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="estyp.cluster.NClusterSearch.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/estyp/cluster.html#NClusterSearch.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#estyp.cluster.NClusterSearch.fit" title="Permalink to this definition"></a></dt>
+<dd><p>Fits the estimator with the data over a range of cluster numbers.</p>
+<section id="id1">
+<h4>Parameters:<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>X<span class="classifier">array-like, shape (n_samples, n_features)</span></dt><dd><p>The data to determine the optimal number of clusters for.</p>
+</dd>
+</dl>
+<p><a href="#id2"><span class="problematic" id="id3">**</span></a>kwargs : Additional keyword arguments to be passed to the estimator’s fit method.</p>
+</section>
+<section id="id4">
+<h4>Returns:<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>self<span class="classifier">object</span></dt><dd><p>Returns an instance of self.</p>
+</dd>
+</dl>
+</section>
+<section id="id5">
+<h4>Example:<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h4>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">NClusterSearch</span><span class="p">(</span><span class="n">estimator</span><span class="o">=</span><span class="n">KMeans</span><span class="p">(),</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;elbow&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="estyp.cluster.NClusterSearch.labels_">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">labels_</span></span><a class="headerlink" href="#estyp.cluster.NClusterSearch.labels_" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the labels of each point for the best estimator.</p>
+<p>This property can be accessed only after calling the fit method.</p>
+<section id="id6">
+<h4>Returns:<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>labels<span class="classifier">array, shape (n_samples,)</span></dt><dd><p>Index of the cluster each sample belongs to.</p>
+</dd>
+</dl>
+</section>
+<section id="id7">
+<h4>Example:<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h4>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">NClusterSearch</span><span class="p">(</span><span class="n">estimator</span><span class="o">=</span><span class="n">KMeans</span><span class="p">(),</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;elbow&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">labels</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">labels_</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="estyp.cluster.NClusterSearch.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/estyp/cluster.html#NClusterSearch.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#estyp.cluster.NClusterSearch.plot" title="Permalink to this definition"></a></dt>
+<dd><p>Plots the results of the selected method (either ‘elbow’ or ‘silhouette’) to visualize the optimal cluster number.</p>
+<section id="id8">
+<h4>Parameters:<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>ax<span class="classifier">matplotlib axis object, optional</span></dt><dd><p>Axis on which to draw the plot. If None, a new figure and axis will be created.</p>
+</dd>
+</dl>
+</section>
+<section id="id9">
+<h4>Returns:<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h4>
+<p>None</p>
+</section>
+<section id="id10">
+<h4>Example:<a class="headerlink" href="#id10" title="Permalink to this heading"></a></h4>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">NClusterSearch</span><span class="p">(</span><span class="n">estimator</span><span class="o">=</span><span class="n">KMeans</span><span class="p">(),</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;elbow&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This will plot the elbow method’s results for the data.</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="estyp.cluster.NClusterSearch.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/estyp/cluster.html#NClusterSearch.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#estyp.cluster.NClusterSearch.predict" title="Permalink to this definition"></a></dt>
+<dd><p>Predicts the closest cluster for each sample in X using the <a href="#id14"><span class="problematic" id="id15">best_estimator_</span></a>.</p>
+<section id="id11">
+<h4>Parameters:<a class="headerlink" href="#id11" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>X<span class="classifier">array-like, shape (n_samples, n_features)</span></dt><dd><p>New data to predict cluster labels.</p>
+</dd>
+</dl>
+</section>
+<section id="id12">
+<h4>Returns:<a class="headerlink" href="#id12" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>labels<span class="classifier">array, shape (n_samples,)</span></dt><dd><p>Index of the cluster each sample belongs to.</p>
+</dd>
+</dl>
+</section>
+<section id="id13">
+<h4>Example:<a class="headerlink" href="#id13" title="Permalink to this heading"></a></h4>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">NClusterSearch</span><span class="p">(</span><span class="n">estimator</span><span class="o">=</span><span class="n">KMeans</span><span class="p">(),</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;elbow&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">new_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+</section>
+</dd></dl>
+
 </section>
 </section>
 
