@@ -40,6 +40,7 @@ Parameters
 
 Example
 -------
+
 >>> import statsmodels.api as sm
 >>> from sklearn.datasets import load_diabetes
 >>> diabetes = load_diabetes()
@@ -251,6 +252,7 @@ An instance of the `TestResults` class containing the following attributes:
 
 Examples
 --------
+
 >>> import numpy as np
 >>> np.random.seed(2023)
 >>> x = np.random.normal(size=100)
@@ -311,6 +313,7 @@ An instance of the `TestResults` class containing the following attributes:
 
 Examples
 --------
+
 >>> import numpy as np
 >>> np.random.seed(2023)
 >>> x = np.random.normal(size=100)
@@ -331,6 +334,7 @@ def nested_models_test(
 ) -> TestResults:
     """
 Nested Models F-Test Function
+-----------------------------
 
 Description:
 -------------
@@ -361,6 +365,7 @@ The function returns an object of class TestResults that contains the following 
 Examples:
 ---------
 Example 1: With OLS
+
 >>> import pandas as pd
 >>> import statsmodels.api as sm
 >>> data = pd.DataFrame({
@@ -372,6 +377,7 @@ Example 1: With OLS
 >>> print(nested_models_test(model_small, model_big))
 
 Example 2: With Logit
+
 >>> import pandas as pd
 >>> import statsmodels.api as sm
 >>> data = pd.DataFrame({
@@ -383,6 +389,7 @@ Example 2: With Logit
 >>> print(nested_models_test(model_small, model_big))
 
 Example 3: With GLM
+
 >>> import pandas as pd
 >>> import statsmodels.api as sm
 >>> data = pd.DataFrame({
@@ -465,6 +472,7 @@ Returns
 
 Examples
 --------
+
 >>> import numpy as np
 >>> from scipy import stats
 >>> x = np.array([83, 90, 129, 70])
@@ -625,28 +633,33 @@ Examples
 --------
 
 From Agresti(2007) p.39
+
 >>> M = [[762, 327, 468], [484, 239, 477]]
 >>> result1 = chisq_test(M)
 >>> print(result1)
 
 Effect of rescale_p
+
 >>> x = [12, 5, 7, 7]
 >>> p = [0.4, 0.4, 0.2, 0.2]
 >>> result2 = chisq_test(x, p=p, rescale_p=True)
 >>> print(result2)
 
 Testing for population probabilities
+
 >>> x = [20, 15, 25]
 >>> result31 = chisq_test(x)
 >>> print(result31)
 
 A second example of testing for population probabilities
+
 >>> x = [89,37,30,28,2]
 >>> p = [0.40,0.20,0.20,0.19,0.01]
 >>> result32 = chisq_test(x, p=p)
 >>> print(result32)
 
 Goodness of fit
+
 >>> x = [1, 2, 3, 4, 5, 6]
 >>> y = [6, 1, 2, 3, 4, 5]
 >>> result4 = chisq_test(x, y)

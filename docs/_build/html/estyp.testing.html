@@ -318,29 +318,39 @@ the 2-by-2 case (if correct is True, the default).</p>
 </section>
 <section id="examples">
 <h3>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h3>
-<p>From Agresti(2007) p.39
-&gt;&gt;&gt; M = [[762, 327, 468], [484, 239, 477]]
-&gt;&gt;&gt; result1 = chisq_test(M)
-&gt;&gt;&gt; print(result1)</p>
-<p>Effect of rescale_p
-&gt;&gt;&gt; x = [12, 5, 7, 7]
-&gt;&gt;&gt; p = [0.4, 0.4, 0.2, 0.2]
-&gt;&gt;&gt; result2 = chisq_test(x, p=p, rescale_p=True)
-&gt;&gt;&gt; print(result2)</p>
-<p>Testing for population probabilities
-&gt;&gt;&gt; x = [20, 15, 25]
-&gt;&gt;&gt; result31 = chisq_test(x)
-&gt;&gt;&gt; print(result31)</p>
-<p>A second example of testing for population probabilities
-&gt;&gt;&gt; x = [89,37,30,28,2]
-&gt;&gt;&gt; p = [0.40,0.20,0.20,0.19,0.01]
-&gt;&gt;&gt; result32 = chisq_test(x, p=p)
-&gt;&gt;&gt; print(result32)</p>
-<p>Goodness of fit
-&gt;&gt;&gt; x = [1, 2, 3, 4, 5, 6]
-&gt;&gt;&gt; y = [6, 1, 2, 3, 4, 5]
-&gt;&gt;&gt; result4 = chisq_test(x, y)
-&gt;&gt;&gt; print(result4)</p>
+<p>From Agresti(2007) p.39</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">M</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">762</span><span class="p">,</span> <span class="mi">327</span><span class="p">,</span> <span class="mi">468</span><span class="p">],</span> <span class="p">[</span><span class="mi">484</span><span class="p">,</span> <span class="mi">239</span><span class="p">,</span> <span class="mi">477</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result1</span> <span class="o">=</span> <span class="n">chisq_test</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">result1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Effect of rescale_p</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result2</span> <span class="o">=</span> <span class="n">chisq_test</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="p">,</span> <span class="n">rescale_p</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">result2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Testing for population probabilities</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result31</span> <span class="o">=</span> <span class="n">chisq_test</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">result31</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>A second example of testing for population probabilities</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">89</span><span class="p">,</span><span class="mi">37</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">28</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.40</span><span class="p">,</span><span class="mf">0.20</span><span class="p">,</span><span class="mf">0.20</span><span class="p">,</span><span class="mf">0.19</span><span class="p">,</span><span class="mf">0.01</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result32</span> <span class="o">=</span> <span class="n">chisq_test</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">result32</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Goodness of fit</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result4</span> <span class="o">=</span> <span class="n">chisq_test</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">result4</span><span class="p">)</span>
+</pre></div>
+</div>
 </section>
 </dd></dl>
 
@@ -421,7 +431,9 @@ These are sometimes referred to as tests of no correlation, but that term is oft
 <dl class="py function">
 <dt class="sig sig-object py" id="estyp.testing.nested_models_test">
 <span class="sig-prename descclassname"><span class="pre">estyp.testing.</span></span><span class="sig-name descname"><span class="pre">nested_models_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fitted_small_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">RegressionResultsWrapper</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fitted_big_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">RegressionResultsWrapper</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">TestResults</span></span></span><a class="reference internal" href="_modules/estyp/testing.html#nested_models_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#estyp.testing.nested_models_test" title="Permalink to this definition"></a></dt>
-<dd><p>Nested Models F-Test Function</p>
+<dd><section id="nested-models-f-test-function">
+<h3>Nested Models F-Test Function<a class="headerlink" href="#nested-models-f-test-function" title="Permalink to this heading"></a></h3>
+</section>
 <section id="id16">
 <h3>Description:<a class="headerlink" href="#id16" title="Permalink to this heading"></a></h3>
 <p>This function performs a nested models F-test using deviance from two fitted models from statsmodels library. The test compares two nested models: a larger or “big” model and a smaller or “small” model. The purpose of this test is to determine whether the larger model significantly improves the model fit compared to the smaller model by adding additional predictors.</p>
@@ -453,36 +465,42 @@ These are sometimes referred to as tests of no correlation, but that term is oft
 </section>
 <section id="id19">
 <h3>Examples:<a class="headerlink" href="#id19" title="Permalink to this heading"></a></h3>
-<p>Example 1: With OLS
-&gt;&gt;&gt; import pandas as pd
-&gt;&gt;&gt; import statsmodels.api as sm
-&gt;&gt;&gt; data = pd.DataFrame({
-…     “x”: [2.01, 2.99, 4.01, 5.01, 6.89],
-…     “y”: [2, 3, 4, 5, 6]
-… })
-&gt;&gt;&gt; model_small = sm.OLS.from_formula(“y ~ 1”, data).fit()
-&gt;&gt;&gt; model_big = sm.OLS.from_formula(“y ~ x”, data).fit()
-&gt;&gt;&gt; print(nested_models_test(model_small, model_big))</p>
-<p>Example 2: With Logit
-&gt;&gt;&gt; import pandas as pd
-&gt;&gt;&gt; import statsmodels.api as sm
-&gt;&gt;&gt; data = pd.DataFrame({
-…     “x”: [2.01, 2.99, 4.01, 3.01, 4.89],
-…     “y”: [0, 1, 1, 0, 1]
-… })
-&gt;&gt;&gt; model_small = sm.Logit.from_formula(“y ~ 1”, data).fit()
-&gt;&gt;&gt; model_big = sm.Logit.from_formula(“y ~ x”, data).fit()
-&gt;&gt;&gt; print(nested_models_test(model_small, model_big))</p>
-<p>Example 3: With GLM
-&gt;&gt;&gt; import pandas as pd
-&gt;&gt;&gt; import statsmodels.api as sm
-&gt;&gt;&gt; data = pd.DataFrame({
-…     “x”: [2.01, 2.99, 4.01, 5.01, 6.89],
-…     “y”: [2, 3, 4, 5, 6]
-… })
-&gt;&gt;&gt; model_small = sm.GLM.from_formula(“y ~ 1”, data, family = sm.families.Gamma()).fit()
-&gt;&gt;&gt; model_big = sm.GLM.from_formula(“y ~ x”, data, family = sm.families.Gamma()).fit()
-&gt;&gt;&gt; print(nested_models_test(model_small, model_big))</p>
+<p>Example 1: With OLS</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+<span class="gp">... </span>    <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">2.01</span><span class="p">,</span> <span class="mf">2.99</span><span class="p">,</span> <span class="mf">4.01</span><span class="p">,</span> <span class="mf">5.01</span><span class="p">,</span> <span class="mf">6.89</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+<span class="gp">... </span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model_small</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="s2">&quot;y ~ 1&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model_big</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="s2">&quot;y ~ x&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">nested_models_test</span><span class="p">(</span><span class="n">model_small</span><span class="p">,</span> <span class="n">model_big</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Example 2: With Logit</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+<span class="gp">... </span>    <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">2.01</span><span class="p">,</span> <span class="mf">2.99</span><span class="p">,</span> <span class="mf">4.01</span><span class="p">,</span> <span class="mf">3.01</span><span class="p">,</span> <span class="mf">4.89</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="gp">... </span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model_small</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">Logit</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="s2">&quot;y ~ 1&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model_big</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">Logit</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="s2">&quot;y ~ x&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">nested_models_test</span><span class="p">(</span><span class="n">model_small</span><span class="p">,</span> <span class="n">model_big</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Example 3: With GLM</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+<span class="gp">... </span>    <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">2.01</span><span class="p">,</span> <span class="mf">2.99</span><span class="p">,</span> <span class="mf">4.01</span><span class="p">,</span> <span class="mf">5.01</span><span class="p">,</span> <span class="mf">6.89</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+<span class="gp">... </span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model_small</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">GLM</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="s2">&quot;y ~ 1&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">family</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">families</span><span class="o">.</span><span class="n">Gamma</span><span class="p">())</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model_big</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">GLM</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="s2">&quot;y ~ x&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">family</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">families</span><span class="o">.</span><span class="n">Gamma</span><span class="p">())</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">nested_models_test</span><span class="p">(</span><span class="n">model_small</span><span class="p">,</span> <span class="n">model_big</span><span class="p">))</span>
+</pre></div>
+</div>
 </section>
 </dd></dl>
 

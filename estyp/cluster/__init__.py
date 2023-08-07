@@ -64,6 +64,7 @@ Example 1: Using the elbow method with KMeans
 
 
 Example 2: Using KModes with custom arguments
+
 >>> from kmodes.kmodes import KModes
 >>> import pandas as pd
 >>> import numpy as np
@@ -74,6 +75,7 @@ Example 2: Using KModes with custom arguments
 >>> searcher.fit(data)
 
 Example 3: Using the silhouette method with KMedoids
+
 >>> from sklean.datasets import load_iris
 >>> from sklearn_extra.cluster import KMedoids
 >>> data = load_iris().data
@@ -82,6 +84,7 @@ Example 3: Using the silhouette method with KMedoids
 >>> searcher.plot()
 
 Example 4: Using the silhouette method with KPrototypes
+
 >>> import pandas as pd
 >>> import numpy as np
 >>> from kmodes.kprototypes import KPrototypes
@@ -93,6 +96,7 @@ Example 4: Using the silhouette method with KPrototypes
 >>> searcher.plot()
 
 Example 5: Using the silhouette method with KPrototypes and custom alpha for distance calculation
+
 >>> import pandas as pd
 >>> import numpy as np
 >>> from kmodes.kprototypes import KPrototypes
@@ -163,6 +167,7 @@ Returns:
 
 Example:
 --------
+
 >>> from sklearn.cluster import KMeans
 >>> from sklean.datasets import load_iris
 >>> data = load_iris().data
@@ -204,6 +209,7 @@ best_estimator : instance of clustering model
 
 Example:
 --------
+
 >>> from sklearn.cluster import KMeans
 >>> from sklean.datasets import load_iris
 >>> data = load_iris().data
@@ -427,6 +433,7 @@ None
 
 Example:
 --------
+
 >>> from sklearn.cluster import KMeans
 >>> from sklean.datasets import load_iris
 >>> data = load_iris().data
@@ -461,6 +468,7 @@ Returns:
 
 Example:
 --------
+
 >>> from sklearn.cluster import KMeans
 >>> from sklean.datasets import load_iris
 >>> data = load_iris().data
@@ -488,6 +496,7 @@ labels : array, shape (n_samples,)
 
 Example:
 --------
+
 >>> from sklearn.cluster import KMeans
 >>> from sklean.datasets import load_iris
 >>> data = load_iris().data
