@@ -10,7 +10,7 @@ Welcome to ESTYP Documentation's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   modules
+   estyp
 
 Indices and tables
 ==================
