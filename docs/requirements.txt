@@ -1,6 +1,6 @@
 sphinx_rtd_theme
 jupyter-sphinx
-
+jupyter
 estyp
 numpy >= 1.22.3
 scikit-learn >= 1.3.0
