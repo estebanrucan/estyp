@@ -42,6 +42,7 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../estyp.html">estyp package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">estyp</a></li>
 </ul>
 
         </div>
@@ -80,66 +81,67 @@
 
 <div class="viewcode-block" id="LogisticRegression"><a class="viewcode-back" href="../../estyp.linear_model.html#estyp.linear_model.LogisticRegression">[docs]</a><span class="k">class</span> <span class="nc">LogisticRegression</span><span class="p">(</span><span class="n">LogisticRegression_</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd"># Logistic Regression</span>
+<span class="sd">Logistic Regression</span>
+<span class="sd">-------------------</span>
+
+<span class="sd">Description</span>
+<span class="sd">-----------</span>
 
 <span class="sd">This class implements a logistic regression model. It inherits from the `sklearn.linear_model.LogisticRegression` class, but adds additional methods for calculating confidence intervals, p-values, and model summaries.</span>
 
-<span class="sd">## Parameters</span>
+<span class="sd">Parameters</span>
+<span class="sd">----------</span>
 
-<span class="sd">* `penalty`: The type of penalty to use. Can be one of `&quot;none&quot;` (default). `&quot;l1&quot;`, `&quot;l2&quot;`, or `&quot;elasticnet&quot;`.</span>
-<span class="sd">* `dual`: Whether to use the dual formulation of the problem.</span>
-<span class="sd">* `tol`: The tolerance for convergence.</span>
-<span class="sd">* `C`: The regularization strength.</span>
-<span class="sd">* `fit_intercept`: Whether to fit an intercept term.</span>
-<span class="sd">* `intercept_scaling`: The scaling factor for the intercept term.</span>
-<span class="sd">* `class_weight`: None (default), &quot;balanced&quot; or a dictionary that maps class labels to weights.</span>
-<span class="sd">* `random_state`: The random seed.</span>
-<span class="sd">* `solver`: The solver to use. Can be one of `&quot;lbfgs&quot;` (default), `&quot;liblinear&quot;`, `&quot;newton-cg&quot;`, `&quot;newton-cholesky&quot;`, `&quot;sag&quot;`, or `&quot;saga&quot;`.</span>
-<span class="sd">* `max_iter`: The maximum number of iterations.</span>
-<span class="sd">* `multi_class`: The type of multi-class classification to use. Can be one of `&quot;auto&quot;`, `&quot;ovr&quot;`, or `&quot;multinomial&quot;`.</span>
-<span class="sd">* `verbose`: The verbosity level.</span>
-<span class="sd">* `warm_start`: Whether to use the warm start.</span>
-<span class="sd">* `n_jobs`: The number of jobs to use for parallel processing.</span>
-<span class="sd">* `l1_ratio`: The l1_ratio parameter for elasticnet regularization.</span>
+<span class="sd">- `penalty`: The type of penalty to use. Can be one of `&quot;none&quot;` (default). `&quot;l1&quot;`, `&quot;l2&quot;`, or `&quot;elasticnet&quot;`.</span>
+<span class="sd">- `dual`: Whether to use the dual formulation of the problem.</span>
+<span class="sd">- `tol`: The tolerance for convergence.</span>
+<span class="sd">- `C`: The regularization strength.</span>
+<span class="sd">- `fit_intercept`: Whether to fit an intercept term.</span>
+<span class="sd">- `intercept_scaling`: The scaling factor for the intercept term.</span>
+<span class="sd">- `class_weight`: None (default), &quot;balanced&quot; or a dictionary that maps class labels to weights.</span>
+<span class="sd">- `random_state`: The random seed.</span>
+<span class="sd">- `solver`: The solver to use. Can be one of `&quot;lbfgs&quot;` (default), `&quot;liblinear&quot;`, `&quot;newton-cg&quot;`, `&quot;newton-cholesky&quot;`, `&quot;sag&quot;`, or `&quot;saga&quot;`.</span>
+<span class="sd">- `max_iter`: The maximum number of iterations.</span>
+<span class="sd">- `multi_class`: The type of multi-class classification to use. Can be one of `&quot;auto&quot;`, `&quot;ovr&quot;`, or `&quot;multinomial&quot;`.</span>
+<span class="sd">- `verbose`: The verbosity level.</span>
+<span class="sd">- `warm_start`: Whether to use the warm start.</span>
+<span class="sd">- `n_jobs`: The number of jobs to use for parallel processing.</span>
+<span class="sd">- `l1_ratio`: The l1_ratio parameter for elasticnet regularization.</span>
 
-<span class="sd">## Properties</span>
+<span class="sd">Properties</span>
+<span class="sd">----------</span>
 
-<span class="sd">* `params`: Returns the estimated values for model parameters.</span>
-<span class="sd">* `aic`: Calculates the Akaike information criterion (AIC) for the model.</span>
-<span class="sd">* `bic`: Calculates the Bayesian information criterion (BIC) for the model.</span>
-<span class="sd">* `cov_matrix`: Returns the covariance matrix for model parámetres.</span>
+<span class="sd">- `params`: Returns the estimated values for model parameters.</span>
+<span class="sd">- `aic`: Calculates the Akaike information criterion (AIC) for the model.</span>
+<span class="sd">- `bic`: Calculates the Bayesian information criterion (BIC) for the model.</span>
+<span class="sd">- `cov_matrix`: Returns the covariance matrix for model parámetres.</span>
 
-<span class="sd">## Methods</span>
+<span class="sd">Methods</span>
+<span class="sd">-------</span>
 
-<span class="sd">* `fit()`: Fits the model to the data.</span>
-<span class="sd">* `predict()`: Predicts the class labels for new data.</span>
-<span class="sd">* `conf_int()`: Calculates the confidence intervals for the model coefficients.</span>
-<span class="sd">* `se()`: Calculates the standard errors for the model coefficients.</span>
-<span class="sd">* `z_values()`: Calculates the z-scores for the model coefficients.</span>
-<span class="sd">* `p_values()`: Calculates the p-values for the model coefficients.</span>
-<span class="sd">* `summary()`: Prints a summary of the model.</span>
+<span class="sd">- `fit()`: Fits the model to the data.</span>
+<span class="sd">- `predict()`: Predicts the class labels for new data.</span>
+<span class="sd">- `conf_int()`: Calculates the confidence intervals for the model coefficients.</span>
+<span class="sd">- `se()`: Calculates the standard errors for the model coefficients.</span>
+<span class="sd">- `z_values()`: Calculates the z-scores for the model coefficients.</span>
+<span class="sd">- `p_values()`: Calculates the p-values for the model coefficients.</span>
+<span class="sd">- `summary()`: Prints a summary of the model.</span>
 
+<span class="sd">Examples</span>
+<span class="sd">--------</span>
 
-<span class="sd">## Examples</span>
-
-<span class="sd">```python</span>
-<span class="sd">import numpy as np</span>
-<span class="sd">import pandas as pd</span>
-
-<span class="sd">np.random.seed(123)</span>
-<span class="sd">data = pd.DataFrame({</span>
-<span class="sd">    &quot;y&quot;: np.random.randint(2, size=100),</span>
-<span class="sd">    &quot;x1&quot;: np.random.uniform(-1, 1, size=100),</span>
-<span class="sd">    &quot;x2&quot;: np.random.uniform(-1, 1, size=100),</span>
-<span class="sd">})</span>
-
-<span class="sd">formula = &quot;y ~ x1 + x2&quot;</span>
-
-<span class="sd">spec = LogisticRegression.from_formula(formula, data)</span>
-<span class="sd">model = spec.fit()</span>
-
-<span class="sd">print(model.summary())</span>
-<span class="sd">```</span>
+<span class="sd">&gt;&gt;&gt; import numpy as np</span>
+<span class="sd">&gt;&gt;&gt; import pandas as pd</span>
+<span class="sd">&gt;&gt;&gt; np.random.seed(123)</span>
+<span class="sd">&gt;&gt;&gt; data = pd.DataFrame({</span>
+<span class="sd">        &quot;y&quot;: np.random.randint(2, size=100),</span>
+<span class="sd">        &quot;x1&quot;: np.random.uniform(-1, 1, size=100),</span>
+<span class="sd">        &quot;x2&quot;: np.random.uniform(-1, 1, size=100),</span>
+<span class="sd">    })</span>
+<span class="sd">&gt;&gt;&gt; formula = &quot;y ~ x1 + x2&quot;</span>
+<span class="sd">&gt;&gt;&gt; spec = LogisticRegression.from_formula(formula, data)</span>
+<span class="sd">&gt;&gt;&gt; model = spec.fit()</span>
+<span class="sd">&gt;&gt;&gt; print(model.summary())</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">penalty</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;l1&#39;</span><span class="p">,</span> <span class="s1">&#39;l2&#39;</span><span class="p">,</span> <span class="s1">&#39;elasticnet&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">dual</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">tol</span> <span class="o">=</span> <span class="mf">0.0001</span><span class="p">,</span> <span class="n">C</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">fit_intercept</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">intercept_scaling</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">class_weight</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">2023</span><span class="p">,</span> <span class="n">solver</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;lbfgs&#39;</span><span class="p">,</span> <span class="s1">&#39;liblinear&#39;</span><span class="p">,</span> <span class="s1">&#39;newton-cg&#39;</span><span class="p">,</span> <span class="s1">&#39;newton-cholesky&#39;</span><span class="p">,</span> <span class="s1">&#39;sag&#39;</span><span class="p">,</span> <span class="s1">&#39;saga&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;lbfgs&quot;</span><span class="p">,</span> <span class="n">max_iter</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">multi_class</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="s1">&#39;ovr&#39;</span><span class="p">,</span> <span class="s1">&#39;multinomial&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">warm_start</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">n_jobs</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">l1_ratio</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>

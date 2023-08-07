@@ -58,6 +58,19 @@
 <li class="toctree-l2"><a class="reference internal" href="estyp.html#module-estyp">Module contents</a></li>
 </ul>
 </li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">estyp</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="estyp.html">estyp package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="estyp.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="estyp.cluster.html">estyp.cluster package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="estyp.linear_model.html">estyp.linear_model package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="estyp.testing.html">estyp.testing package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="estyp.html#module-estyp">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -93,9 +106,15 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="estyp.linear_model.stepwise.both_selection">
 <span class="sig-prename descclassname"><span class="pre">estyp.linear_model.stepwise.</span></span><span class="sig-name descname"><span class="pre">both_selection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">formula</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GLM</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10000</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/estyp/linear_model/stepwise.html#both_selection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#estyp.linear_model.stepwise.both_selection" title="Permalink to this definition"></a></dt>
-<dd><p># Both Forward and Backward Variable Selection for GLM’s</p>
+<dd><section id="both-forward-and-backward-variable-selection-for-glm-s">
+<h3>Both Forward and Backward Variable Selection for GLM’s<a class="headerlink" href="#both-forward-and-backward-variable-selection-for-glm-s" title="Permalink to this heading"></a></h3>
+</section>
+<section id="description">
+<h3>Description<a class="headerlink" href="#description" title="Permalink to this heading"></a></h3>
 <p>This function performs both forward and backward variable selection using the Akaike Information Criterion (AIC).</p>
-<p>## Parameters</p>
+</section>
+<section id="parameters">
+<h3>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p><cite>formula</cite>: A string representing the initial model formula.</p></li>
 <li><p><cite>data</cite>: A Pandas DataFrame containing the data to be used for model fitting.</p></li>
@@ -103,31 +122,41 @@
 <li><p><cite>max_iter</cite>: The maximum number of iterations to perform.</p></li>
 <li><p><cite>**kwargs</cite>: Additional keyword arguments to be passed to the model.from_formula() method.</p></li>
 </ul>
-<p>## Returns</p>
+</section>
+<section id="returns">
+<h3>Returns<a class="headerlink" href="#returns" title="Permalink to this heading"></a></h3>
 <p>A string representing the final model formula.</p>
-<p>## Example</p>
-<p><a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id3"><span class="problematic" id="id4">`</span></a>python
-import statsmodels.api as sm
-import pandas as pd</p>
-<dl class="simple">
-<dt>data = pd.DataFrame({</dt><dd><p>“y”: [1, 2, 3, 4, 5],
-“x1”: [1, 2, 3, 4, 5],
-“x2”: [6, 7, 8, 9, 10],</p>
-</dd>
-</dl>
-<p>})</p>
-<p>formula = “y ~ x1 + x2”</p>
-<p>model = sm.OLS</p>
-<p>final_formula = both_selection(formula=formula, data=data, model=model)</p>
-<p>print(final_formula)</p>
+</section>
+<section id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+<span class="go">    &quot;y&quot;: [1, 2, 3, 4, 5],</span>
+<span class="go">    &quot;x1&quot;: [1, 2, 3, 4, 5],</span>
+<span class="go">    &quot;x2&quot;: [6, 7, 8, 9, 10],</span>
+<span class="go">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">formula</span> <span class="o">=</span> <span class="s2">&quot;y ~ x1 + x2&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">final_formula</span> <span class="o">=</span> <span class="n">both_selection</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">final_formula</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="estyp.linear_model.stepwise.forward_selection">
 <span class="sig-prename descclassname"><span class="pre">estyp.linear_model.stepwise.</span></span><span class="sig-name descname"><span class="pre">forward_selection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y:</span> <span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data:</span> <span class="pre">~pandas.core.frame.DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model:</span> <span class="pre">~statsmodels.genmod.generalized_linear_model.GLM</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'statsmodels.regression.linear_model.OLS'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha=0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/estyp/linear_model/stepwise.html#forward_selection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#estyp.linear_model.stepwise.forward_selection" title="Permalink to this definition"></a></dt>
-<dd><p># Forward Variable Selection for GLM’s</p>
+<dd><section id="forward-variable-selection-for-glm-s">
+<h3>Forward Variable Selection for GLM’s<a class="headerlink" href="#forward-variable-selection-for-glm-s" title="Permalink to this heading"></a></h3>
+</section>
+<section id="id1">
+<h3>Description<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
 <p>This function performs forward variable selection using p-values calculated from nested models testing.</p>
-<p>## Parameters</p>
+</section>
+<section id="id2">
+<h3>Parameters<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p><cite>y</cite>: A string containing the name of the dependent variable (target) to be predicted.</p></li>
 <li><p>data: The pandas DataFrame containing both the target variable ‘y’ and the        predictor variables for model training.</p></li>
@@ -135,34 +164,35 @@ import pandas as pd</p>
 <li><p><cite>alpha</cite>: A number between 0 and 1. The significance level for feature selection. A feature is added to the model if its p-value is less than this alpha value. Defaults to 0.05.</p></li>
 <li><p><cite>**kwargs</cite>: Additional keyword arguments to be passed to the model.from_formula() method.</p></li>
 </ul>
-<p>## Returns</p>
+</section>
+<section id="id3">
+<h3>Returns<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
 <p>A string representing the final model formula.</p>
-<p>## Example</p>
-<p><a href="#id5"><span class="problematic" id="id6">``</span></a><a href="#id7"><span class="problematic" id="id8">`</span></a>python
-import pandas as pd
-import statsmodels.api as sm</p>
-<p># Create sample DataFrame
-data = pd.DataFrame({</p>
-<blockquote>
-<div><p>‘y’: [1, 2, 3, 4, 5],
-‘X1’: [2, 4, 5, 7, 9],
-‘X2’: [3, 1, 6, 8, 4],
-‘X3’: [1, 5, 9, 2, 3]</p>
-</div></blockquote>
-<p>})</p>
-<p># Perform the forward variable selection
-formula = forward_selection(</p>
-<blockquote>
-<div><p>y = “y”, ,
-data = data, 
-model = sm.OLS, 
-alpha = 0.05</p>
-</div></blockquote>
-<p>)</p>
-<p># Fit the model using the selected formula
-selected_model = sm.OLS.from_formula(formula, data).fit()
-print(selected_model.summary())
-<a href="#id9"><span class="problematic" id="id10">``</span></a><a href="#id11"><span class="problematic" id="id12">`</span></a></p>
+</section>
+<section id="id4">
+<h3>Examples<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create sample DataFrame</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+<span class="go">    &#39;y&#39;: [1, 2, 3, 4, 5],</span>
+<span class="go">    &#39;X1&#39;: [2, 4, 5, 7, 9],</span>
+<span class="go">    &#39;X2&#39;: [3, 1, 6, 8, 4],</span>
+<span class="go">    &#39;X3&#39;: [1, 5, 9, 2, 3]</span>
+<span class="go">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Perform the forward variable selection</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">formula</span> <span class="o">=</span> <span class="n">forward_selection</span><span class="p">(</span>
+<span class="go">    y = &quot;y&quot;, ,</span>
+<span class="go">    data = data, </span>
+<span class="go">    model = sm.OLS, </span>
+<span class="go">    alpha = 0.05</span>
+<span class="go">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Fit the model using the selected formula</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">selected_model</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">selected_model</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</section>
 </dd></dl>
 
 </section>

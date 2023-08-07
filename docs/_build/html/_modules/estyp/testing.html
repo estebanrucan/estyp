@@ -42,6 +42,7 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../estyp.html">estyp package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">estyp</a></li>
 </ul>
 
         </div>
@@ -93,35 +94,34 @@
 
 <div class="viewcode-block" id="CheckModel"><a class="viewcode-back" href="../../estyp.testing.html#estyp.testing.CheckModel">[docs]</a><span class="k">class</span> <span class="nc">CheckModel</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    # Check Linear Regression Assumptions</span>
+<span class="sd">Check Linear Regression Assumptions</span>
+<span class="sd">-----------------------------------</span>
 
-<span class="sd">    The `CheckModel` class provides methods to test the assumptions of the linear regression model.</span>
-<span class="sd">    These assumptions are:</span>
+<span class="sd">The `CheckModel` class provides methods to test the assumptions of the linear regression model.</span>
+<span class="sd">These assumptions are:</span>
 
-<span class="sd">    - Normality of residuals</span>
-<span class="sd">    - Homoscedasticity (equal variance) of residuals</span>
-<span class="sd">    - Independence of residuals</span>
-<span class="sd">    - No Multicollinearity among predictors</span>
+<span class="sd">- Normality of residuals</span>
+<span class="sd">- Homoscedasticity (equal variance) of residuals</span>
+<span class="sd">- Independence of residuals</span>
+<span class="sd">- No Multicollinearity among predictors</span>
 
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    `fitted_model` : `RegressionResultsWrapper`</span>
-<span class="sd">        The fitted linear regression model which is an instance of RegressionResultsWrapper.</span>
+<span class="sd">Parameters</span>
+<span class="sd">----------</span>
+<span class="sd">`fitted_model` : `RegressionResultsWrapper`</span>
+<span class="sd">    The fitted linear regression model which is an instance of RegressionResultsWrapper.</span>
 
-<span class="sd">    Example</span>
-<span class="sd">    -------</span>
-<span class="sd">    ```python</span>
-<span class="sd">    import statsmodels.api as sm</span>
-<span class="sd">    from sklearn.datasets import load_diabetes</span>
-<span class="sd">    diabetes = load_diabetes()</span>
-<span class="sd">    X = diabetes[&quot;data&quot;]</span>
-<span class="sd">    y = diabetes[&quot;target&quot;]</span>
-<span class="sd">    X = sm.add_constant(X)</span>
-<span class="sd">    model = sm.OLS(y, X)</span>
-<span class="sd">    fitted_model = model.fit()</span>
-<span class="sd">    cm = CheckModel(fitted_model)</span>
-<span class="sd">    cm.check_all()</span>
-<span class="sd">    ```</span>
+<span class="sd">Example</span>
+<span class="sd">-------</span>
+<span class="sd">&gt;&gt;&gt; import statsmodels.api as sm</span>
+<span class="sd">&gt;&gt;&gt; from sklearn.datasets import load_diabetes</span>
+<span class="sd">&gt;&gt;&gt; diabetes = load_diabetes()</span>
+<span class="sd">&gt;&gt;&gt; X = diabetes[&quot;data&quot;]</span>
+<span class="sd">&gt;&gt;&gt; y = diabetes[&quot;target&quot;]</span>
+<span class="sd">&gt;&gt;&gt; X = sm.add_constant(X)</span>
+<span class="sd">&gt;&gt;&gt; model = sm.OLS(y, X)</span>
+<span class="sd">&gt;&gt;&gt; fitted_model = model.fit()</span>
+<span class="sd">&gt;&gt;&gt; cm = CheckModel(fitted_model)</span>
+<span class="sd">&gt;&gt;&gt; cm.check_all()</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fitted_model</span><span class="p">:</span> <span class="n">RegressionResultsWrapper</span><span class="p">):</span>
@@ -133,25 +133,21 @@
 
 <div class="viewcode-block" id="CheckModel.check_normality"><a class="viewcode-back" href="../../estyp.testing.html#estyp.testing.CheckModel.check_normality">[docs]</a>    <span class="k">def</span> <span class="nf">check_normality</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_pvals</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Checks the normality assumption of the residuals using several statistical tests.</span>
+<span class="sd">Checks the normality assumption of the residuals using several statistical tests.</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        `alpha` : float, optional</span>
-<span class="sd">            The significance level used by the statistical tests, by default 0.05.</span>
-<span class="sd">        `plot` : bool, optional</span>
-<span class="sd">            If `True`, a plot is shown for visual inspection of normality, by default `True`.</span>
-<span class="sd">        `return_pvals` : bool, optional</span>
-<span class="sd">            If `True`, the p-values of the statistical tests are returned, by default `False`.</span>
+<span class="sd">Parameters</span>
+<span class="sd">----------</span>
+<span class="sd">`alpha` : float, optional</span>
+<span class="sd">    The significance level used by the statistical tests, by default 0.05.</span>
+<span class="sd">`plot` : bool, optional</span>
+<span class="sd">    If `True`, a plot is shown for visual inspection of normality, by default `True`.</span>
+<span class="sd">`return_pvals` : bool, optional</span>
+<span class="sd">    If `True`, the p-values of the statistical tests are returned, by default `False`.</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        dict</span>
-<span class="sd">            A dictionary of p-values of the statistical tests if `return_pvals=True`.</span>
-
-<span class="sd">        Example</span>
-<span class="sd">        -------</span>
-<span class="sd">        &gt;&gt;&gt; cm.check_normality()</span>
+<span class="sd">Returns</span>
+<span class="sd">-------</span>
+<span class="sd">dict</span>
+<span class="sd">    A dictionary of p-values of the statistical tests if `return_pvals=True`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">normality</span> <span class="o">=</span> <span class="n">_CheckNormality</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">plot</span><span class="p">:</span>
@@ -163,25 +159,21 @@
 
 <div class="viewcode-block" id="CheckModel.check_homocedasticity"><a class="viewcode-back" href="../../estyp.testing.html#estyp.testing.CheckModel.check_homocedasticity">[docs]</a>    <span class="k">def</span> <span class="nf">check_homocedasticity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_pvals</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Checks the homoscedasticity assumption (equal variance of residuals) using several statistical tests.</span>
+<span class="sd">Checks the homoscedasticity assumption (equal variance of residuals) using several statistical tests.</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        `alpha` : float, optional</span>
-<span class="sd">            The significance level used by the statistical tests, by default 0.05.</span>
-<span class="sd">        `plot` : bool, optional</span>
-<span class="sd">            If `True`, a plot is shown for visual inspection of homoscedasticity, by default `True`.</span>
-<span class="sd">        `return_pvals` : bool, optional</span>
-<span class="sd">            If `True`, the p-values of the statistical tests are returned, by default `False`.</span>
+<span class="sd">Parameters</span>
+<span class="sd">----------</span>
+<span class="sd">`alpha` : float, optional</span>
+<span class="sd">    The significance level used by the statistical tests, by default 0.05.</span>
+<span class="sd">`plot` : bool, optional</span>
+<span class="sd">    If `True`, a plot is shown for visual inspection of homoscedasticity, by default `True`.</span>
+<span class="sd">`return_pvals` : bool, optional</span>
+<span class="sd">    If `True`, the p-values of the statistical tests are returned, by default `False`.</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        dict</span>
-<span class="sd">            A dictionary of p-values of the statistical tests if `return_pvals=True`.</span>
-
-<span class="sd">        Example</span>
-<span class="sd">        -------</span>
-<span class="sd">        &gt;&gt;&gt; cm.check_homocedasticity()</span>
+<span class="sd">Returns</span>
+<span class="sd">-------</span>
+<span class="sd">dict</span>
+<span class="sd">    A dictionary of p-values of the statistical tests if `return_pvals=True`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">homocedasticity</span> <span class="o">=</span> <span class="n">_CheckHomocedasticity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">plot</span><span class="p">:</span>
@@ -193,25 +185,21 @@
 
 <div class="viewcode-block" id="CheckModel.check_independence"><a class="viewcode-back" href="../../estyp.testing.html#estyp.testing.CheckModel.check_independence">[docs]</a>    <span class="k">def</span> <span class="nf">check_independence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_vals</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Checks the independence assumption of the residuals using several statistical tests.</span>
+<span class="sd">Checks the independence assumption of the residuals using several statistical tests.</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        alpha : float, optional</span>
-<span class="sd">            The significance level used by the statistical tests, by default 0.05.</span>
-<span class="sd">        plot : bool, optional</span>
-<span class="sd">            If `True`, a plot is shown for visual inspection of independence, by default `True`.</span>
-<span class="sd">        return_pvals : bool, optional</span>
-<span class="sd">            If `True`, the p-values of the statistical tests are returned, by default `False`.</span>
+<span class="sd">Parameters</span>
+<span class="sd">----------</span>
+<span class="sd">alpha : float, optional</span>
+<span class="sd">    The significance level used by the statistical tests, by default 0.05.</span>
+<span class="sd">plot : bool, optional</span>
+<span class="sd">    If `True`, a plot is shown for visual inspection of independence, by default `True`.</span>
+<span class="sd">return_pvals : bool, optional</span>
+<span class="sd">    If `True`, the p-values of the statistical tests are returned, by default `False`.</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        dict</span>
-<span class="sd">            A dictionary of values of the statistical tests if `return_vals=True`.</span>
-
-<span class="sd">        Example</span>
-<span class="sd">        -------</span>
-<span class="sd">        &gt;&gt;&gt; cm.check_independence()</span>
+<span class="sd">Returns</span>
+<span class="sd">-------</span>
+<span class="sd">dict</span>
+<span class="sd">    A dictionary of values of the statistical tests if `return_vals=True`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">independence</span> <span class="o">=</span> <span class="n">_CheckIndependence</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">plot</span><span class="p">:</span>
@@ -236,10 +224,6 @@
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
 <span class="sd">            The condition number of the model if `return_cm=True`.</span>
-
-<span class="sd">        Example</span>
-<span class="sd">        -------</span>
-<span class="sd">        &gt;&gt;&gt; cm.check_multicollinearity()</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">multicollinearity</span> <span class="o">=</span> <span class="n">_CheckMulticollinearity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">plot</span><span class="p">:</span>
@@ -251,25 +235,21 @@
 
 <div class="viewcode-block" id="CheckModel.check_all"><a class="viewcode-back" href="../../estyp.testing.html#estyp.testing.CheckModel.check_all">[docs]</a>    <span class="k">def</span> <span class="nf">check_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_vals</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Checks all the assumptions of the linear regression model.</span>
+<span class="sd">Checks all the assumptions of the linear regression model.</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        `alpha` : float, optional</span>
-<span class="sd">            The significance level used by the statistical tests, by default 0.05.</span>
-<span class="sd">        `plot` : bool, optional</span>
-<span class="sd">            If `True`, a plot is shown for visual inspection of each assumption, by default `True`.</span>
-<span class="sd">        `return_vals` : bool, optional</span>
-<span class="sd">            If `True`, the values of the statistical tests are returned, by default `False`.</span>
+<span class="sd">Parameters</span>
+<span class="sd">----------</span>
+<span class="sd">`alpha` : float, optional</span>
+<span class="sd">    The significance level used by the statistical tests, by default 0.05.</span>
+<span class="sd">`plot` : bool, optional</span>
+<span class="sd">    If `True`, a plot is shown for visual inspection of each assumption, by default `True`.</span>
+<span class="sd">`return_vals` : bool, optional</span>
+<span class="sd">    If `True`, the values of the statistical tests are returned, by default `False`.</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        dict</span>
-<span class="sd">            A dictionary of values of the statistical tests if `return_vals=True`.</span>
-
-<span class="sd">        Example</span>
-<span class="sd">        -------</span>
-<span class="sd">        &gt;&gt;&gt; cm.check_all()</span>
+<span class="sd">Returns</span>
+<span class="sd">-------</span>
+<span class="sd">dict</span>
+<span class="sd">    A dictionary of values of the statistical tests if `return_vals=True`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">normality</span> <span class="o">=</span> <span class="n">_CheckNormality</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
         <span class="n">homocedasticity</span> <span class="o">=</span> <span class="n">_CheckHomocedasticity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
@@ -311,51 +291,46 @@
     <span class="n">conf_level</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TestResults</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    # F Test to Compare Two Variances</span>
-<span class="sd">    ## Description</span>
-<span class="sd">    Performs an F test to compare the variances of two samples from normal populations. This function is inspired by the `var.test()` function of the software R.</span>
+<span class="sd">F Test to Compare Two Variances</span>
+<span class="sd">-------------------------------</span>
 
-<span class="sd">    ## Usage</span>
-
-<span class="sd">    ```python</span>
-<span class="sd">    var_test(x, y, ...)</span>
-<span class="sd">    var_test(x, y, ratio = 1,</span>
-<span class="sd">            alternative = [two-sided&quot;, &quot;less&quot;, &quot;greater&quot;],</span>
-<span class="sd">            conf_level = 0.95)</span>
-<span class="sd">    ```</span>
-
-<span class="sd">    ## Arguments</span>
-<span class="sd">    * `x`, `y`: numeric list, `np.array` or `pd.Series` of data values.</span>
-<span class="sd">    * `ratio`: the hypothesized ratio of the population variances of x and y.</span>
-<span class="sd">    * `alternative`: a character string specifying the alternative hypothesis, must be one of &quot;two.sided&quot; (default), &quot;greater&quot; or &quot;less&quot;. You can specify just the initial letter.</span>
-<span class="sd">    * `conf_level`: a number between 0 and 1 indicanting the confidence level of the interval.</span>
+<span class="sd">Description</span>
+<span class="sd">-----------</span>
+<span class="sd">Performs an F test to compare the variances of two samples from normal populations. This function is inspired by the `var.test()` function of the software R.</span>
 
 
-<span class="sd">    ## Details</span>
-<span class="sd">    The null hypothesis is that the ratio of the variances of the populations from which x and y were drawn, is equal to ratio.</span>
+<span class="sd">Arguments</span>
+<span class="sd">---------</span>
+<span class="sd">- `x`, `y`: numeric list, `np.array` or `pd.Series` of data values.</span>
+<span class="sd">- `ratio`: the hypothesized ratio of the population variances of x and y.</span>
+<span class="sd">- `alternative`: a character string specifying the alternative hypothesis, must be one of &quot;two-sided&quot; (default), &quot;greater&quot; or &quot;less&quot;. You can specify just the initial letter.</span>
+<span class="sd">- `conf_level`: a number between 0 and 1 indicanting the confidence level of the interval.</span>
 
-<span class="sd">    ## Value</span>
-<span class="sd">    An instance of the `TestResults` class containing the following attributes:</span>
+<span class="sd">Details</span>
+<span class="sd">-------</span>
+<span class="sd">The null hypothesis is that the ratio of the variances of the populations from which x and y were drawn, is equal to ratio.</span>
 
-<span class="sd">    * `statistic`: the value of the F test statistic.</span>
-<span class="sd">    * `df`: the degrees of freedom for the F test statistic.</span>
-<span class="sd">    * `p_value`: the p-value for the test.</span>
-<span class="sd">    * `ci`: a confidence interval for the ratio of the population variances.</span>
-<span class="sd">    * `estimate`: the ratio of the sample variances of x and y.</span>
-<span class="sd">    * `alternative`: a string describing the alternative hypothesis.</span>
+<span class="sd">Value</span>
+<span class="sd">-----</span>
+<span class="sd">An instance of the `TestResults` class containing the following attributes:</span>
 
-<span class="sd">    ## Examples</span>
+<span class="sd">- `statistic`: the value of the F test statistic.</span>
+<span class="sd">- `df`: the degrees of freedom for the F test statistic.</span>
+<span class="sd">- `p_value`: the p-value for the test.</span>
+<span class="sd">- `ci`: a confidence interval for the ratio of the population variances.</span>
+<span class="sd">- `estimate`: the ratio of the sample variances of x and y.</span>
+<span class="sd">- `alternative`: a string describing the alternative hypothesis.</span>
 
-<span class="sd">    ```python</span>
-<span class="sd">    import numpy as np</span>
-<span class="sd">    np.random.seed(2023)</span>
-<span class="sd">    x = np.random.normal(size=100)</span>
-<span class="sd">    y = np.random.normal(size=100)</span>
+<span class="sd">Examples</span>
+<span class="sd">--------</span>
+<span class="sd">&gt;&gt;&gt; import numpy as np</span>
+<span class="sd">&gt;&gt;&gt; np.random.seed(2023)</span>
+<span class="sd">&gt;&gt;&gt; x = np.random.normal(size=100)</span>
+<span class="sd">&gt;&gt;&gt; y = np.random.normal(size=100)</span>
 
-<span class="sd">    print(var_test(x, y))</span>
-<span class="sd">    print(var_test(x, y, alternative=&quot;less&quot;))</span>
-<span class="sd">    print(var_test(x, y, ratio = 0.9, alternative=&quot;greater&quot;))</span>
-<span class="sd">    ```</span>
+<span class="sd">&gt;&gt;&gt; print(var_test(x, y))</span>
+<span class="sd">&gt;&gt;&gt; print(var_test(x, y, alternative=&quot;less&quot;))</span>
+<span class="sd">&gt;&gt;&gt; print(var_test(x, y, ratio=0.9, alternative=&quot;greater&quot;))</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">__var_test</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">ratio</span><span class="p">,</span> <span class="n">alternative</span><span class="p">,</span> <span class="n">conf_level</span><span class="p">)</span></div>
 
@@ -370,65 +345,54 @@
     <span class="n">conf_level</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TestResults</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Student&#39;s t-Test</span>
+<span class="sd">-----------------</span>
 
-<span class="sd">    # Student&#39;s t-Test</span>
-<span class="sd">    ## Description</span>
-<span class="sd">    Performs one and two sample t-tests on groups of data. This function is inspired by the `t.test()` function of the software R.</span>
-
-<span class="sd">    ## Usage</span>
-<span class="sd">    ```python</span>
-<span class="sd">    t_test(x, ...)</span>
-<span class="sd">    ```</span>
-
-<span class="sd">    ```python</span>
-<span class="sd">    t_test(x, y = None,</span>
-<span class="sd">        alternative = [&quot;two-sided&quot;, &quot;less&quot;, &quot;greater&quot;],</span>
-<span class="sd">        mu = 0, paired = False, var_equal = False,</span>
-<span class="sd">        conf_level = 0.95)</span>
-<span class="sd">    ```</span>
+<span class="sd">Description</span>
+<span class="sd">-----------</span>
+<span class="sd">Performs one and two sample t-tests on groups of data. This function is inspired by the `t.test()` function of the software R.</span>
 
 
-<span class="sd">    ## Arguments</span>
-<span class="sd">    * `x`: a (non-empty) numeric container of data values.</span>
-<span class="sd">    * `y`: an (optional) numeric container of data values.</span>
-<span class="sd">    * `alternative`: a string specifying the alternative hypothesis, must be one of &quot;two-sided&quot; (default), &quot;greater&quot; or &quot;less&quot;.</span>
-<span class="sd">    * `mu`: a number indicating the true value of the mean (or difference in means if you are performing a two sample test).</span>
-<span class="sd">    * `paired`: a logical indicating whether you want a paired t-test.</span>
-<span class="sd">    * `var_equal`: a logical variable indicating whether to treat the two variances as being equal. If `True` then the pooled variance is used to estimate the variance otherwise the Welch (or Satterthwaite) approximation to the degrees of freedom is used.</span>
-<span class="sd">    * `conf_level`: a number between 0 and 1 indicanting the confidence level of the interval.</span>
+<span class="sd">Arguments</span>
+<span class="sd">---------</span>
+<span class="sd">- `x`: a (non-empty) numeric container of data values.</span>
+<span class="sd">- `y`: an (optional) numeric container of data values.</span>
+<span class="sd">- `alternative`: a string specifying the alternative hypothesis, must be one of &quot;two-sided&quot; (default), &quot;greater&quot; or &quot;less&quot;.</span>
+<span class="sd">- `mu`: a number indicating the true value of the mean (or difference in means if you are performing a two sample test).</span>
+<span class="sd">- `paired`: a logical indicating whether you want a paired t-test.</span>
+<span class="sd">- `var_equal`: a logical variable indicating whether to treat the two variances as being equal. If `True` then the pooled variance is used to estimate the variance otherwise the Welch (or Satterthwaite) approximation to the degrees of freedom is used.</span>
+<span class="sd">- `conf_level`: a number between 0 and 1 indicanting the confidence level of the interval.</span>
 
+<span class="sd">Details</span>
+<span class="sd">-------</span>
+<span class="sd">alternative = &quot;greater&quot; is the alternative that x has a larger mean than y. For the one-sample case: that the mean is positive.</span>
 
-<span class="sd">    ## Details</span>
-<span class="sd">    alternative = &quot;greater&quot; is the alternative that x has a larger mean than y. For the one-sample case: that the mean is positive.</span>
+<span class="sd">If `paired` is `True` then both x and y must be specified and they must be the same length. Missing values are silently removed (in pairs if `paired` is `True`). If `var_equal` is `True` then the pooled estimate of the variance is used. By default, if `var_equal` is `False` then the variance is estimated separately for both groups and the Welch modification to the degrees of freedom is used.</span>
 
-<span class="sd">    If `paired` is `True` then both x and y must be specified and they must be the same length. Missing values are silently removed (in pairs if `paired` is `True`). If `var_equal` is `True` then the pooled estimate of the variance is used. By default, if `var_equal` is `False` then the variance is estimated separately for both groups and the Welch modification to the degrees of freedom is used.</span>
+<span class="sd">Value</span>
+<span class="sd">-----</span>
+<span class="sd">An instance of the `TestResults` class containing the following attributes:</span>
 
+<span class="sd">- `statistic`: the value of the t-statistic.</span>
+<span class="sd">- `df`: the degrees of freedom for the t-statistic.</span>
+<span class="sd">- `p_value`: the p-value for the test.</span>
+<span class="sd">- `ci`: a confidence interval for the mean appropriate to the specified alternative hypothesis.</span>
+<span class="sd">- `estimate`: the estimated mean or list of estimated means depending on whether it was a one-sample test or a two-sample test.</span>
+<span class="sd">- `alternative`: a character string describing the alternative hypothesis.</span>
+<span class="sd">- `mu`: the mean of the null hypothesis.</span>
 
-<span class="sd">    ### Value</span>
-<span class="sd">    An instance of the `TestResults` class containing the following attributes:</span>
+<span class="sd">Examples</span>
+<span class="sd">--------</span>
+<span class="sd">&gt;&gt;&gt; import numpy as np</span>
+<span class="sd">&gt;&gt;&gt; np.random.seed(2023)</span>
+<span class="sd">&gt;&gt;&gt; x = np.random.normal(size=100)</span>
+<span class="sd">&gt;&gt;&gt; y = np.random.normal(size=100)</span>
+<span class="sd">&gt;&gt;&gt; mu = 0.1</span>
 
-<span class="sd">    * `statistic`: the value of the t-statistic.</span>
-<span class="sd">    * `df`: the degrees of freedom for the t-statistic.</span>
-<span class="sd">    * `p_value`: the p-value for the test.</span>
-<span class="sd">    * `ci`: a confidence interval for the mean appropriate to the specified alternative hypothesis.</span>
-<span class="sd">    * `estimate`: the estimated mean or list of estimated means depending on whether it was a one-sample test or a two-sample test.</span>
-<span class="sd">    * `alternative`: a character string describing the alternative hypothesis.</span>
-<span class="sd">    * `mu`: the mean of the null hypothesis.</span>
-
-
-<span class="sd">    ## Examples</span>
-<span class="sd">    ```python</span>
-<span class="sd">    import numpy as np</span>
-<span class="sd">    np.random.seed(2023)</span>
-<span class="sd">    x = np.random.normal(size=100)</span>
-<span class="sd">    y = np.random.normal(size=100)</span>
-<span class="sd">    mu = 0.1</span>
-
-<span class="sd">    print(t_test(x, mu=mu, alternative=&quot;less&quot;))</span>
-<span class="sd">    print(t_test(x, y, mu=mu))</span>
-<span class="sd">    print(t_test(x, y, mu=mu, var_equal=True, alternative=&quot;greater&quot;))</span>
-<span class="sd">    print(t_test(x, y, mu=mu, paired=True))</span>
-<span class="sd">    ```</span>
+<span class="sd">&gt;&gt;&gt; print(t_test(x, mu=mu, alternative=&quot;less&quot;))</span>
+<span class="sd">&gt;&gt;&gt; print(t_test(x, y, mu=mu))</span>
+<span class="sd">&gt;&gt;&gt; print(t_test(x, y, mu=mu, var_equal=True, alternative=&quot;greater&quot;))</span>
+<span class="sd">&gt;&gt;&gt; print(t_test(x, y, mu=mu, paired=True))</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">__t_test</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">alternative</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">paired</span><span class="p">,</span> <span class="n">var_equal</span><span class="p">,</span> <span class="n">conf_level</span><span class="p">)</span></div>
 
@@ -438,68 +402,68 @@
     <span class="n">fitted_big_model</span><span class="p">:</span> <span class="n">RegressionResultsWrapper</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TestResults</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    # Nested Models F-Test Function</span>
+<span class="sd">Nested Models F-Test Function</span>
 
-<span class="sd">    ## Description</span>
+<span class="sd">Description:</span>
+<span class="sd">-------------</span>
+<span class="sd">This function performs a nested models F-test using deviance from two fitted models from statsmodels library. The test compares two nested models: a larger or &quot;big&quot; model and a smaller or &quot;small&quot; model. The purpose of this test is to determine whether the larger model significantly improves the model fit compared to the smaller model by adding additional predictors.</span>
 
-<span class="sd">    This function performs a nested models F-test using deviance from two fitted models from statsmodels library. The test compares two nested models: a larger or &quot;big&quot; model and a smaller or &quot;small&quot; model. The purpose of this test is to determine whether the larger model significantly improves the model fit compared to the smaller model by adding additional predictors.</span>
+<span class="sd">Parameters:</span>
+<span class="sd">-----------</span>
+<span class="sd">`fitted_small_model` : `RegressionResultsWrapper`</span>
+<span class="sd">    The fitted model representing the smaller/nested model. It has to come from statsmodels.</span>
+<span class="sd">`fitted_big_model` : `RegressionResultsWrapper`</span>
+<span class="sd">    The fitted model representing the larger model, which includes all the predictors from the smaller model and potentially additional predictors. It has to come from statsmodels.</span>
 
-<span class="sd">    ## Parameters</span>
-<span class="sd">    * `fitted_small_model`: The fitted model representing the smaller/nested model. It have to come from statsmodels.</span>
-<span class="sd">    * `fitted_big_model`: : The fitted model representing the larger model, which includes all the predictors from the smaller model and potentially additional predictors. It have to come from statsmodels.</span>
+<span class="sd">Returns:</span>
+<span class="sd">--------</span>
+<span class="sd">The function returns an object of class TestResults that contains the following information:</span>
 
-<span class="sd">    ## Returns</span>
+<span class="sd">`method` : str</span>
+<span class="sd">    A string indicating the name of the statistical test (Nested models F-test).</span>
+<span class="sd">`statistic` : float</span>
+<span class="sd">    The computed F-statistic value.</span>
+<span class="sd">`estimate` : float</span>
+<span class="sd">    The difference in deviances between the models.</span>
+<span class="sd">`df` : dict</span>
+<span class="sd">    A dictionary with the degrees of freedom for the numerator and denominator of the F-statistic.</span>
+<span class="sd">`p_value` : float</span>
+<span class="sd">    The p-value associated with the F-statistic.</span>
 
-<span class="sd">    The function returns an object of class TestResults that contains the following information:</span>
+<span class="sd">Examples:</span>
+<span class="sd">---------</span>
+<span class="sd">Example 1: With OLS</span>
+<span class="sd">&gt;&gt;&gt; import pandas as pd</span>
+<span class="sd">&gt;&gt;&gt; import statsmodels.api as sm</span>
+<span class="sd">&gt;&gt;&gt; data = pd.DataFrame({</span>
+<span class="sd">...     &quot;x&quot;: [2.01, 2.99, 4.01, 5.01, 6.89],</span>
+<span class="sd">...     &quot;y&quot;: [2, 3, 4, 5, 6]</span>
+<span class="sd">... })</span>
+<span class="sd">&gt;&gt;&gt; model_small = sm.OLS.from_formula(&quot;y ~ 1&quot;, data).fit()</span>
+<span class="sd">&gt;&gt;&gt; model_big = sm.OLS.from_formula(&quot;y ~ x&quot;, data).fit()</span>
+<span class="sd">&gt;&gt;&gt; print(nested_models_test(model_small, model_big))</span>
 
-<span class="sd">    * `method`: A string indicating the name of the statistical test (Nested models F-test).</span>
-<span class="sd">    * `statistic`: The computed F-statistic value.</span>
-<span class="sd">    * `estimate`: The difference in deviances between the models.</span>
-<span class="sd">    * `df`: A dictionary with the degrees of freedom for the numerator and denominator of the F-statistic.</span>
-<span class="sd">    * p_value: The p-value associated with the F-statistic.</span>
+<span class="sd">Example 2: With Logit</span>
+<span class="sd">&gt;&gt;&gt; import pandas as pd</span>
+<span class="sd">&gt;&gt;&gt; import statsmodels.api as sm</span>
+<span class="sd">&gt;&gt;&gt; data = pd.DataFrame({</span>
+<span class="sd">...     &quot;x&quot;: [2.01, 2.99, 4.01, 3.01, 4.89],</span>
+<span class="sd">...     &quot;y&quot;: [0, 1, 1, 0, 1]</span>
+<span class="sd">... })</span>
+<span class="sd">&gt;&gt;&gt; model_small = sm.Logit.from_formula(&quot;y ~ 1&quot;, data).fit()</span>
+<span class="sd">&gt;&gt;&gt; model_big = sm.Logit.from_formula(&quot;y ~ x&quot;, data).fit()</span>
+<span class="sd">&gt;&gt;&gt; print(nested_models_test(model_small, model_big))</span>
 
-<span class="sd">    ## Examples</span>
-<span class="sd">    ### Example 1: With OLS</span>
-<span class="sd">    ```python</span>
-<span class="sd">    import pandas as pd</span>
-<span class="sd">    import statsmodels.api as sm</span>
-<span class="sd">    data = pd.DataFrame({</span>
-<span class="sd">        &quot;x&quot;: [2.01, 2.99, 4.01, 5.01, 6.89],</span>
-<span class="sd">        &quot;y&quot;: [2, 3, 4, 5, 6]</span>
-<span class="sd">    })</span>
-
-<span class="sd">    model_small = sm.OLS.from_formula(&quot;y ~ 1&quot;, data).fit()</span>
-<span class="sd">    model_big = sm.OLS.from_formula(&quot;y ~ x&quot;, data).fit()</span>
-
-<span class="sd">    print(nested_models_test(model_small, model_big))</span>
-<span class="sd">    ```</span>
-<span class="sd">    ### Example 2: With Logit</span>
-<span class="sd">    ```python</span>
-<span class="sd">    import pandas as pd</span>
-<span class="sd">    import statsmodels.api as sm</span>
-<span class="sd">    data = pd.DataFrame({</span>
-<span class="sd">        &quot;x&quot;: [2.01, 2.99, 4.01, 3.01, 4.89],</span>
-<span class="sd">        &quot;y&quot;: [0, 1, 1, 0, 1]</span>
-<span class="sd">    })</span>
-
-<span class="sd">    model_small = sm.Logit.from_formula(&quot;y ~ 1&quot;, data).fit()</span>
-<span class="sd">    model_big = sm.Logit.from_formula(&quot;y ~ x&quot;, data).fit()</span>
-
-<span class="sd">    print(nested_models_test(model_small, model_big))</span>
-<span class="sd">    ```</span>
-<span class="sd">    ### Example 3: With GLM</span>
-<span class="sd">    ```python</span>
-<span class="sd">    import pandas as pd</span>
-<span class="sd">    import statsmodels.api as sm</span>
-<span class="sd">    data = pd.DataFrame({</span>
-<span class="sd">        &quot;x&quot;: [2.01, 2.99, 4.01, 5.01, 6.89],</span>
-<span class="sd">        &quot;y&quot;: [2, 3, 4, 5, 6]</span>
-<span class="sd">    })</span>
-<span class="sd">    model_small = sm.GLM.from_formula(&quot;y ~ 1&quot;, data, family = sm.families.Gamma()).fit()</span>
-<span class="sd">    model_big = sm.GLM.from_formula(&quot;y ~ x&quot;, data, family = sm.families.Gamma()).fit()</span>
-
-<span class="sd">    print(nested_models_test(model_small, model_big))</span>
-<span class="sd">    ```</span>
+<span class="sd">Example 3: With GLM</span>
+<span class="sd">&gt;&gt;&gt; import pandas as pd</span>
+<span class="sd">&gt;&gt;&gt; import statsmodels.api as sm</span>
+<span class="sd">&gt;&gt;&gt; data = pd.DataFrame({</span>
+<span class="sd">...     &quot;x&quot;: [2.01, 2.99, 4.01, 5.01, 6.89],</span>
+<span class="sd">...     &quot;y&quot;: [2, 3, 4, 5, 6]</span>
+<span class="sd">... })</span>
+<span class="sd">&gt;&gt;&gt; model_small = sm.GLM.from_formula(&quot;y ~ 1&quot;, data, family = sm.families.Gamma()).fit()</span>
+<span class="sd">&gt;&gt;&gt; model_big = sm.GLM.from_formula(&quot;y ~ x&quot;, data, family = sm.families.Gamma()).fit()</span>
+<span class="sd">&gt;&gt;&gt; print(nested_models_test(model_small, model_big))</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">__nested_models_test</span><span class="p">(</span><span class="n">fitted_small_model</span><span class="p">,</span> <span class="n">fitted_big_model</span><span class="p">)</span></div>
 
@@ -513,78 +477,72 @@
     <span class="n">correct</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TestResults</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    # Test of Equal or Given Proportions.</span>
+<span class="sd">Test of Equal or Given Proportions.</span>
 
-<span class="sd">    `prop_test()` can be used for testing the null that the proportions</span>
-<span class="sd">    (probabilities of success) in several groups are the same, or that they equal</span>
-<span class="sd">    certain given values.</span>
+<span class="sd">Parameters</span>
+<span class="sd">----------</span>
+<span class="sd">`x` : array_like</span>
+<span class="sd">    A vector of counts of successes, a one-dimensional table with two entries,</span>
+<span class="sd">    or a two-dimensional table (or matrix) with 2 columns, giving the counts of</span>
+<span class="sd">    successes and failures, respectively.</span>
+<span class="sd">`n` : array_like, optional</span>
+<span class="sd">    A vector of counts of trials; ignored if x is a matrix or a table.</span>
+<span class="sd">    If not provided, it is calculated as the sum of the elements in x.</span>
+<span class="sd">`p` : array_like, optional</span>
+<span class="sd">    A vector of probabilities of success. The length of p must be the same as</span>
+<span class="sd">    the number of groups specified by x, and its elements must be greater than</span>
+<span class="sd">    0 and less than 1.</span>
+<span class="sd">`alternative` : str, optional</span>
+<span class="sd">    A character string specifying the alternative hypothesis, must be one of</span>
+<span class="sd">    &quot;two-sided&quot; (default), &quot;greater&quot; or &quot;less&quot;. You can specify just the</span>
+<span class="sd">    initial letter. Only used for testing the null that a single proportion</span>
+<span class="sd">    equals a given value, or that two proportions are equal; ignored otherwise.</span>
+<span class="sd">`conf_level` : float, optional</span>
+<span class="sd">    Confidence level of the returned confidence interval. Must be a single</span>
+<span class="sd">    number between 0 and 1. Only used when testing the null that a single</span>
+<span class="sd">    proportion equals a given value, or that two proportions are equal;</span>
+<span class="sd">    ignored otherwise.</span>
+<span class="sd">`correct` : bool, optional</span>
+<span class="sd">    A logical indicating whether Yates&#39; continuity correction should be</span>
+<span class="sd">    applied where possible.</span>
 
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    `x` : array_like</span>
-<span class="sd">        a vector of counts of successes, a one-dimensional table with two entries,</span>
-<span class="sd">        or a two-dimensional table (or matrix) with 2 columns, giving the counts of</span>
-<span class="sd">        successes and failures, respectively.</span>
-<span class="sd">    `n` : array_like, optional</span>
-<span class="sd">        a vector of counts of trials; ignored if x is a matrix or a table.</span>
-<span class="sd">        If not provided, it is calculated as the sum of the elements in x.</span>
-<span class="sd">    `p` : array_like, optional</span>
-<span class="sd">        a vector of probabilities of success. The length of p must be the same as</span>
-<span class="sd">        the number of groups specified by x, and its elements must be greater than</span>
-<span class="sd">        0 and less than 1.</span>
-<span class="sd">    alternative : str, optional</span>
-<span class="sd">        a character string specifying the alternative hypothesis, must be one of</span>
-<span class="sd">        &quot;two.sided&quot; (default), &quot;greater&quot; or &quot;less&quot;. You can specify just the</span>
-<span class="sd">        initial letter. Only used for testing the null that a single proportion</span>
-<span class="sd">        equals a given value, or that two proportions are equal; ignored otherwise.</span>
-<span class="sd">    `conf_level` : float, optional</span>
-<span class="sd">        confidence level of the returned confidence interval. Must be a single</span>
-<span class="sd">        number between 0 and 1. Only used when testing the null that a single</span>
-<span class="sd">        proportion equals a given value, or that two proportions are equal;</span>
-<span class="sd">        ignored otherwise.</span>
-<span class="sd">    `correct` : bool, optional</span>
-<span class="sd">        a logical indicating whether Yates&#39; continuity correction should be</span>
-<span class="sd">        applied where possible.</span>
+<span class="sd">Returns</span>
+<span class="sd">-------</span>
+<span class="sd">`TestResults`</span>
+<span class="sd">    A data class with the following attributes:</span>
 
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    `TestResult`</span>
-<span class="sd">        A data class with the following attributes:</span>
+<span class="sd">    - `statistic` : float</span>
+<span class="sd">        The value of Pearson&#39;s chi-squared test statistic.</span>
+<span class="sd">    - `df` : int</span>
+<span class="sd">        The degrees of freedom of the approximate chi-squared distribution of</span>
+<span class="sd">        the test statistic.</span>
+<span class="sd">    - `p_value` : float</span>
+<span class="sd">        The p-value of the test.</span>
+<span class="sd">    - `estimate` : array_like</span>
+<span class="sd">        A vector with the sample proportions x/n.</span>
+<span class="sd">    - `null_value` : float or array_like</span>
+<span class="sd">        The value of p if specified by the null hypothesis.</span>
+<span class="sd">    - `conf_int` : array_like</span>
+<span class="sd">        A confidence interval for the true proportion if there is one group,</span>
+<span class="sd">        or for the difference in proportions if there are 2 groups and p is</span>
+<span class="sd">        not given, or None otherwise. In the cases where it is not None, the</span>
+<span class="sd">        returned confidence interval has an asymptotic confidence level as</span>
+<span class="sd">        specified by conf_level, and is appropriate to the specified</span>
+<span class="sd">        alternative hypothesis.</span>
+<span class="sd">    - `alternative` : str</span>
+<span class="sd">        A character string describing the alternative.</span>
+<span class="sd">    - `method` : str</span>
+<span class="sd">        A character string indicating the method used, and whether Yates&#39;</span>
+<span class="sd">        continuity correction was applied.</span>
 
-<span class="sd">        `statistic` : float</span>
-<span class="sd">            the value of Pearson&#39;s chi-squared test statistic.</span>
-<span class="sd">        `df` : int</span>
-<span class="sd">            the degrees of freedom of the approximate chi-squared distribution of</span>
-<span class="sd">            the test statistic.</span>
-<span class="sd">        `p_value` : float</span>
-<span class="sd">            the p-value of the test.</span>
-<span class="sd">        `estimate` : array_like</span>
-<span class="sd">            a vector with the sample proportions x/n.</span>
-<span class="sd">        `null_value` : float or array_like</span>
-<span class="sd">            the value of p if specified by the null hypothesis.</span>
-<span class="sd">        `conf_int` : array_like</span>
-<span class="sd">            a confidence interval for the true proportion if there is one group,</span>
-<span class="sd">            or for the difference in proportions if there are 2 groups and p is</span>
-<span class="sd">            not given, or None otherwise. In the cases where it is not None, the</span>
-<span class="sd">            returned confidence interval has an asymptotic confidence level as</span>
-<span class="sd">            specified by conf_level, and is appropriate to the specified</span>
-<span class="sd">            alternative hypothesis.</span>
-<span class="sd">        `alternative` : str</span>
-<span class="sd">            a character string describing the alternative.</span>
-<span class="sd">        `method` : str</span>
-<span class="sd">            a character string indicating the method used, and whether Yates&#39;</span>
-<span class="sd">            continuity correction was applied.</span>
-
-<span class="sd">    Example</span>
-<span class="sd">    --------</span>
-<span class="sd">    ```python</span>
-<span class="sd">    import numpy as np</span>
-<span class="sd">    from scipy import stats</span>
-<span class="sd">    x = np.array([83, 90, 129, 70])</span>
-<span class="sd">    n = np.array([86, 93, 136, 82])</span>
-<span class="sd">    result = prop_test(x, n)</span>
-<span class="sd">    print(result)</span>
-<span class="sd">    ```</span>
+<span class="sd">Examples</span>
+<span class="sd">--------</span>
+<span class="sd">&gt;&gt;&gt; import numpy as np</span>
+<span class="sd">&gt;&gt;&gt; from scipy import stats</span>
+<span class="sd">&gt;&gt;&gt; x = np.array([83, 90, 129, 70])</span>
+<span class="sd">&gt;&gt;&gt; n = np.array([86, 93, 136, 82])</span>
+<span class="sd">&gt;&gt;&gt; result = prop_test(x, n)</span>
+<span class="sd">&gt;&gt;&gt; print(result)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">__prop_test</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">alternative</span><span class="p">,</span> <span class="n">conf_level</span><span class="p">,</span> <span class="n">correct</span><span class="p">)</span></div>
 
@@ -598,79 +556,71 @@
     <span class="n">continuity</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TestResults</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    # Test for Association/Correlation Between Paired Samples</span>
+<span class="sd">Test for Association/Correlation Between Paired Samples</span>
+<span class="sd">-------------------------------------------------------</span>
 
-<span class="sd">    Description</span>
-<span class="sd">    -----------</span>
-<span class="sd">    Test for association between paired samples, using one of Pearson&#39;s product moment correlation coefficient, Kendall&#39;s</span>
-<span class="sd">    tau or Spearman&#39;s rho.</span>
+<span class="sd">Description</span>
+<span class="sd">-----------</span>
+<span class="sd">Test for association between paired samples, using one of Pearson&#39;s product moment correlation coefficient, Kendall&#39;s</span>
+<span class="sd">tau or Spearman&#39;s rho.</span>
 
-<span class="sd">    Usage</span>
-<span class="sd">    -----</span>
-<span class="sd">    ```python</span>
-<span class="sd">    cor_test(x, y, ...)</span>
-<span class="sd">    cor_test(x, y, alternative=&quot;two-sided&quot;, method=&quot;pearson&quot;, conf_level=0.95, continuity=False)</span>
-<span class="sd">    ```</span>
+<span class="sd">Arguments</span>
+<span class="sd">---------</span>
+<span class="sd">`x`, `y` : array_like</span>
+<span class="sd">    Numeric one-dimensional `arrays`, `lists` or `pd.Series` of data values. `x` and `y` must have the same length.</span>
 
-<span class="sd">    Arguments</span>
-<span class="sd">    ---------</span>
-<span class="sd">    `x`, `y` : array_like</span>
-<span class="sd">        Numeric one-dimensional `arrays`, `lists` or `pd.Series` of data values. `x` and `y` must have the same length.</span>
+<span class="sd">`alternative` : str, optional</span>
+<span class="sd">    Indicates the alternative hypothesis and must be one of &quot;two-sided&quot;, &quot;greater&quot; or &quot;less&quot;.</span>
+<span class="sd">    &quot;greater&quot; corresponds to positive association, &quot;less&quot; to negative association.</span>
 
-<span class="sd">    `alternative` : str, optional</span>
-<span class="sd">        Indicates the alternative hypothesis and must be one of &quot;two-sided&quot;, &quot;greater&quot; or &quot;less&quot;.</span>
-<span class="sd">        &quot;greater&quot; corresponds to positive association, &quot;less&quot; to negative association.</span>
+<span class="sd">`method` : str, optional</span>
+<span class="sd">    A string indicating which correlation coefficient is to be used for the test.</span>
+<span class="sd">    One of &quot;pearson&quot;, &quot;kendall&quot;, or &quot;spearman&quot;.</span>
 
-<span class="sd">    `method` : str, optional</span>
-<span class="sd">        A string indicating which correlation coefficient is to be used for the test.</span>
-<span class="sd">        One of &quot;pearson&quot;, &quot;kendall&quot;, or &quot;spearman&quot;.</span>
+<span class="sd">`conf_level` : float, optional</span>
+<span class="sd">    Confidence level for the returned confidence interval. Currently only used for the</span>
+<span class="sd">    Pearson product moment correlation coefficient if there are at least 4 complete pairs of observations.</span>
 
-<span class="sd">    `conf_level` : float, optional</span>
-<span class="sd">        Confidence level for the returned confidence interval. Currently only used for the</span>
-<span class="sd">        Pearson product moment correlation coefficient if there are at least 4 complete pairs of observations.</span>
+<span class="sd">`continuity` : bool, optional</span>
+<span class="sd">    If `True`, a continuity correction is used for Kendall&#39;s tau.</span>
 
-<span class="sd">    `continuity` : bool, optional</span>
-<span class="sd">        If `True`, a continuity correction is used for Kendall&#39;s tau.</span>
+<span class="sd">Returns</span>
+<span class="sd">-------</span>
+<span class="sd">A `TestResults` instance containing the following atributes:</span>
+<span class="sd">    - `statistic`: the value of the test statistic.</span>
+<span class="sd">    - `df` (if applicable): the degrees of freedom of the test statistic.</span>
+<span class="sd">    - `p_value`: the p-value of the test.</span>
+<span class="sd">    - `estimate`: the estimated measure of association.</span>
+<span class="sd">    - `null_value`: the value of the association measure under the null hypothesis, always 0.</span>
+<span class="sd">    - `alternative`: a string describing the alternative hypothesis.</span>
+<span class="sd">    - `method`: a string indicating how the association was measured.</span>
+<span class="sd">    - `conf_int` (if applicable): a confidence interval for the measure of association.</span>
 
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    A `TestResults` instance containing the following atributes:</span>
-<span class="sd">        - `statistic`: the value of the test statistic.</span>
-<span class="sd">        - `df` (if applicable): the degrees of freedom of the test statistic.</span>
-<span class="sd">        - `p_value`: the p-value of the test.</span>
-<span class="sd">        - `estimate`: the estimated measure of association.</span>
-<span class="sd">        - `null_value`: the value of the association measure under the null hypothesis, always 0.</span>
-<span class="sd">        - `alternative`: a string describing the alternative hypothesis.</span>
-<span class="sd">        - `method`: a string indicating how the association was measured.</span>
-<span class="sd">        - `conf_int` (if applicable): a confidence interval for the measure of association.</span>
+<span class="sd">Details</span>
+<span class="sd">-------</span>
+<span class="sd">The three methods each estimate the association between paired samples and compute a test of the value being zero.</span>
+<span class="sd">They use different measures of association, all in the range [-1, 1] with 0 indicating no association.</span>
+<span class="sd">These are sometimes referred to as tests of no correlation, but that term is often confined to the default method.</span>
 
-<span class="sd">    Details</span>
-<span class="sd">    -------</span>
-<span class="sd">    The three methods each estimate the association between paired samples and compute a test of the value being zero.</span>
-<span class="sd">    They use different measures of association, all in the range [-1, 1] with 0 indicating no association.</span>
-<span class="sd">    These are sometimes referred to as tests of no correlation, but that term is often confined to the default method.</span>
+<span class="sd">References</span>
+<span class="sd">----------</span>
+<span class="sd">[1] D. J. Best &amp; D. E. Roberts (1975). Algorithm AS 89: The Upper Tail Probabilities of Spearman&#39;s rho.</span>
+<span class="sd">    Applied Statistics, 24, 377--379. 10.2307/2347111.</span>
 
-<span class="sd">    References</span>
-<span class="sd">    ----------</span>
-<span class="sd">    [1] D. J. Best &amp; D. E. Roberts (1975). Algorithm AS 89: The Upper Tail Probabilities of Spearman&#39;s rho.</span>
-<span class="sd">        Applied Statistics, 24, 377--379. 10.2307/2347111.</span>
+<span class="sd">[2] Myles Hollander &amp; Douglas A. Wolfe (1973), Nonparametric Statistical Methods.</span>
+<span class="sd">    New York: John Wiley &amp; Sons. Pages 185--194 (Kendall and Spearman tests).</span>
 
-<span class="sd">    [2] Myles Hollander &amp; Douglas A. Wolfe (1973), Nonparametric Statistical Methods.</span>
-<span class="sd">        New York: John Wiley &amp; Sons. Pages 185--194 (Kendall and Spearman tests).</span>
+<span class="sd">Example</span>
+<span class="sd">-------</span>
+<span class="sd">Using the iris dataset to test the association between sepal length and petal length using Pearson&#39;s correlation:</span>
 
-<span class="sd">    Example</span>
-<span class="sd">    -------</span>
-<span class="sd">    Using the iris dataset to test the association between sepal length and petal length using Pearson&#39;s correlation:</span>
+<span class="sd">&gt;&gt;&gt; from sklearn import datasets</span>
+<span class="sd">&gt;&gt;&gt; iris = datasets.load_iris()</span>
+<span class="sd">&gt;&gt;&gt; sepal_length = iris.data[:, 0]</span>
+<span class="sd">&gt;&gt;&gt; petal_length = iris.data[:, 2]</span>
+<span class="sd">&gt;&gt;&gt; result = cor_test(sepal_length, petal_length, method=&quot;pearson&quot;)</span>
+<span class="sd">&gt;&gt;&gt; print(result)</span>
 
-<span class="sd">    ```python</span>
-<span class="sd">    from sklearn import datasets</span>
-<span class="sd">    iris = datasets.load_iris()</span>
-
-<span class="sd">    sepal_length = iris.data[:, 0]</span>
-<span class="sd">    petal_length = iris.data[:, 2]</span>
-
-<span class="sd">    result = cor_test(sepal_length, petal_length, method=&quot;pearson&quot;)</span>
-<span class="sd">    print(result)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">__cor_test</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">alternative</span><span class="p">,</span> <span class="n">conf_level</span><span class="p">,</span> <span class="n">continuity</span><span class="p">)</span></div>
 
@@ -683,19 +633,13 @@
     <span class="n">rescale_p</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd"># Pearson&#39;s Chi-squared Test for Count Data</span>
+<span class="sd">Pearson&#39;s Chi-squared Test for Count Data</span>
+<span class="sd">------------------------------------------</span>
 
 
 <span class="sd">Description</span>
 <span class="sd">-----------</span>
 <span class="sd">`chisq_test()` performs chi-squared contingency table tests and goodness-of-fit tests.</span>
-
-<span class="sd">Usage</span>
-<span class="sd">------</span>
-<span class="sd">```python</span>
-<span class="sd">chisq_test(x, ...)</span>
-<span class="sd">chisq_test(x, y=None, correct=True, p=None, rescale_p=False)</span>
-<span class="sd">```</span>
 
 <span class="sd">Arguments</span>
 <span class="sd">---------</span>
@@ -710,7 +654,7 @@
 
 <span class="sd">`correct`: </span>
 <span class="sd">    A boolean indicating whether to apply continuity correction when computing the test statistic for 2x2 tables: </span>
-<span class="sd">    one half is subtracted from all |O-E| differences; however, the correction will not be bigger than the differences themselves. The default is True.</span>
+<span class="sd">    one half is subtracted from all abs(O-E) differences; however, the correction will not be bigger than the differences themselves. The default is True.</span>
 
 <span class="sd">`rescale_p`: boolean</span>
 <span class="sd">    A boolean; if True then p is rescaled (if necessary) to sum to 1. If rescale_p is False, and p does not sum to 1, an error is raised.</span>
@@ -751,35 +695,34 @@
 
 <span class="sd">Examples</span>
 <span class="sd">--------</span>
-<span class="sd">```python</span>
-<span class="sd">## From Agresti(2007) p.39</span>
-<span class="sd">M = [[762, 327, 468], [484, 239, 477]]</span>
-<span class="sd">result1 = chisq_test(M)</span>
-<span class="sd">print(result1)</span>
 
-<span class="sd">## Effect of rescale_p</span>
-<span class="sd">x = [12, 5, 7, 7]</span>
-<span class="sd">p = [0.4, 0.4, 0.2, 0.2]</span>
-<span class="sd">result2 = chisq_test(x, p=p, rescale_p=True)</span>
-<span class="sd">print(result2)</span>
+<span class="sd">From Agresti(2007) p.39</span>
+<span class="sd">&gt;&gt;&gt; M = [[762, 327, 468], [484, 239, 477]]</span>
+<span class="sd">&gt;&gt;&gt; result1 = chisq_test(M)</span>
+<span class="sd">&gt;&gt;&gt; print(result1)</span>
 
-<span class="sd">## Testing for population probabilities</span>
-<span class="sd">x = [20, 15, 25]</span>
-<span class="sd">result31 = chisq_test(x)</span>
-<span class="sd">print(result31)</span>
+<span class="sd">Effect of rescale_p</span>
+<span class="sd">&gt;&gt;&gt; x = [12, 5, 7, 7]</span>
+<span class="sd">&gt;&gt;&gt; p = [0.4, 0.4, 0.2, 0.2]</span>
+<span class="sd">&gt;&gt;&gt; result2 = chisq_test(x, p=p, rescale_p=True)</span>
+<span class="sd">&gt;&gt;&gt; print(result2)</span>
 
-<span class="sd">x = [89,37,30,28,2]</span>
-<span class="sd">p = [0.40,0.20,0.20,0.19,0.01]</span>
-<span class="sd">result32 = chisq_test(x, p=p)</span>
-<span class="sd">print(result32)</span>
+<span class="sd">Testing for population probabilities</span>
+<span class="sd">&gt;&gt;&gt; x = [20, 15, 25]</span>
+<span class="sd">&gt;&gt;&gt; result31 = chisq_test(x)</span>
+<span class="sd">&gt;&gt;&gt; print(result31)</span>
 
+<span class="sd">A second example of testing for population probabilities</span>
+<span class="sd">&gt;&gt;&gt; x = [89,37,30,28,2]</span>
+<span class="sd">&gt;&gt;&gt; p = [0.40,0.20,0.20,0.19,0.01]</span>
+<span class="sd">&gt;&gt;&gt; result32 = chisq_test(x, p=p)</span>
+<span class="sd">&gt;&gt;&gt; print(result32)</span>
 
-<span class="sd"># Goodness of fit</span>
-<span class="sd">x = [1, 2, 3, 4, 5, 6]</span>
-<span class="sd">y = [6, 1, 2, 3, 4, 5]</span>
-<span class="sd">result4 = chisq_test(x, y)</span>
-<span class="sd">print(result4)</span>
-<span class="sd">```</span>
+<span class="sd">Goodness of fit</span>
+<span class="sd">&gt;&gt;&gt; x = [1, 2, 3, 4, 5, 6]</span>
+<span class="sd">&gt;&gt;&gt; y = [6, 1, 2, 3, 4, 5]</span>
+<span class="sd">&gt;&gt;&gt; result4 = chisq_test(x, y)</span>
+<span class="sd">&gt;&gt;&gt; print(result4)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">return</span> <span class="n">__chisq_test</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">correct</span><span class="p">,</span> <span class="n">rescale_p</span><span class="p">)</span></div>

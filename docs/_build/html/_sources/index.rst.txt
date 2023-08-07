@@ -11,6 +11,7 @@ Welcome to ESTYP Documentation's documentation!
    :caption: Contents:
 
    estyp
+   modules
 
 Indices and tables
 ==================

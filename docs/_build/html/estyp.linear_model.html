@@ -58,6 +58,19 @@
 <li class="toctree-l2"><a class="reference internal" href="estyp.html#module-estyp">Module contents</a></li>
 </ul>
 </li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">estyp</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="estyp.html">estyp package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="estyp.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="estyp.cluster.html">estyp.cluster package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">estyp.linear_model package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="estyp.testing.html">estyp.testing package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="estyp.html#module-estyp">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -108,9 +121,15 @@
 <dt class="sig sig-object py" id="estyp.linear_model.LogisticRegression">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">estyp.linear_model.</span></span><span class="sig-name descname"><span class="pre">LogisticRegression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">penalty</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'l1'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'l2'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'elasticnet'</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dual</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fit_intercept</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intercept_scaling</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2023</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'lbfgs'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'liblinear'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'newton-cg'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'newton-cholesky'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'sag'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'saga'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'lbfgs'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multi_class</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'auto'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'ovr'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'multinomial'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">warm_start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l1_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/estyp/linear_model.html#LogisticRegression"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#estyp.linear_model.LogisticRegression" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">LogisticRegression</span></code></p>
-<p># Logistic Regression</p>
+<section id="logistic-regression">
+<h3>Logistic Regression<a class="headerlink" href="#logistic-regression" title="Permalink to this heading"></a></h3>
+</section>
+<section id="description">
+<h3>Description<a class="headerlink" href="#description" title="Permalink to this heading"></a></h3>
 <p>This class implements a logistic regression model. It inherits from the <cite>sklearn.linear_model.LogisticRegression</cite> class, but adds additional methods for calculating confidence intervals, p-values, and model summaries.</p>
-<p>## Parameters</p>
+</section>
+<section id="parameters">
+<h3>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p><cite>penalty</cite>: The type of penalty to use. Can be one of <cite>“none”</cite> (default). <cite>“l1”</cite>, <cite>“l2”</cite>, or <cite>“elasticnet”</cite>.</p></li>
 <li><p><cite>dual</cite>: Whether to use the dual formulation of the problem.</p></li>
@@ -128,14 +147,18 @@
 <li><p><cite>n_jobs</cite>: The number of jobs to use for parallel processing.</p></li>
 <li><p><cite>l1_ratio</cite>: The l1_ratio parameter for elasticnet regularization.</p></li>
 </ul>
-<p>## Properties</p>
+</section>
+<section id="properties">
+<h3>Properties<a class="headerlink" href="#properties" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p><cite>params</cite>: Returns the estimated values for model parameters.</p></li>
 <li><p><cite>aic</cite>: Calculates the Akaike information criterion (AIC) for the model.</p></li>
 <li><p><cite>bic</cite>: Calculates the Bayesian information criterion (BIC) for the model.</p></li>
 <li><p><cite>cov_matrix</cite>: Returns the covariance matrix for model parámetres.</p></li>
 </ul>
-<p>## Methods</p>
+</section>
+<section id="methods">
+<h3>Methods<a class="headerlink" href="#methods" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p><cite>fit()</cite>: Fits the model to the data.</p></li>
 <li><p><cite>predict()</cite>: Predicts the class labels for new data.</p></li>
@@ -145,23 +168,23 @@
 <li><p><cite>p_values()</cite>: Calculates the p-values for the model coefficients.</p></li>
 <li><p><cite>summary()</cite>: Prints a summary of the model.</p></li>
 </ul>
-<p>## Examples</p>
-<p><a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id3"><span class="problematic" id="id4">`</span></a>python
-import numpy as np
-import pandas as pd</p>
-<p>np.random.seed(123)
-data = pd.DataFrame({</p>
-<blockquote>
-<div><p>“y”: np.random.randint(2, size=100),
-“x1”: np.random.uniform(-1, 1, size=100),
-“x2”: np.random.uniform(-1, 1, size=100),</p>
-</div></blockquote>
-<p>})</p>
-<p>formula = “y ~ x1 + x2”</p>
-<p>spec = LogisticRegression.from_formula(formula, data)
-model = spec.fit()</p>
-<p>print(model.summary())
-<a href="#id5"><span class="problematic" id="id6">``</span></a><a href="#id7"><span class="problematic" id="id8">`</span></a></p>
+</section>
+<section id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+<span class="go">        &quot;y&quot;: np.random.randint(2, size=100),</span>
+<span class="go">        &quot;x1&quot;: np.random.uniform(-1, 1, size=100),</span>
+<span class="go">        &quot;x2&quot;: np.random.uniform(-1, 1, size=100),</span>
+<span class="go">    })</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">formula</span> <span class="o">=</span> <span class="s2">&quot;y ~ x1 + x2&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spec</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">spec</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
 <dl class="py property">
 <dt class="sig sig-object py" id="estyp.linear_model.LogisticRegression.aic">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">aic</span></span><a class="headerlink" href="#estyp.linear_model.LogisticRegression.aic" title="Permalink to this definition"></a></dt>
@@ -186,8 +209,8 @@ model = spec.fit()</p>
 <dt class="sig sig-object py" id="estyp.linear_model.LogisticRegression.fit">
 <span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/estyp/linear_model.html#LogisticRegression.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#estyp.linear_model.LogisticRegression.fit" title="Permalink to this definition"></a></dt>
 <dd><p>Fit the model according to the given training data.</p>
-<section id="parameters">
-<h3>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h3>
+<section id="id1">
+<h4>Parameters<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h4>
 <dl>
 <dt>X<span class="classifier">{array-like, sparse matrix} of shape (n_samples, n_features)</span></dt><dd><p>Training vector, where <cite>n_samples</cite> is the number of samples and
 <cite>n_features</cite> is the number of features.</p>
@@ -203,14 +226,14 @@ If not provided, then each sample is given unit weight.</p>
 </dl>
 </section>
 <section id="returns">
-<h3>Returns<a class="headerlink" href="#returns" title="Permalink to this heading"></a></h3>
+<h4>Returns<a class="headerlink" href="#returns" title="Permalink to this heading"></a></h4>
 <dl class="simple">
 <dt>self</dt><dd><p>Fitted estimator.</p>
 </dd>
 </dl>
 </section>
 <section id="notes">
-<h3>Notes<a class="headerlink" href="#notes" title="Permalink to this heading"></a></h3>
+<h4>Notes<a class="headerlink" href="#notes" title="Permalink to this heading"></a></h4>
 <p>The SAGA solver supports both float64 and float32 bit arrays.</p>
 </section>
 </dd></dl>
@@ -234,15 +257,15 @@ If not provided, then each sample is given unit weight.</p>
 <dt class="sig sig-object py" id="estyp.linear_model.LogisticRegression.predict">
 <span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/estyp/linear_model.html#LogisticRegression.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#estyp.linear_model.LogisticRegression.predict" title="Permalink to this definition"></a></dt>
 <dd><p>Predict class labels for samples in X.</p>
-<section id="id9">
-<h3>Parameters<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h3>
+<section id="id2">
+<h4>Parameters<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h4>
 <dl class="simple">
 <dt>X<span class="classifier">{array-like, sparse matrix} of shape (n_samples, n_features)</span></dt><dd><p>The data matrix for which we want to get the predictions.</p>
 </dd>
 </dl>
 </section>
-<section id="id10">
-<h3>Returns<a class="headerlink" href="#id10" title="Permalink to this heading"></a></h3>
+<section id="id3">
+<h4>Returns<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h4>
 <dl class="simple">
 <dt>y_pred<span class="classifier">ndarray of shape (n_samples,)</span></dt><dd><p>Vector containing the class labels for each sample.</p>
 </dd>
@@ -282,15 +305,15 @@ parameters and not others.</p>
 sub-estimator of a meta-estimator, e.g. used inside a
 <code class="xref py py-class docutils literal notranslate"><span class="pre">pipeline.Pipeline</span></code>. Otherwise it has no effect.</p>
 </div>
-<section id="id11">
-<h3>Parameters<a class="headerlink" href="#id11" title="Permalink to this heading"></a></h3>
+<section id="id4">
+<h4>Parameters<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h4>
 <dl class="simple">
 <dt>new_data<span class="classifier">str, True, False, or None,                     default=sklearn.utils.metadata_routing.UNCHANGED</span></dt><dd><p>Metadata routing for <code class="docutils literal notranslate"><span class="pre">new_data</span></code> parameter in <code class="docutils literal notranslate"><span class="pre">predict</span></code>.</p>
 </dd>
 </dl>
 </section>
-<section id="id12">
-<h3>Returns<a class="headerlink" href="#id12" title="Permalink to this heading"></a></h3>
+<section id="id5">
+<h4>Returns<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h4>
 <dl class="simple">
 <dt>self<span class="classifier">object</span></dt><dd><p>The updated object.</p>
 </dd>
@@ -325,15 +348,15 @@ parameters and not others.</p>
 sub-estimator of a meta-estimator, e.g. used inside a
 <code class="xref py py-class docutils literal notranslate"><span class="pre">pipeline.Pipeline</span></code>. Otherwise it has no effect.</p>
 </div>
-<section id="id13">
-<h3>Parameters<a class="headerlink" href="#id13" title="Permalink to this heading"></a></h3>
+<section id="id6">
+<h4>Parameters<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h4>
 <dl class="simple">
 <dt>sample_weight<span class="classifier">str, True, False, or None,                     default=sklearn.utils.metadata_routing.UNCHANGED</span></dt><dd><p>Metadata routing for <code class="docutils literal notranslate"><span class="pre">sample_weight</span></code> parameter in <code class="docutils literal notranslate"><span class="pre">score</span></code>.</p>
 </dd>
 </dl>
 </section>
-<section id="id14">
-<h3>Returns<a class="headerlink" href="#id14" title="Permalink to this heading"></a></h3>
+<section id="id7">
+<h4>Returns<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h4>
 <dl class="simple">
 <dt>self<span class="classifier">object</span></dt><dd><p>The updated object.</p>
 </dd>
@@ -351,6 +374,7 @@ sub-estimator of a meta-estimator, e.g. used inside a
 <span class="sig-name descname"><span class="pre">z_values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/estyp/linear_model.html#LogisticRegression.z_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#estyp.linear_model.LogisticRegression.z_values" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
+</section>
 </dd></dl>
 
 </section>
