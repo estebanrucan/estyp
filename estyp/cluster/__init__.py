@@ -452,7 +452,7 @@ Example:
         elif self.method == "silhouette":
             self.__plot_silhouette(ax=ax)
 
-    def predict(self, X):
+    def predict(self, X, **kwargs):
         """
 Predicts the closest cluster for each sample in `X` using the `best_estimator_`.
 
@@ -460,6 +460,8 @@ Parameters:
 -----------
 `X` : array-like, shape (n_samples, n_features)
     New data to predict cluster labels.
+    
+`**kwargs` : Additional keyword arguments to be passed to the estimator's predict method.
 
 Returns:
 --------
@@ -480,7 +482,8 @@ Example:
             raise Exception(
                 "The model is not fitted yet. Call 'fit' with appropriate arguments before using this method."
             )
-        return self.best_estimator_.predict(X)
+        
+        return self.best_estimator_.predict(X, **kwargs)
 
     @property
     def labels_(self):
@@ -504,7 +507,7 @@ Example:
 >>> model.fit(data)
 >>> labels = model.labels_
         """
-        return self.best_estimator.labels_
+        return self.best_estimator_.labels_
 
     def __repr__(self) -> str:
         return f"NClusterSearch(estimator={self.estimator}, method='{self.method}', min_clusters={self.min_clusters}, max_clusters={self.max_clusters}, step={self.step}, random_state={self.random_state})"

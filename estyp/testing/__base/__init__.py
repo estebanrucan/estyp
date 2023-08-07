@@ -284,7 +284,7 @@ class TestResults:
         else:
             p_value = f"{p_value:0.4f}"
         # df
-        if self.__dict__.get("df"):
+        if self.__dict__.get("df") is not None:
             df = self.df
             if isinstance(df, (float, int)):
                 if df == float(int(df)):
@@ -298,7 +298,7 @@ class TestResults:
         else:
             df = None
         # estimates
-        if self.__dict__.get("estimate"):
+        if self.__dict__.get("estimate") is not None:
             estimate = self.estimate
             if isinstance(estimate, (list, np.ndarray)):
                 estimate = [float(f"{e:0.6f}") for e in estimate]
@@ -311,7 +311,7 @@ class TestResults:
     {bcolors.BOLD + bcolors.UNDERLINE + self.method + bcolors.ENDC}
     {self.__names['statistic']} = {self.statistic:0.4f} |{' df: ' + str(df) + ' |' if df is not None else ''} p-value = {p_value}
     alternative hypothesis: {self.__names["alternative"]}"""
-        if self.__dict__.get("conf_int"):
+        if self.__dict__.get("conf_int") is not None:
             if self.conf_int is not None:
                 cl = self.conf_level * 100
                 if cl == float(int(cl)):
@@ -319,7 +319,7 @@ class TestResults:
                 string += f"""
     {cl} percent confidence interval:
     {" "}{self.conf_int[0]:0.6f} {self.conf_int[1]:0.6f}"""
-        if self.__dict__.get("estimate"):
+        if self.__dict__.get("estimate") is not None:
             string += f"""
     sample estimates:
     {" " * 2}{self.__names["estimate"]}: {estimate}

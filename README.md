@@ -4,7 +4,7 @@
 
 ## Description
 
-This library is a collection of statistical functions for Python.
+ESTYP (Extended Statistical Toolkit Yet Practical) is a Python library that serves as a multifaceted toolkit for statistical analysis. The `testing` module encompasses a wide range of statistical tests, including t-tests, chi-squared tests, and correlation tests, providing robust methods for data comparison and validation. In the `linear_model` module, users can find functionalities related to logistic regression, including variable selection techniques and additional methods for calculating confidence intervals and p-values. This module enhances the capabilities of traditional logistic regression analysis. The cluster module is designed to assist in clustering analysis, offering tools to identify the optimal number of `clusters` using methods like the elbow or silhouette techniques. Together, these modules form a comprehensive and practical statistical toolkit that caters to various analytical needs. 
 
 Actually, the name comes from the way my friends call me (Esti), plus "p" which is the initial of `python`.
 
