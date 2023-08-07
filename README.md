@@ -1,6 +1,6 @@
 # ESTYP: Extended Statistical Toolkit Yet Practical
 
-[![Downloads](https://static.pepy.tech/badge/estyp)](https://pepy.tech/project/estyp) [![PyPI version](https://badge.fury.io/py/estyp.svg)](https://badge.fury.io/py/estyp) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Contributions](https://img.shields.io/badge/Contributions-welcome-blue.svg)](https://github.com/estebanrucan/estyp/issues) [![Chilean](https://img.shields.io/badge/Made_in-%F0%9F%87%A8%F0%9F%87%B1_Chile-blue.svg)](https://es.wikipedia.org/wiki/Chile)
+[![Downloads](https://static.pepy.tech/badge/estyp)](https://pepy.tech/project/estyp) [![Documentation Status](https://readthedocs.org/projects/estyp/badge/?version=latest)](https://estyp.readthedocs.io/en/latest/?badge=latest) [![PyPI version](https://badge.fury.io/py/estyp.svg)](https://badge.fury.io/py/estyp) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Contributions](https://img.shields.io/badge/Contributions-welcome-blue.svg)](https://github.com/estebanrucan/estyp/issues) [![Chilean](https://img.shields.io/badge/Made_in-%F0%9F%87%A8%F0%9F%87%B1_Chile-blue.svg)](https://es.wikipedia.org/wiki/Chile)
 
 ## Description
 
