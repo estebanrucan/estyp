@@ -10,8 +10,9 @@ Welcome to ESTYP Documentation's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   estyp
-   modules
+   estyp.cluster
+   estyp.linear_model
+   estyp.testing
 
 Indices and tables
 ==================

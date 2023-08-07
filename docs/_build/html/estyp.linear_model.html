@@ -7,6 +7,8 @@
   <title>estyp.linear_model package &mdash; ESTYP Documentation 0.1.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/jupyter-sphinx.css" type="text/css" />
+      <link rel="stylesheet" href="_static/thebelab.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -16,6 +18,9 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/thebelab-helper.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -44,33 +49,35 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="estyp.html">estyp package</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="estyp.html#subpackages">Subpackages</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="estyp.cluster.html">estyp.cluster package</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">estyp.linear_model package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#subpackages">Subpackages</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#module-estyp.linear_model">Module contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="estyp.cluster.html">estyp.cluster package</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">estyp.linear_model package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="estyp.linear_model.stepwise.html">estyp.linear_model.stepwise package</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="estyp.testing.html">estyp.testing package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-estyp.linear_model">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#estyp.linear_model.LogisticRegression"><code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#estyp.linear_model.LogisticRegression.aic"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.aic</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#estyp.linear_model.LogisticRegression.bic"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.bic</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#estyp.linear_model.LogisticRegression.conf_int"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.conf_int()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#estyp.linear_model.LogisticRegression.cov_matrix"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.cov_matrix</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#estyp.linear_model.LogisticRegression.fit"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#estyp.linear_model.LogisticRegression.from_formula"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.from_formula()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#estyp.linear_model.LogisticRegression.p_values"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.p_values()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#estyp.linear_model.LogisticRegression.params"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.params</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#estyp.linear_model.LogisticRegression.predict"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.predict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#estyp.linear_model.LogisticRegression.se"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.se()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#estyp.linear_model.LogisticRegression.set_predict_request"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.set_predict_request()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#estyp.linear_model.LogisticRegression.set_score_request"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.set_score_request()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#estyp.linear_model.LogisticRegression.summary"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.summary()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#estyp.linear_model.LogisticRegression.z_values"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.z_values()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="estyp.html#module-estyp">Module contents</a></li>
-</ul>
-</li>
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">estyp</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="estyp.html">estyp package</a><ul class="current">
-<li class="toctree-l3 current"><a class="reference internal" href="estyp.html#subpackages">Subpackages</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="estyp.cluster.html">estyp.cluster package</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">estyp.linear_model package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="estyp.testing.html">estyp.testing package</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="estyp.html#module-estyp">Module contents</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="estyp.testing.html">estyp.testing package</a></li>
 </ul>
 
         </div>
@@ -87,7 +94,6 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="estyp.html">estyp package</a></li>
       <li class="breadcrumb-item active">estyp.linear_model package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/estyp.linear_model.rst.txt" rel="nofollow"> View page source</a>
