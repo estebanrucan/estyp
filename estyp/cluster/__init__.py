@@ -8,96 +8,100 @@ from typing import Literal
 
 class NClusterSearch:
     """
-    
-    # Optimal Number of Clusters Searcher
-    
-    Description
-    -----------
-    
-    A helper class to identify the optimal number of clusters for clustering algorithms.
+Optimal Number of Clusters Searcher
+------------------------------------
 
-    This class offers methods like the elbow method and silhouette method to evaluate
-    and suggest the best number of clusters for the provided data. The class currently
-    supports KMeans, KMedoids, KModes, and KPrototypes as estimators.
+Description
+-----------
 
-    Parameters:
-    -----------
-    `estimator` : instance of clustering model
-        The clustering algorithm for which you want to find the optimal number of clusters.
-        Supported estimators: `KMeans`, `KMedoids`, `KModes`, `KPrototypes`.
+A helper class to identify the optimal number of clusters for clustering algorithms.
 
-    `method` : str, optional (default = 'elbow')
-        The method used to determine the optimal number of clusters.
-        Accepted values: 'elbow', 'silhouette'.
+This class offers methods like the elbow method and silhouette method to evaluate
+and suggest the best number of clusters for the provided data. The class currently
+supports KMeans, KMedoids, KModes, and KPrototypes as estimators.
 
-    `min_clusters` : int, optional (default = 1)
-        The minimum number of clusters to consider.
+Parameters:
+-----------
+`estimator` : instance of clustering model
+    The clustering algorithm for which you want to find the optimal number of clusters.
+    Supported estimators: `KMeans`, `KMedoids`, `KModes`, `KPrototypes`.
 
-    `max_clusters` : int, optional (default = 10)
-        The maximum number of clusters to consider.
+`method` : str, optional (default = 'elbow')
+    The method used to determine the optimal number of clusters.
+    Accepted values: 'elbow', 'silhouette'.
 
-    `step` : int, optional (default = 1)
-        The step size for increasing the number of clusters during the search.
+`min_clusters` : int, optional (default = 1)
+    The minimum number of clusters to consider.
 
-    `random_state` : int, optional (default = 123)
-        Random seed for reproducibility.
+`max_clusters` : int, optional (default = 10)
+    The maximum number of clusters to consider.
 
-    `verbose` : bool, optional (default = False)
-        If True, the process will print details as it proceeds.
+`step` : int, optional (default = 1)
+    The step size for increasing the number of clusters during the search.
 
-    Examples:
-    ---------
-    
-    #### Example 1: Using the elbow method with KMeans
-    
-    ```python
-    from sklearn.cluster import KMeans
-    searcher = NClusterSearch(estimator=KMeans(), method='elbow')
-    searcher.fit(data)
-    searcher.plot()
-    labels = searcher.labels_
-    predicted_labels = searcher.predict(new_data)
-    optimal_model = searcher.best_estimator_
-    optimal_clusters = searcher.optimal_clusters_
-    ```
-    
-    #### Example 2: Using KModes with custom arguments
-    
-    ```python
-    from kmodes.kmodes import KModes
-    kmodes = KModes(init='Huang', n_init=5, verbose=1)
-    searcher = NClusterSearch(estimator=km, method='elbow')
-    searcher.fit(data)
-    ```
-    
-    #### Example 3: Using the silhouette method with KMedoids
-    
-    ```python
-    from sklearn_extra.cluster import KMedoids
-    searcher = NClusterSearch(estimator=KMedoids(), method='silhouette')
-    searcher.fit(data)
-    searcher.plot()
-    ```	
-    
-    #### Example 4: Using the silhouette method with KPrototypes
-    
-    ```python
-    from kmodes.kprototypes import KPrototypes
-    searcher = NClusterSearch(estimator=KPrototypes(), method='silhouette', verbose=True)
-    searcher.fit(data, categorical=[0, 1])
-    searcher.plot()
-    ```
-    
-    #### Example 5: Using the silhouette method with KPrototypes and custom alpha for distance calculation
-    
-    ```python
-    from kmodes.kprototypes import KPrototypes
-    searcher = NClusterSearch(estimator=KPrototypes(), method='silhouette')
-    searcher.fit(data, categorical=[0, 1], alpha=0.1)
-    searcher.plot()
-    ```
-    
-    
+`random_state` : int, optional (default = 123)
+    Random seed for reproducibility.
+
+`verbose` : bool, optional (default = False)
+    If True, the process will print details as it proceeds.
+
+Examples:
+---------
+
+Example 1: Using the elbow method with KMeans
+
+>>> from sklearn.cluster import KMeans
+>>> from sklean.datasets import load_iris
+>>> data = load_iris().data
+>>> new_data = load_iris().data[:10]
+>>> searcher = NClusterSearch(estimator=KMeans(), method='elbow')
+>>> searcher.fit(data)
+>>> searcher.plot()
+>>> labels = searcher.labels_
+>>> predicted_labels = searcher.predict(new_data)
+>>> optimal_model = searcher.best_estimator_
+>>> optimal_clusters = searcher.optimal_clusters_
+
+
+Example 2: Using KModes with custom arguments
+>>> from kmodes.kmodes import KModes
+>>> import pandas as pd
+>>> import numpy as np
+>>> np.random.seed(2023)
+>>> data = pd.DataFrame(np.random.randint(0, 10, size=(100, 4))).apply(lambda x: x.astype('object'))
+>>> kmodes = KModes(init='Huang', n_init=5, verbose=1)
+>>> searcher = NClusterSearch(estimator=kmodes, method='elbow')
+>>> searcher.fit(data)
+
+Example 3: Using the silhouette method with KMedoids
+>>> from sklean.datasets import load_iris
+>>> from sklearn_extra.cluster import KMedoids
+>>> data = load_iris().data
+>>> searcher = NClusterSearch(estimator=KMedoids(), method='silhouette')
+>>> searcher.fit(data)
+>>> searcher.plot()
+
+Example 4: Using the silhouette method with KPrototypes
+>>> import pandas as pd
+>>> import numpy as np
+>>> from kmodes.kprototypes import KPrototypes
+>>> np.random.seed(2023)
+>>> data = pd.DataFrame(np.random.randint(0, 10, size=(100, 4))).apply(lambda x: x.astype('object'))
+>>> data["new"] = np.random.randint(0, 10, size=(100, 1))
+>>> searcher = NClusterSearch(estimator=KPrototypes(), method='silhouette', verbose=True)
+>>> searcher.fit(data, categorical=[0, 1, 2, 3])
+>>> searcher.plot()
+
+Example 5: Using the silhouette method with KPrototypes and custom alpha for distance calculation
+>>> import pandas as pd
+>>> import numpy as np
+>>> from kmodes.kprototypes import KPrototypes
+>>> np.random.seed(2023)
+>>> data = pd.DataFrame(np.random.randint(0, 10, size=(100, 4))).apply(lambda x: x.astype('object'))
+>>> data["new"] = np.random.randint(0, 10, size=(100, 1))
+>>> searcher = NClusterSearch(estimator=KPrototypes(), method='silhouette')
+>>> searcher.fit(data, categorical=[0, 1, 2, 3], alpha=0.1)
+>>> searcher.plot()
     """
 
     def __init__(
@@ -143,24 +147,27 @@ class NClusterSearch:
 
     def fit(self, X, **kwargs):
         """
-        Fits the estimator with the data over a range of cluster numbers.
-        
-        Parameters:
-        -----------
-        X : array-like, shape (n_samples, n_features)
-            The data to determine the optimal number of clusters for.
-            
-        **kwargs : Additional keyword arguments to be passed to the estimator's fit method.
-        
-        Returns:
-        --------
-        self : object
-            Returns an instance of self.
-        
-        Example:
-        --------
-        >>> model = NClusterSearch(estimator=KMeans(), method='elbow')
-        >>> model.fit(data)
+Fits the estimator with the data over a range of cluster numbers.
+
+Parameters:
+-----------
+`X` : array-like, shape (n_samples, n_features)
+    The data to determine the optimal number of clusters for.
+    
+`**kwargs` : Additional keyword arguments to be passed to the estimator's fit method.
+
+Returns:
+--------
+`self` : object
+    Returns an instance of `NClusterSearch()`.
+
+Example:
+--------
+>>> from sklearn.cluster import KMeans
+>>> from sklean.datasets import load_iris
+>>> data = load_iris().data
+>>> searcher = NClusterSearch(estimator=KMeans(), method='elbow')
+>>> searcher.fit(data)
         """
         self.__X = X
 
@@ -186,20 +193,23 @@ class NClusterSearch:
     @property
     def best_estimator_(self):
         """
-        Returns the estimator with the optimal number of clusters.
-        
-        This property can be accessed only after calling the fit method.
-        
-        Returns:
-        --------
-        best_estimator : instance of clustering model
-            Estimator set to the optimal number of clusters and trained with the data.
-        
-        Example:
-        --------
-        >>> model = NClusterSearch(estimator=KMeans(), method='elbow')
-        >>> model.fit(data)
-        >>> optimal_model = model.best_estimator_
+Returns the estimator with the optimal number of clusters.
+
+This property can be accessed only after calling the fit method.
+
+Returns:
+--------
+best_estimator : instance of clustering model
+    Estimator set to the optimal number of clusters and trained with the data.
+
+Example:
+--------
+>>> from sklearn.cluster import KMeans
+>>> from sklean.datasets import load_iris
+>>> data = load_iris().data
+>>> model = NClusterSearch(estimator=KMeans(), method='elbow')
+>>> model.fit(data)
+>>> optimal_model = model.best_estimator_
         """
         if not self.__fitted:
             raise Exception(
@@ -282,8 +292,6 @@ class NClusterSearch:
             return cat_score + num_score * alpha
 
     def __create_dm__kproto(self, dataset, alpha=0.1):
-        # if the input dataset is a dataframe, we take out the values as a numpy.
-        # If the input dataset is a numpy array, we use it as is.
         if type(dataset).__name__ == "DataFrame":
             dataset = dataset.values
         lenDataset = len(dataset)
@@ -406,24 +414,25 @@ class NClusterSearch:
 
     def plot(self, *, ax=None):
         """
-        Plots the results of the selected method (either 'elbow' or 'silhouette') to visualize the optimal cluster number.
-        
-        Parameters:
-        -----------
-        ax : matplotlib axis object, optional
-            Axis on which to draw the plot. If None, a new figure and axis will be created.
-        
-        Returns:
-        --------
-        None
-        
-        Example:
-        --------
-        >>> model = NClusterSearch(estimator=KMeans(), method='elbow')
-        >>> model.fit(data)
-        >>> model.plot()
-        
-        This will plot the elbow method's results for the data.
+Plots the results of the selected method (either 'elbow' or 'silhouette') to visualize the optimal cluster number.
+
+Parameters:
+-----------
+ax : matplotlib axis object, optional
+    Axis on which to draw the plot. If None, a new figure and axis will be created.
+
+Returns:
+--------
+None
+
+Example:
+--------
+>>> from sklearn.cluster import KMeans
+>>> from sklean.datasets import load_iris
+>>> data = load_iris().data
+>>> model = NClusterSearch(estimator=KMeans(), method='elbow')
+>>> model.fit(data)
+>>> model.plot()
         """
         if not self.__fitted:
             raise Exception(
@@ -438,23 +447,26 @@ class NClusterSearch:
 
     def predict(self, X):
         """
-        Predicts the closest cluster for each sample in X using the best_estimator_.
-        
-        Parameters:
-        -----------
-        X : array-like, shape (n_samples, n_features)
-            New data to predict cluster labels.
-        
-        Returns:
-        --------
-        labels : array, shape (n_samples,)
-            Index of the cluster each sample belongs to.
-        
-        Example:
-        --------
-        >>> model = NClusterSearch(estimator=KMeans(), method='elbow')
-        >>> model.fit(data)
-        >>> predictions = model.predict(new_data)
+Predicts the closest cluster for each sample in `X` using the `best_estimator_`.
+
+Parameters:
+-----------
+`X` : array-like, shape (n_samples, n_features)
+    New data to predict cluster labels.
+
+Returns:
+--------
+`labels` : array, shape (n_samples,)
+    Index of the cluster each sample belongs to.
+
+Example:
+--------
+>>> from sklearn.cluster import KMeans
+>>> from sklean.datasets import load_iris
+>>> data = load_iris().data
+>>> model = NClusterSearch(estimator=KMeans(), method='elbow')
+>>> model.fit(data)
+>>> predictions = model.predict(new_data)
         """
         if not self.__fitted:
             raise Exception(
@@ -465,20 +477,23 @@ class NClusterSearch:
     @property
     def labels_(self):
         """
-        Returns the labels of each point for the best estimator.
-        
-        This property can be accessed only after calling the fit method.
-        
-        Returns:
-        --------
-        labels : array, shape (n_samples,)
-            Index of the cluster each sample belongs to.
-        
-        Example:
-        --------
-        >>> model = NClusterSearch(estimator=KMeans(), method='elbow')
-        >>> model.fit(data)
-        >>> labels = model.labels_
+Returns the labels of each point for the best estimator.
+
+This property can be accessed only after calling the fit method.
+
+Returns:
+--------
+labels : array, shape (n_samples,)
+    Index of the cluster each sample belongs to.
+
+Example:
+--------
+>>> from sklearn.cluster import KMeans
+>>> from sklean.datasets import load_iris
+>>> data = load_iris().data
+>>> model = NClusterSearch(estimator=KMeans(), method='elbow')
+>>> model.fit(data)
+>>> labels = model.labels_
         """
         return self.best_estimator.labels_
 

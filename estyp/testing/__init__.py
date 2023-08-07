@@ -22,35 +22,34 @@ from estyp.testing.__base import (
 
 class CheckModel:
     """
-    # Check Linear Regression Assumptions
+Check Linear Regression Assumptions
+-----------------------------------
 
-    The `CheckModel` class provides methods to test the assumptions of the linear regression model.
-    These assumptions are:
+The `CheckModel` class provides methods to test the assumptions of the linear regression model.
+These assumptions are:
 
-    - Normality of residuals
-    - Homoscedasticity (equal variance) of residuals
-    - Independence of residuals
-    - No Multicollinearity among predictors
+- Normality of residuals
+- Homoscedasticity (equal variance) of residuals
+- Independence of residuals
+- No Multicollinearity among predictors
 
-    Parameters
-    ----------
-    `fitted_model` : `RegressionResultsWrapper`
-        The fitted linear regression model which is an instance of RegressionResultsWrapper.
+Parameters
+----------
+`fitted_model` : `RegressionResultsWrapper`
+    The fitted linear regression model which is an instance of RegressionResultsWrapper.
 
-    Example
-    -------
-    ```python
-    import statsmodels.api as sm
-    from sklearn.datasets import load_diabetes
-    diabetes = load_diabetes()
-    X = diabetes["data"]
-    y = diabetes["target"]
-    X = sm.add_constant(X)
-    model = sm.OLS(y, X)
-    fitted_model = model.fit()
-    cm = CheckModel(fitted_model)
-    cm.check_all()
-    ```
+Example
+-------
+>>> import statsmodels.api as sm
+>>> from sklearn.datasets import load_diabetes
+>>> diabetes = load_diabetes()
+>>> X = diabetes["data"]
+>>> y = diabetes["target"]
+>>> X = sm.add_constant(X)
+>>> model = sm.OLS(y, X)
+>>> fitted_model = model.fit()
+>>> cm = CheckModel(fitted_model)
+>>> cm.check_all()
     """
 
     def __init__(self, fitted_model: RegressionResultsWrapper):
@@ -62,25 +61,21 @@ class CheckModel:
 
     def check_normality(self, alpha=0.05, plot=True, return_pvals=False):
         """
-        Checks the normality assumption of the residuals using several statistical tests.
+Checks the normality assumption of the residuals using several statistical tests.
 
-        Parameters
-        ----------
-        `alpha` : float, optional
-            The significance level used by the statistical tests, by default 0.05.
-        `plot` : bool, optional
-            If `True`, a plot is shown for visual inspection of normality, by default `True`.
-        `return_pvals` : bool, optional
-            If `True`, the p-values of the statistical tests are returned, by default `False`.
+Parameters
+----------
+`alpha` : float, optional
+    The significance level used by the statistical tests, by default 0.05.
+`plot` : bool, optional
+    If `True`, a plot is shown for visual inspection of normality, by default `True`.
+`return_pvals` : bool, optional
+    If `True`, the p-values of the statistical tests are returned, by default `False`.
 
-        Returns
-        -------
-        dict
-            A dictionary of p-values of the statistical tests if `return_pvals=True`.
-
-        Example
-        -------
-        >>> cm.check_normality()
+Returns
+-------
+dict
+    A dictionary of p-values of the statistical tests if `return_pvals=True`.
         """
         normality = _CheckNormality(self.model)
         if plot:
@@ -92,25 +87,21 @@ class CheckModel:
 
     def check_homocedasticity(self, alpha=0.05, plot=True, return_pvals=False):
         """
-        Checks the homoscedasticity assumption (equal variance of residuals) using several statistical tests.
+Checks the homoscedasticity assumption (equal variance of residuals) using several statistical tests.
 
-        Parameters
-        ----------
-        `alpha` : float, optional
-            The significance level used by the statistical tests, by default 0.05.
-        `plot` : bool, optional
-            If `True`, a plot is shown for visual inspection of homoscedasticity, by default `True`.
-        `return_pvals` : bool, optional
-            If `True`, the p-values of the statistical tests are returned, by default `False`.
+Parameters
+----------
+`alpha` : float, optional
+    The significance level used by the statistical tests, by default 0.05.
+`plot` : bool, optional
+    If `True`, a plot is shown for visual inspection of homoscedasticity, by default `True`.
+`return_pvals` : bool, optional
+    If `True`, the p-values of the statistical tests are returned, by default `False`.
 
-        Returns
-        -------
-        dict
-            A dictionary of p-values of the statistical tests if `return_pvals=True`.
-
-        Example
-        -------
-        >>> cm.check_homocedasticity()
+Returns
+-------
+dict
+    A dictionary of p-values of the statistical tests if `return_pvals=True`.
         """
         homocedasticity = _CheckHomocedasticity(self.model)
         if plot:
@@ -122,25 +113,21 @@ class CheckModel:
 
     def check_independence(self, alpha=0.05, plot=True, return_vals=False):
         """
-        Checks the independence assumption of the residuals using several statistical tests.
+Checks the independence assumption of the residuals using several statistical tests.
 
-        Parameters
-        ----------
-        alpha : float, optional
-            The significance level used by the statistical tests, by default 0.05.
-        plot : bool, optional
-            If `True`, a plot is shown for visual inspection of independence, by default `True`.
-        return_pvals : bool, optional
-            If `True`, the p-values of the statistical tests are returned, by default `False`.
+Parameters
+----------
+alpha : float, optional
+    The significance level used by the statistical tests, by default 0.05.
+plot : bool, optional
+    If `True`, a plot is shown for visual inspection of independence, by default `True`.
+return_pvals : bool, optional
+    If `True`, the p-values of the statistical tests are returned, by default `False`.
 
-        Returns
-        -------
-        dict
-            A dictionary of values of the statistical tests if `return_vals=True`.
-
-        Example
-        -------
-        >>> cm.check_independence()
+Returns
+-------
+dict
+    A dictionary of values of the statistical tests if `return_vals=True`.
         """
         independence = _CheckIndependence(self.model)
         if plot:
@@ -165,10 +152,6 @@ class CheckModel:
         -------
         float
             The condition number of the model if `return_cm=True`.
-
-        Example
-        -------
-        >>> cm.check_multicollinearity()
         """
         multicollinearity = _CheckMulticollinearity(self.model)
         if plot:
@@ -180,25 +163,21 @@ class CheckModel:
 
     def check_all(self, alpha=0.05, plot=True, return_vals=False):
         """
-        Checks all the assumptions of the linear regression model.
+Checks all the assumptions of the linear regression model.
 
-        Parameters
-        ----------
-        `alpha` : float, optional
-            The significance level used by the statistical tests, by default 0.05.
-        `plot` : bool, optional
-            If `True`, a plot is shown for visual inspection of each assumption, by default `True`.
-        `return_vals` : bool, optional
-            If `True`, the values of the statistical tests are returned, by default `False`.
+Parameters
+----------
+`alpha` : float, optional
+    The significance level used by the statistical tests, by default 0.05.
+`plot` : bool, optional
+    If `True`, a plot is shown for visual inspection of each assumption, by default `True`.
+`return_vals` : bool, optional
+    If `True`, the values of the statistical tests are returned, by default `False`.
 
-        Returns
-        -------
-        dict
-            A dictionary of values of the statistical tests if `return_vals=True`.
-
-        Example
-        -------
-        >>> cm.check_all()
+Returns
+-------
+dict
+    A dictionary of values of the statistical tests if `return_vals=True`.
         """
         normality = _CheckNormality(self.model)
         homocedasticity = _CheckHomocedasticity(self.model)
@@ -240,51 +219,46 @@ def var_test(
     conf_level=0.95,
 ) -> TestResults:
     """
-    # F Test to Compare Two Variances
-    ## Description
-    Performs an F test to compare the variances of two samples from normal populations. This function is inspired by the `var.test()` function of the software R.
+F Test to Compare Two Variances
+-------------------------------
 
-    ## Usage
-
-    ```python
-    var_test(x, y, ...)
-    var_test(x, y, ratio = 1,
-            alternative = [two-sided", "less", "greater"],
-            conf_level = 0.95)
-    ```
-
-    ## Arguments
-    * `x`, `y`: numeric list, `np.array` or `pd.Series` of data values.
-    * `ratio`: the hypothesized ratio of the population variances of x and y.
-    * `alternative`: a character string specifying the alternative hypothesis, must be one of "two.sided" (default), "greater" or "less". You can specify just the initial letter.
-    * `conf_level`: a number between 0 and 1 indicanting the confidence level of the interval.
+Description
+-----------
+Performs an F test to compare the variances of two samples from normal populations. This function is inspired by the `var.test()` function of the software R.
 
 
-    ## Details
-    The null hypothesis is that the ratio of the variances of the populations from which x and y were drawn, is equal to ratio.
+Arguments
+---------
+- `x`, `y`: numeric list, `np.array` or `pd.Series` of data values.
+- `ratio`: the hypothesized ratio of the population variances of x and y.
+- `alternative`: a character string specifying the alternative hypothesis, must be one of "two-sided" (default), "greater" or "less". You can specify just the initial letter.
+- `conf_level`: a number between 0 and 1 indicanting the confidence level of the interval.
 
-    ## Value
-    An instance of the `TestResults` class containing the following attributes:
+Details
+-------
+The null hypothesis is that the ratio of the variances of the populations from which x and y were drawn, is equal to ratio.
 
-    * `statistic`: the value of the F test statistic.
-    * `df`: the degrees of freedom for the F test statistic.
-    * `p_value`: the p-value for the test.
-    * `ci`: a confidence interval for the ratio of the population variances.
-    * `estimate`: the ratio of the sample variances of x and y.
-    * `alternative`: a string describing the alternative hypothesis.
+Value
+-----
+An instance of the `TestResults` class containing the following attributes:
 
-    ## Examples
+- `statistic`: the value of the F test statistic.
+- `df`: the degrees of freedom for the F test statistic.
+- `p_value`: the p-value for the test.
+- `ci`: a confidence interval for the ratio of the population variances.
+- `estimate`: the ratio of the sample variances of x and y.
+- `alternative`: a string describing the alternative hypothesis.
 
-    ```python
-    import numpy as np
-    np.random.seed(2023)
-    x = np.random.normal(size=100)
-    y = np.random.normal(size=100)
+Examples
+--------
+>>> import numpy as np
+>>> np.random.seed(2023)
+>>> x = np.random.normal(size=100)
+>>> y = np.random.normal(size=100)
 
-    print(var_test(x, y))
-    print(var_test(x, y, alternative="less"))
-    print(var_test(x, y, ratio = 0.9, alternative="greater"))
-    ```
+>>> print(var_test(x, y))
+>>> print(var_test(x, y, alternative="less"))
+>>> print(var_test(x, y, ratio=0.9, alternative="greater"))
     """
     return __var_test(x, y, ratio, alternative, conf_level)
 
@@ -299,65 +273,54 @@ def t_test(
     conf_level=0.95,
 ) -> TestResults:
     """
+Student's t-Test
+-----------------
 
-    # Student's t-Test
-    ## Description
-    Performs one and two sample t-tests on groups of data. This function is inspired by the `t.test()` function of the software R.
-
-    ## Usage
-    ```python
-    t_test(x, ...)
-    ```
-
-    ```python
-    t_test(x, y = None,
-        alternative = ["two-sided", "less", "greater"],
-        mu = 0, paired = False, var_equal = False,
-        conf_level = 0.95)
-    ```
+Description
+-----------
+Performs one and two sample t-tests on groups of data. This function is inspired by the `t.test()` function of the software R.
 
 
-    ## Arguments
-    * `x`: a (non-empty) numeric container of data values.
-    * `y`: an (optional) numeric container of data values.
-    * `alternative`: a string specifying the alternative hypothesis, must be one of "two-sided" (default), "greater" or "less".
-    * `mu`: a number indicating the true value of the mean (or difference in means if you are performing a two sample test).
-    * `paired`: a logical indicating whether you want a paired t-test.
-    * `var_equal`: a logical variable indicating whether to treat the two variances as being equal. If `True` then the pooled variance is used to estimate the variance otherwise the Welch (or Satterthwaite) approximation to the degrees of freedom is used.
-    * `conf_level`: a number between 0 and 1 indicanting the confidence level of the interval.
+Arguments
+---------
+- `x`: a (non-empty) numeric container of data values.
+- `y`: an (optional) numeric container of data values.
+- `alternative`: a string specifying the alternative hypothesis, must be one of "two-sided" (default), "greater" or "less".
+- `mu`: a number indicating the true value of the mean (or difference in means if you are performing a two sample test).
+- `paired`: a logical indicating whether you want a paired t-test.
+- `var_equal`: a logical variable indicating whether to treat the two variances as being equal. If `True` then the pooled variance is used to estimate the variance otherwise the Welch (or Satterthwaite) approximation to the degrees of freedom is used.
+- `conf_level`: a number between 0 and 1 indicanting the confidence level of the interval.
 
+Details
+-------
+alternative = "greater" is the alternative that x has a larger mean than y. For the one-sample case: that the mean is positive.
 
-    ## Details
-    alternative = "greater" is the alternative that x has a larger mean than y. For the one-sample case: that the mean is positive.
+If `paired` is `True` then both x and y must be specified and they must be the same length. Missing values are silently removed (in pairs if `paired` is `True`). If `var_equal` is `True` then the pooled estimate of the variance is used. By default, if `var_equal` is `False` then the variance is estimated separately for both groups and the Welch modification to the degrees of freedom is used.
 
-    If `paired` is `True` then both x and y must be specified and they must be the same length. Missing values are silently removed (in pairs if `paired` is `True`). If `var_equal` is `True` then the pooled estimate of the variance is used. By default, if `var_equal` is `False` then the variance is estimated separately for both groups and the Welch modification to the degrees of freedom is used.
+Value
+-----
+An instance of the `TestResults` class containing the following attributes:
 
+- `statistic`: the value of the t-statistic.
+- `df`: the degrees of freedom for the t-statistic.
+- `p_value`: the p-value for the test.
+- `ci`: a confidence interval for the mean appropriate to the specified alternative hypothesis.
+- `estimate`: the estimated mean or list of estimated means depending on whether it was a one-sample test or a two-sample test.
+- `alternative`: a character string describing the alternative hypothesis.
+- `mu`: the mean of the null hypothesis.
 
-    ### Value
-    An instance of the `TestResults` class containing the following attributes:
+Examples
+--------
+>>> import numpy as np
+>>> np.random.seed(2023)
+>>> x = np.random.normal(size=100)
+>>> y = np.random.normal(size=100)
+>>> mu = 0.1
 
-    * `statistic`: the value of the t-statistic.
-    * `df`: the degrees of freedom for the t-statistic.
-    * `p_value`: the p-value for the test.
-    * `ci`: a confidence interval for the mean appropriate to the specified alternative hypothesis.
-    * `estimate`: the estimated mean or list of estimated means depending on whether it was a one-sample test or a two-sample test.
-    * `alternative`: a character string describing the alternative hypothesis.
-    * `mu`: the mean of the null hypothesis.
-
-
-    ## Examples
-    ```python
-    import numpy as np
-    np.random.seed(2023)
-    x = np.random.normal(size=100)
-    y = np.random.normal(size=100)
-    mu = 0.1
-
-    print(t_test(x, mu=mu, alternative="less"))
-    print(t_test(x, y, mu=mu))
-    print(t_test(x, y, mu=mu, var_equal=True, alternative="greater"))
-    print(t_test(x, y, mu=mu, paired=True))
-    ```
+>>> print(t_test(x, mu=mu, alternative="less"))
+>>> print(t_test(x, y, mu=mu))
+>>> print(t_test(x, y, mu=mu, var_equal=True, alternative="greater"))
+>>> print(t_test(x, y, mu=mu, paired=True))
     """
     return __t_test(x, y, alternative, mu, paired, var_equal, conf_level)
 
@@ -367,68 +330,68 @@ def nested_models_test(
     fitted_big_model: RegressionResultsWrapper,
 ) -> TestResults:
     """
-    # Nested Models F-Test Function
+Nested Models F-Test Function
 
-    ## Description
+Description:
+-------------
+This function performs a nested models F-test using deviance from two fitted models from statsmodels library. The test compares two nested models: a larger or "big" model and a smaller or "small" model. The purpose of this test is to determine whether the larger model significantly improves the model fit compared to the smaller model by adding additional predictors.
 
-    This function performs a nested models F-test using deviance from two fitted models from statsmodels library. The test compares two nested models: a larger or "big" model and a smaller or "small" model. The purpose of this test is to determine whether the larger model significantly improves the model fit compared to the smaller model by adding additional predictors.
+Parameters:
+-----------
+`fitted_small_model` : `RegressionResultsWrapper`
+    The fitted model representing the smaller/nested model. It has to come from statsmodels.
+`fitted_big_model` : `RegressionResultsWrapper`
+    The fitted model representing the larger model, which includes all the predictors from the smaller model and potentially additional predictors. It has to come from statsmodels.
 
-    ## Parameters
-    * `fitted_small_model`: The fitted model representing the smaller/nested model. It have to come from statsmodels.
-    * `fitted_big_model`: : The fitted model representing the larger model, which includes all the predictors from the smaller model and potentially additional predictors. It have to come from statsmodels.
+Returns:
+--------
+The function returns an object of class TestResults that contains the following information:
 
-    ## Returns
+`method` : str
+    A string indicating the name of the statistical test (Nested models F-test).
+`statistic` : float
+    The computed F-statistic value.
+`estimate` : float
+    The difference in deviances between the models.
+`df` : dict
+    A dictionary with the degrees of freedom for the numerator and denominator of the F-statistic.
+`p_value` : float
+    The p-value associated with the F-statistic.
 
-    The function returns an object of class TestResults that contains the following information:
+Examples:
+---------
+Example 1: With OLS
+>>> import pandas as pd
+>>> import statsmodels.api as sm
+>>> data = pd.DataFrame({
+...     "x": [2.01, 2.99, 4.01, 5.01, 6.89],
+...     "y": [2, 3, 4, 5, 6]
+... })
+>>> model_small = sm.OLS.from_formula("y ~ 1", data).fit()
+>>> model_big = sm.OLS.from_formula("y ~ x", data).fit()
+>>> print(nested_models_test(model_small, model_big))
 
-    * `method`: A string indicating the name of the statistical test (Nested models F-test).
-    * `statistic`: The computed F-statistic value.
-    * `estimate`: The difference in deviances between the models.
-    * `df`: A dictionary with the degrees of freedom for the numerator and denominator of the F-statistic.
-    * p_value: The p-value associated with the F-statistic.
+Example 2: With Logit
+>>> import pandas as pd
+>>> import statsmodels.api as sm
+>>> data = pd.DataFrame({
+...     "x": [2.01, 2.99, 4.01, 3.01, 4.89],
+...     "y": [0, 1, 1, 0, 1]
+... })
+>>> model_small = sm.Logit.from_formula("y ~ 1", data).fit()
+>>> model_big = sm.Logit.from_formula("y ~ x", data).fit()
+>>> print(nested_models_test(model_small, model_big))
 
-    ## Examples
-    ### Example 1: With OLS
-    ```python
-    import pandas as pd
-    import statsmodels.api as sm
-    data = pd.DataFrame({
-        "x": [2.01, 2.99, 4.01, 5.01, 6.89],
-        "y": [2, 3, 4, 5, 6]
-    })
-
-    model_small = sm.OLS.from_formula("y ~ 1", data).fit()
-    model_big = sm.OLS.from_formula("y ~ x", data).fit()
-
-    print(nested_models_test(model_small, model_big))
-    ```
-    ### Example 2: With Logit
-    ```python
-    import pandas as pd
-    import statsmodels.api as sm
-    data = pd.DataFrame({
-        "x": [2.01, 2.99, 4.01, 3.01, 4.89],
-        "y": [0, 1, 1, 0, 1]
-    })
-
-    model_small = sm.Logit.from_formula("y ~ 1", data).fit()
-    model_big = sm.Logit.from_formula("y ~ x", data).fit()
-
-    print(nested_models_test(model_small, model_big))
-    ```
-    ### Example 3: With GLM
-    ```python
-    import pandas as pd
-    import statsmodels.api as sm
-    data = pd.DataFrame({
-        "x": [2.01, 2.99, 4.01, 5.01, 6.89],
-        "y": [2, 3, 4, 5, 6]
-    })
-    model_small = sm.GLM.from_formula("y ~ 1", data, family = sm.families.Gamma()).fit()
-    model_big = sm.GLM.from_formula("y ~ x", data, family = sm.families.Gamma()).fit()
-
-    print(nested_models_test(model_small, model_big))
-    ```
+Example 3: With GLM
+>>> import pandas as pd
+>>> import statsmodels.api as sm
+>>> data = pd.DataFrame({
+...     "x": [2.01, 2.99, 4.01, 5.01, 6.89],
+...     "y": [2, 3, 4, 5, 6]
+... })
+>>> model_small = sm.GLM.from_formula("y ~ 1", data, family = sm.families.Gamma()).fit()
+>>> model_big = sm.GLM.from_formula("y ~ x", data, family = sm.families.Gamma()).fit()
+>>> print(nested_models_test(model_small, model_big))
     """
     return __nested_models_test(fitted_small_model, fitted_big_model)
 
@@ -442,78 +405,72 @@ def prop_test(
     correct: bool = True,
 ) -> TestResults:
     """
-    # Test of Equal or Given Proportions.
+Test of Equal or Given Proportions.
 
-    `prop_test()` can be used for testing the null that the proportions
-    (probabilities of success) in several groups are the same, or that they equal
-    certain given values.
+Parameters
+----------
+`x` : array_like
+    A vector of counts of successes, a one-dimensional table with two entries,
+    or a two-dimensional table (or matrix) with 2 columns, giving the counts of
+    successes and failures, respectively.
+`n` : array_like, optional
+    A vector of counts of trials; ignored if x is a matrix or a table.
+    If not provided, it is calculated as the sum of the elements in x.
+`p` : array_like, optional
+    A vector of probabilities of success. The length of p must be the same as
+    the number of groups specified by x, and its elements must be greater than
+    0 and less than 1.
+`alternative` : str, optional
+    A character string specifying the alternative hypothesis, must be one of
+    "two-sided" (default), "greater" or "less". You can specify just the
+    initial letter. Only used for testing the null that a single proportion
+    equals a given value, or that two proportions are equal; ignored otherwise.
+`conf_level` : float, optional
+    Confidence level of the returned confidence interval. Must be a single
+    number between 0 and 1. Only used when testing the null that a single
+    proportion equals a given value, or that two proportions are equal;
+    ignored otherwise.
+`correct` : bool, optional
+    A logical indicating whether Yates' continuity correction should be
+    applied where possible.
 
-    Parameters
-    ----------
-    `x` : array_like
-        a vector of counts of successes, a one-dimensional table with two entries,
-        or a two-dimensional table (or matrix) with 2 columns, giving the counts of
-        successes and failures, respectively.
-    `n` : array_like, optional
-        a vector of counts of trials; ignored if x is a matrix or a table.
-        If not provided, it is calculated as the sum of the elements in x.
-    `p` : array_like, optional
-        a vector of probabilities of success. The length of p must be the same as
-        the number of groups specified by x, and its elements must be greater than
-        0 and less than 1.
-    alternative : str, optional
-        a character string specifying the alternative hypothesis, must be one of
-        "two.sided" (default), "greater" or "less". You can specify just the
-        initial letter. Only used for testing the null that a single proportion
-        equals a given value, or that two proportions are equal; ignored otherwise.
-    `conf_level` : float, optional
-        confidence level of the returned confidence interval. Must be a single
-        number between 0 and 1. Only used when testing the null that a single
-        proportion equals a given value, or that two proportions are equal;
-        ignored otherwise.
-    `correct` : bool, optional
-        a logical indicating whether Yates' continuity correction should be
-        applied where possible.
+Returns
+-------
+`TestResults`
+    A data class with the following attributes:
 
-    Returns
-    -------
-    `TestResult`
-        A data class with the following attributes:
+    - `statistic` : float
+        The value of Pearson's chi-squared test statistic.
+    - `df` : int
+        The degrees of freedom of the approximate chi-squared distribution of
+        the test statistic.
+    - `p_value` : float
+        The p-value of the test.
+    - `estimate` : array_like
+        A vector with the sample proportions x/n.
+    - `null_value` : float or array_like
+        The value of p if specified by the null hypothesis.
+    - `conf_int` : array_like
+        A confidence interval for the true proportion if there is one group,
+        or for the difference in proportions if there are 2 groups and p is
+        not given, or None otherwise. In the cases where it is not None, the
+        returned confidence interval has an asymptotic confidence level as
+        specified by conf_level, and is appropriate to the specified
+        alternative hypothesis.
+    - `alternative` : str
+        A character string describing the alternative.
+    - `method` : str
+        A character string indicating the method used, and whether Yates'
+        continuity correction was applied.
 
-        `statistic` : float
-            the value of Pearson's chi-squared test statistic.
-        `df` : int
-            the degrees of freedom of the approximate chi-squared distribution of
-            the test statistic.
-        `p_value` : float
-            the p-value of the test.
-        `estimate` : array_like
-            a vector with the sample proportions x/n.
-        `null_value` : float or array_like
-            the value of p if specified by the null hypothesis.
-        `conf_int` : array_like
-            a confidence interval for the true proportion if there is one group,
-            or for the difference in proportions if there are 2 groups and p is
-            not given, or None otherwise. In the cases where it is not None, the
-            returned confidence interval has an asymptotic confidence level as
-            specified by conf_level, and is appropriate to the specified
-            alternative hypothesis.
-        `alternative` : str
-            a character string describing the alternative.
-        `method` : str
-            a character string indicating the method used, and whether Yates'
-            continuity correction was applied.
-
-    Example
-    --------
-    ```python
-    import numpy as np
-    from scipy import stats
-    x = np.array([83, 90, 129, 70])
-    n = np.array([86, 93, 136, 82])
-    result = prop_test(x, n)
-    print(result)
-    ```
+Examples
+--------
+>>> import numpy as np
+>>> from scipy import stats
+>>> x = np.array([83, 90, 129, 70])
+>>> n = np.array([86, 93, 136, 82])
+>>> result = prop_test(x, n)
+>>> print(result)
     """
     return __prop_test(x, n, p, alternative, conf_level, correct)
 
@@ -527,79 +484,71 @@ def cor_test(
     continuity: bool = False,
 ) -> TestResults:
     """
-    # Test for Association/Correlation Between Paired Samples
+Test for Association/Correlation Between Paired Samples
+-------------------------------------------------------
 
-    Description
-    -----------
-    Test for association between paired samples, using one of Pearson's product moment correlation coefficient, Kendall's
-    tau or Spearman's rho.
+Description
+-----------
+Test for association between paired samples, using one of Pearson's product moment correlation coefficient, Kendall's
+tau or Spearman's rho.
 
-    Usage
-    -----
-    ```python
-    cor_test(x, y, ...)
-    cor_test(x, y, alternative="two-sided", method="pearson", conf_level=0.95, continuity=False)
-    ```
+Arguments
+---------
+`x`, `y` : array_like
+    Numeric one-dimensional `arrays`, `lists` or `pd.Series` of data values. `x` and `y` must have the same length.
 
-    Arguments
-    ---------
-    `x`, `y` : array_like
-        Numeric one-dimensional `arrays`, `lists` or `pd.Series` of data values. `x` and `y` must have the same length.
+`alternative` : str, optional
+    Indicates the alternative hypothesis and must be one of "two-sided", "greater" or "less".
+    "greater" corresponds to positive association, "less" to negative association.
 
-    `alternative` : str, optional
-        Indicates the alternative hypothesis and must be one of "two-sided", "greater" or "less".
-        "greater" corresponds to positive association, "less" to negative association.
+`method` : str, optional
+    A string indicating which correlation coefficient is to be used for the test.
+    One of "pearson", "kendall", or "spearman".
 
-    `method` : str, optional
-        A string indicating which correlation coefficient is to be used for the test.
-        One of "pearson", "kendall", or "spearman".
+`conf_level` : float, optional
+    Confidence level for the returned confidence interval. Currently only used for the
+    Pearson product moment correlation coefficient if there are at least 4 complete pairs of observations.
 
-    `conf_level` : float, optional
-        Confidence level for the returned confidence interval. Currently only used for the
-        Pearson product moment correlation coefficient if there are at least 4 complete pairs of observations.
+`continuity` : bool, optional
+    If `True`, a continuity correction is used for Kendall's tau.
 
-    `continuity` : bool, optional
-        If `True`, a continuity correction is used for Kendall's tau.
+Returns
+-------
+A `TestResults` instance containing the following atributes:
+    - `statistic`: the value of the test statistic.
+    - `df` (if applicable): the degrees of freedom of the test statistic.
+    - `p_value`: the p-value of the test.
+    - `estimate`: the estimated measure of association.
+    - `null_value`: the value of the association measure under the null hypothesis, always 0.
+    - `alternative`: a string describing the alternative hypothesis.
+    - `method`: a string indicating how the association was measured.
+    - `conf_int` (if applicable): a confidence interval for the measure of association.
 
-    Returns
-    -------
-    A `TestResults` instance containing the following atributes:
-        - `statistic`: the value of the test statistic.
-        - `df` (if applicable): the degrees of freedom of the test statistic.
-        - `p_value`: the p-value of the test.
-        - `estimate`: the estimated measure of association.
-        - `null_value`: the value of the association measure under the null hypothesis, always 0.
-        - `alternative`: a string describing the alternative hypothesis.
-        - `method`: a string indicating how the association was measured.
-        - `conf_int` (if applicable): a confidence interval for the measure of association.
+Details
+-------
+The three methods each estimate the association between paired samples and compute a test of the value being zero.
+They use different measures of association, all in the range [-1, 1] with 0 indicating no association.
+These are sometimes referred to as tests of no correlation, but that term is often confined to the default method.
 
-    Details
-    -------
-    The three methods each estimate the association between paired samples and compute a test of the value being zero.
-    They use different measures of association, all in the range [-1, 1] with 0 indicating no association.
-    These are sometimes referred to as tests of no correlation, but that term is often confined to the default method.
+References
+----------
+[1] D. J. Best & D. E. Roberts (1975). Algorithm AS 89: The Upper Tail Probabilities of Spearman's rho.
+    Applied Statistics, 24, 377--379. 10.2307/2347111.
 
-    References
-    ----------
-    [1] D. J. Best & D. E. Roberts (1975). Algorithm AS 89: The Upper Tail Probabilities of Spearman's rho.
-        Applied Statistics, 24, 377--379. 10.2307/2347111.
+[2] Myles Hollander & Douglas A. Wolfe (1973), Nonparametric Statistical Methods.
+    New York: John Wiley & Sons. Pages 185--194 (Kendall and Spearman tests).
 
-    [2] Myles Hollander & Douglas A. Wolfe (1973), Nonparametric Statistical Methods.
-        New York: John Wiley & Sons. Pages 185--194 (Kendall and Spearman tests).
+Example
+-------
+Using the iris dataset to test the association between sepal length and petal length using Pearson's correlation:
 
-    Example
-    -------
-    Using the iris dataset to test the association between sepal length and petal length using Pearson's correlation:
+>>> from sklearn import datasets
+>>> iris = datasets.load_iris()
+>>> sepal_length = iris.data[:, 0]
+>>> petal_length = iris.data[:, 2]
+>>> result = cor_test(sepal_length, petal_length, method="pearson")
+>>> print(result)
 
-    ```python
-    from sklearn import datasets
-    iris = datasets.load_iris()
-
-    sepal_length = iris.data[:, 0]
-    petal_length = iris.data[:, 2]
-
-    result = cor_test(sepal_length, petal_length, method="pearson")
-    print(result)
     """
     return __cor_test(x, y, method, alternative, conf_level, continuity)
 
@@ -612,19 +561,13 @@ def chisq_test(
     rescale_p: bool = False
 ):
     """
-# Pearson's Chi-squared Test for Count Data
+Pearson's Chi-squared Test for Count Data
+------------------------------------------
 
 
 Description
 -----------
 `chisq_test()` performs chi-squared contingency table tests and goodness-of-fit tests.
-
-Usage
-------
-```python
-chisq_test(x, ...)
-chisq_test(x, y=None, correct=True, p=None, rescale_p=False)
-```
 
 Arguments
 ---------
@@ -639,7 +582,7 @@ Arguments
 
 `correct`: 
     A boolean indicating whether to apply continuity correction when computing the test statistic for 2x2 tables: 
-    one half is subtracted from all |O-E| differences; however, the correction will not be bigger than the differences themselves. The default is True.
+    one half is subtracted from all abs(O-E) differences; however, the correction will not be bigger than the differences themselves. The default is True.
 
 `rescale_p`: boolean
     A boolean; if True then p is rescaled (if necessary) to sum to 1. If rescale_p is False, and p does not sum to 1, an error is raised.
@@ -680,35 +623,34 @@ Returns
 
 Examples
 --------
-```python
-## From Agresti(2007) p.39
-M = [[762, 327, 468], [484, 239, 477]]
-result1 = chisq_test(M)
-print(result1)
 
-## Effect of rescale_p
-x = [12, 5, 7, 7]
-p = [0.4, 0.4, 0.2, 0.2]
-result2 = chisq_test(x, p=p, rescale_p=True)
-print(result2)
+From Agresti(2007) p.39
+>>> M = [[762, 327, 468], [484, 239, 477]]
+>>> result1 = chisq_test(M)
+>>> print(result1)
 
-## Testing for population probabilities
-x = [20, 15, 25]
-result31 = chisq_test(x)
-print(result31)
+Effect of rescale_p
+>>> x = [12, 5, 7, 7]
+>>> p = [0.4, 0.4, 0.2, 0.2]
+>>> result2 = chisq_test(x, p=p, rescale_p=True)
+>>> print(result2)
 
-x = [89,37,30,28,2]
-p = [0.40,0.20,0.20,0.19,0.01]
-result32 = chisq_test(x, p=p)
-print(result32)
+Testing for population probabilities
+>>> x = [20, 15, 25]
+>>> result31 = chisq_test(x)
+>>> print(result31)
 
+A second example of testing for population probabilities
+>>> x = [89,37,30,28,2]
+>>> p = [0.40,0.20,0.20,0.19,0.01]
+>>> result32 = chisq_test(x, p=p)
+>>> print(result32)
 
-# Goodness of fit
-x = [1, 2, 3, 4, 5, 6]
-y = [6, 1, 2, 3, 4, 5]
-result4 = chisq_test(x, y)
-print(result4)
-```
+Goodness of fit
+>>> x = [1, 2, 3, 4, 5, 6]
+>>> y = [6, 1, 2, 3, 4, 5]
+>>> result4 = chisq_test(x, y)
+>>> print(result4)
     """
 
     return __chisq_test(x, y, p, correct, rescale_p)

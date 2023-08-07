@@ -9,66 +9,67 @@ from sklearn.linear_model import LogisticRegression as LogisticRegression_
 
 class LogisticRegression(LogisticRegression_):
     """
-# Logistic Regression
+Logistic Regression
+-------------------
+
+Description
+-----------
 
 This class implements a logistic regression model. It inherits from the `sklearn.linear_model.LogisticRegression` class, but adds additional methods for calculating confidence intervals, p-values, and model summaries.
 
-## Parameters
+Parameters
+----------
 
-* `penalty`: The type of penalty to use. Can be one of `"none"` (default). `"l1"`, `"l2"`, or `"elasticnet"`.
-* `dual`: Whether to use the dual formulation of the problem.
-* `tol`: The tolerance for convergence.
-* `C`: The regularization strength.
-* `fit_intercept`: Whether to fit an intercept term.
-* `intercept_scaling`: The scaling factor for the intercept term.
-* `class_weight`: None (default), "balanced" or a dictionary that maps class labels to weights.
-* `random_state`: The random seed.
-* `solver`: The solver to use. Can be one of `"lbfgs"` (default), `"liblinear"`, `"newton-cg"`, `"newton-cholesky"`, `"sag"`, or `"saga"`.
-* `max_iter`: The maximum number of iterations.
-* `multi_class`: The type of multi-class classification to use. Can be one of `"auto"`, `"ovr"`, or `"multinomial"`.
-* `verbose`: The verbosity level.
-* `warm_start`: Whether to use the warm start.
-* `n_jobs`: The number of jobs to use for parallel processing.
-* `l1_ratio`: The l1_ratio parameter for elasticnet regularization.
+- `penalty`: The type of penalty to use. Can be one of `"none"` (default). `"l1"`, `"l2"`, or `"elasticnet"`.
+- `dual`: Whether to use the dual formulation of the problem.
+- `tol`: The tolerance for convergence.
+- `C`: The regularization strength.
+- `fit_intercept`: Whether to fit an intercept term.
+- `intercept_scaling`: The scaling factor for the intercept term.
+- `class_weight`: None (default), "balanced" or a dictionary that maps class labels to weights.
+- `random_state`: The random seed.
+- `solver`: The solver to use. Can be one of `"lbfgs"` (default), `"liblinear"`, `"newton-cg"`, `"newton-cholesky"`, `"sag"`, or `"saga"`.
+- `max_iter`: The maximum number of iterations.
+- `multi_class`: The type of multi-class classification to use. Can be one of `"auto"`, `"ovr"`, or `"multinomial"`.
+- `verbose`: The verbosity level.
+- `warm_start`: Whether to use the warm start.
+- `n_jobs`: The number of jobs to use for parallel processing.
+- `l1_ratio`: The l1_ratio parameter for elasticnet regularization.
 
-## Properties
+Properties
+----------
 
-* `params`: Returns the estimated values for model parameters.
-* `aic`: Calculates the Akaike information criterion (AIC) for the model.
-* `bic`: Calculates the Bayesian information criterion (BIC) for the model.
-* `cov_matrix`: Returns the covariance matrix for model parámetres.
+- `params`: Returns the estimated values for model parameters.
+- `aic`: Calculates the Akaike information criterion (AIC) for the model.
+- `bic`: Calculates the Bayesian information criterion (BIC) for the model.
+- `cov_matrix`: Returns the covariance matrix for model parámetres.
 
-## Methods
+Methods
+-------
 
-* `fit()`: Fits the model to the data.
-* `predict()`: Predicts the class labels for new data.
-* `conf_int()`: Calculates the confidence intervals for the model coefficients.
-* `se()`: Calculates the standard errors for the model coefficients.
-* `z_values()`: Calculates the z-scores for the model coefficients.
-* `p_values()`: Calculates the p-values for the model coefficients.
-* `summary()`: Prints a summary of the model.
+- `fit()`: Fits the model to the data.
+- `predict()`: Predicts the class labels for new data.
+- `conf_int()`: Calculates the confidence intervals for the model coefficients.
+- `se()`: Calculates the standard errors for the model coefficients.
+- `z_values()`: Calculates the z-scores for the model coefficients.
+- `p_values()`: Calculates the p-values for the model coefficients.
+- `summary()`: Prints a summary of the model.
 
+Examples
+--------
 
-## Examples
-
-```python
-import numpy as np
-import pandas as pd
-
-np.random.seed(123)
-data = pd.DataFrame({
-    "y": np.random.randint(2, size=100),
-    "x1": np.random.uniform(-1, 1, size=100),
-    "x2": np.random.uniform(-1, 1, size=100),
-})
-
-formula = "y ~ x1 + x2"
-
-spec = LogisticRegression.from_formula(formula, data)
-model = spec.fit()
-
-print(model.summary())
-```
+>>> import numpy as np
+>>> import pandas as pd
+>>> np.random.seed(123)
+>>> data = pd.DataFrame({
+        "y": np.random.randint(2, size=100),
+        "x1": np.random.uniform(-1, 1, size=100),
+        "x2": np.random.uniform(-1, 1, size=100),
+    })
+>>> formula = "y ~ x1 + x2"
+>>> spec = LogisticRegression.from_formula(formula, data)
+>>> model = spec.fit()
+>>> print(model.summary())
     """
     
     def __init__(self, penalty: Literal['l1', 'l2', 'elasticnet'] = None, *, dual = False, tol = 0.0001, C = 1, fit_intercept = False, intercept_scaling = 1, class_weight = None, random_state = 2023, solver: Literal['lbfgs', 'liblinear', 'newton-cg', 'newton-cholesky', 'sag', 'saga'] = "lbfgs", max_iter = 100, multi_class: Literal['auto', 'ovr', 'multinomial'] = "auto", verbose = 0, warm_start: bool = False, n_jobs = -1, l1_ratio = None):

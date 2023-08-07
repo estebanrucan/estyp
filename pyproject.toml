@@ -24,7 +24,8 @@ dependencies = [
     "patsy >= 0.5.3",
     "statsmodels >= 0.13.5",
     "scipy >= 1.10.1",
-    "kmodes >= 0.12.2"
+    "kmodes >= 0.12.2",
+    "tqdm >= 4.65.0"
 ]
 
 [project.urls]
