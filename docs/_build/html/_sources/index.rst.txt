@@ -27,9 +27,9 @@ This documentation is also powered by `Jupyter`. You can start using the ESTYP l
 
    instalation
    getting_started
-   estyp.cluster
-   estyp.linear_model
-   estyp.testing
+   cluster
+   linear_model
+   testing
 
 Indices and tables
 ------------------
