@@ -10,7 +10,9 @@ from sklearn.linear_model import LogisticRegression as LogisticRegression_
 class LogisticRegression(LogisticRegression_):
     """
 Logistic Regression
--------------------
+===================
+
+View this in the [online documentation](https://estyp.readthedocs.io/en/latest/linear_model.html#logistic-regression).
 
 Description
 -----------

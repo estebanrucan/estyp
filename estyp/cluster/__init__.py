@@ -9,7 +9,9 @@ from typing import Literal
 class NClusterSearch:
     """
 Optimal Number of Clusters Searcher
-------------------------------------
+====================================
+
+View this in the [online documentation](https://estyp.readthedocs.io/en/latest/cluster.html#optimal-number-of-clusters-searcher).
 
 Description
 -----------

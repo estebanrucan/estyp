@@ -23,7 +23,12 @@ from estyp.testing.__base import (
 class CheckModel:
     """
 Check Linear Regression Assumptions
------------------------------------
+===================================
+
+View this in the [online documentation](https://estyp.readthedocs.io/en/latest/testing.html#CheckModel).
+
+Description
+-----------
 
 The `CheckModel` class provides methods to test the assumptions of the linear regression model.
 These assumptions are:
@@ -221,7 +226,9 @@ def var_test(
 ) -> TestResults:
     """
 F Test to Compare Two Variances
--------------------------------
+===============================
+
+View this in the [online documentation](https://estyp.readthedocs.io/en/latest/testing.html#f-test-to-compare-two-variances).
 
 Description
 -----------
@@ -276,7 +283,9 @@ def t_test(
 ) -> TestResults:
     """
 Student's t-Test
------------------
+================
+
+View this in the [online documentation](https://estyp.readthedocs.io/en/latest/testing.html#student-s-t-test).
 
 Description
 -----------
@@ -334,7 +343,9 @@ def nested_models_test(
 ) -> TestResults:
     """
 Nested Models F-Test Function
------------------------------
+=============================
+
+View this in the [online documentation](https://estyp.readthedocs.io/en/latest/testing.html#nested-models-f-test-function).
 
 Description:
 -------------
@@ -413,6 +424,9 @@ def prop_test(
 ) -> TestResults:
     """
 Test of Equal or Given Proportions.
+===================================
+
+View this in the [online documentation](https://estyp.readthedocs.io/en/latest/testing.html#test-of-equal-or-given-proportions).
 
 Parameters
 ----------
@@ -493,7 +507,9 @@ def cor_test(
 ) -> TestResults:
     """
 Test for Association/Correlation Between Paired Samples
--------------------------------------------------------
+=======================================================
+
+View this in the [online documentation](https://estyp.readthedocs.io/en/latest/testing.html#test-for-association-correlation-between-paired-samples).
 
 Description
 -----------
@@ -570,8 +586,9 @@ def chisq_test(
 ):
     """
 Pearson's Chi-squared Test for Count Data
-------------------------------------------
+=========================================
 
+View this in the [online documentation](https://estyp.readthedocs.io/en/latest/testing.html#pearson-s-chi-squared-test-for-count-data).
 
 Description
 -----------
