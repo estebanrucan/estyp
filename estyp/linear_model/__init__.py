@@ -1,4 +1,4 @@
-from typing import Literal
+from typing import Literal, Union
 
 import numpy as np
 from pandas import DataFrame, Series, concat
@@ -20,6 +20,8 @@ This class implements a logistic regression model. It inherits from the `sklearn
 Parameters
 ----------
 
+- `X`: A Pandas DataFrame or a NumPy array containing the model predictors.
+- `y`: A Pandas Series or a NumPy array containing the model response.
 - `penalty`: The type of penalty to use. Can be one of `"none"` (default). `"l1"`, `"l2"`, or `"elasticnet"`.
 - `dual`: Whether to use the dual formulation of the problem.
 - `tol`: The tolerance for convergence.
@@ -72,16 +74,32 @@ Examples
 >>> print(model.summary())
     """
     
-    def __init__(self, penalty: Literal['l1', 'l2', 'elasticnet'] = None, *, dual = False, tol = 0.0001, C = 1, fit_intercept = False, intercept_scaling = 1, class_weight = None, random_state = 2023, solver: Literal['lbfgs', 'liblinear', 'newton-cg', 'newton-cholesky', 'sag', 'saga'] = "lbfgs", max_iter = 100, multi_class: Literal['auto', 'ovr', 'multinomial'] = "auto", verbose = 0, warm_start: bool = False, n_jobs = -1, l1_ratio = None):
+    def __init__(self, X: Union[DataFrame, np.ndarray]=None, y: Union[Series, np.ndarray]=None, penalty: Literal['l1', 'l2', 'elasticnet'] = None, *, dual = False, tol = 0.0001, C = 1, fit_intercept = False, intercept_scaling = 1, class_weight = None, random_state = 2023, solver: Literal['lbfgs', 'liblinear', 'newton-cg', 'newton-cholesky', 'sag', 'saga'] = "lbfgs", max_iter = 100, multi_class: Literal['auto', 'ovr', 'multinomial'] = "auto", verbose = 0, warm_start: bool = False, n_jobs = -1, l1_ratio = None):
+        
         super().__init__(penalty=penalty, dual=dual, tol=tol, C=C, fit_intercept=fit_intercept, intercept_scaling=intercept_scaling, class_weight=class_weight, random_state=random_state, solver=solver, max_iter=max_iter, multi_class=multi_class, verbose=verbose, warm_start=warm_start, n_jobs=n_jobs, l1_ratio=l1_ratio)
+        
 
+        
+        if self.__dict__.get("X") is None and self.__dict__.get("y") is None:
+            if isinstance(X, np.ndarray):
+                X = DataFrame(X, columns=[f"var_{i+1}" for i in range(X.shape[1])])
+            if X is not None and y is not None:
+                data = concat([X, Series(y, name="y")], axis=1)
+                formula = f"y ~ {' + '.join(X.columns.tolist()) if X.columns.tolist() else 1}"
+                y, X = dmatrices(formula, data)
+                self.X = X
+                self.y = y.reshape(-1)
+                
     @classmethod
-    def from_formula(cls, formula, data):
+    def from_formula(cls, formula, data, **kwargs):
+        if "X" in kwargs.keys() or "y" in kwargs.keys():
+            raise ValueError("The 'X' and 'y' arguments cannot be used with the 'from_formula' method.")
         y, X = dmatrices(formula, data)
-        cls.y = y.reshape(-1)
-        cls.formula = formula
-        cls.X = X
-        return cls()
+        self_ = cls(**kwargs)
+        self_.y = y.reshape(-1)
+        self_.X = X
+        self_.formula = formula
+        return self_
 
     def __log_likelihood(self):
         z = np.dot(self.X, self.coef_.flatten())
@@ -89,7 +107,7 @@ Examples
         return log_likelihood
 
 
-    def fit(self):
+    def fit(self, disp = None):
         super().fit(self.X, self.y)
         return self
     
@@ -148,6 +166,16 @@ Examples
     def bic(self):
         bic = -2 * self.__log_likelihood() + np.log(self.X.shape[0]) * (self.coef_.shape[0] - 1)
         return bic.item()
+    
+    def deviance_residuals(self):
+        p = self.predict_proba(self.X)[:, 1]
+        residuals = -2 * (self.y * np.log(p) + (1 - self.y) * np.log(1 - p))
+        return residuals
+    
+    @property
+    def deviance(self):
+        residuals = self.deviance_residuals()
+        return np.sum(residuals).item()
     
     
     def __repr__(self) -> str:

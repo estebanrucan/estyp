@@ -17,6 +17,7 @@ from statsmodels.stats.diagnostic import (acorr_breusch_godfrey,
 from statsmodels.stats.outliers_influence import variance_inflation_factor
 from statsmodels.stats.stattools import (durbin_watson, jarque_bera,
                                          omni_normtest)
+from estyp.linear_model import LogisticRegression
 
 
 class bcolors:
@@ -470,16 +471,29 @@ def __t_test(x, y, alternative, mu, paired, var_equal, conf_level):
 
 
 def __deviance(fitted_model, response):
-    if isinstance(fitted_model.model, OLS):
-        return Gaussian().deviance(endog=response, mu=fitted_model.fittedvalues)
-    elif isinstance(fitted_model.model, GLM):
+    try:
+        fitted_model.model
+        ok = True
+    except:
+        ok = False
+    if ok:
+        if isinstance(fitted_model.model, OLS):
+            return Gaussian().deviance(endog=response, mu=fitted_model.fittedvalues)
+        elif isinstance(fitted_model.model, GLM):
+            return fitted_model.deviance
+        else:
+            return sum(fitted_model.resid_dev ** 2)
+    else:
         return fitted_model.deviance
-    return sum(fitted_model.resid_dev ** 2) 
 
 
 def __nested_models_test(fitted_small_model, fitted_big_model):
-    response = fitted_big_model.model.data.endog
-    n = fitted_big_model.fittedvalues.shape[0]
+    try:
+        response = fitted_big_model.model.data.endog
+    except:
+        response = fitted_big_model.y
+        
+    n = response.shape[0]
     p_big = fitted_big_model.params.shape[0] - 1
     p_small = fitted_small_model.params.shape[0] - 1
     d_big = __deviance(fitted_big_model, response)
@@ -490,6 +504,7 @@ def __nested_models_test(fitted_small_model, fitted_big_model):
     f_den = d_big / df_den
     f_stat = f_num / f_den
     p_value = fisher(dfn=df_num, dfd=df_den).sf(f_stat)
+    diff_dev = float(d_small - d_big)
     names = {
         "statistic": "F",
         "estimate": "Difference in deviances between models",
@@ -499,7 +514,7 @@ def __nested_models_test(fitted_small_model, fitted_big_model):
     res = {
         "method": "Nested models F-test",
         "statistic": f_stat,
-        "estimate": d_small - d_big,
+        "estimate": diff_dev,
         "df": {"df_num": df_num, "df_den": df_den},
         "p_value": p_value,
     }

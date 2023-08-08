@@ -112,6 +112,7 @@ Example 5: Using the silhouette method with KPrototypes and custom alpha for dis
         self,
         estimator,
         method: Literal["elbow", "silhouette"] = "elbow",
+        *,
         min_clusters: int = 1,
         max_clusters: int = 10,
         step: int = 1,
