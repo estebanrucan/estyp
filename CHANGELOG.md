@@ -1,5 +1,10 @@
 # CHANGELOG
 
+### V0.6.0
+
+* I'm glad to announce that this library have it own documentation in [Read the Docs](https://estyp.readthedocs.io/en/latest/).
+* All functions and classes docstrings have a link that redirects to it web documentation.
+
 ### V0.5.1 (Preparing for docs)
 
 * Added CHANGELOG.md file.

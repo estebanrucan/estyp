@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The linear_model.stepwise module &mdash; ESTYP Documentation 0.1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/jupyter-sphinx.css" type="text/css" />
+      <link rel="stylesheet" href="_static/thebelab.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/thebelab-helper.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="The testing module" href="estyp.testing.html" />
+    <link rel="prev" title="The linear_model module" href="estyp.linear_model.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ESTYP Documentation
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="instalation.html">Instalation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="estyp.cluster.html">The <cite>cluster</cite> module</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="estyp.linear_model.html">The <cite>linear_model</cite> module</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">The <cite>linear_model.stepwise</cite> module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#both-method-variable-selection">Both Method Variable Selection</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#both_selection"><code class="docutils literal notranslate"><span class="pre">both_selection()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#forward-variable-selection">Forward Variable Selection</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#forward_selection"><code class="docutils literal notranslate"><span class="pre">forward_selection()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="estyp.linear_model.html#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="estyp.linear_model.html#logistic-regression">Logistic Regression</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="estyp.testing.html">The <cite>testing</cite> module</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ESTYP Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="estyp.linear_model.html">The <cite>linear_model</cite> module</a></li>
+      <li class="breadcrumb-item active">The <cite>linear_model.stepwise</cite> module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/estyp.linear_model.stepwise.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="the-linear-model-stepwise-module">
+<h1>The <cite>linear_model.stepwise</cite> module<a class="headerlink" href="#the-linear-model-stepwise-module" title="Permalink to this heading"></a></h1>
+<section id="both-method-variable-selection">
+<h2>Both Method Variable Selection<a class="headerlink" href="#both-method-variable-selection" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="both_selection">
+<span class="sig-name descname"><span class="pre">both_selection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">formula</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#both_selection" title="Permalink to this definition"></a></dt>
+<dd><section id="both-forward-and-backward-variable-selection-for-glm-s">
+<h3>Both Forward and Backward Variable Selection for GLM’s<a class="headerlink" href="#both-forward-and-backward-variable-selection-for-glm-s" title="Permalink to this heading"></a></h3>
+<p>This function performs both forward and backward variable selection using the Akaike Information Criterion (AIC).</p>
+<dl class="field-list simple">
+<dt class="field-odd">param formula<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A string representing the initial model formula.</p>
+</dd>
+<dt class="field-even">type formula<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+<dt class="field-odd">param data<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A Pandas DataFrame containing the data to be used for model fitting.</p>
+</dd>
+<dt class="field-even">type data<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame</p>
+</dd>
+<dt class="field-odd">param model<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A statsmodels.GLM object that represents the type of model to be fit.</p>
+</dd>
+<dt class="field-even">type model<span class="colon">:</span></dt>
+<dd class="field-even"><p>Union[GLM, OLS, Logit]</p>
+</dd>
+<dt class="field-odd">param max_iter<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The maximum number of iterations to perform.</p>
+</dd>
+<dt class="field-even">type max_iter<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+<dt class="field-odd">param formula_kwargs<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Additional keyword arguments to be passed to the model.from_formula() method.</p>
+</dd>
+<dt class="field-even">type formula_kwargs<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+<dt class="field-odd">param fit_kwargs<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Additional keyword arguments to be passed to the fit() method.</p>
+</dd>
+<dt class="field-even">type fit_kwargs<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+<dt class="field-odd">return<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A string representing the final model formula.</p>
+</dd>
+<dt class="field-even">rtype<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+<div class="jupyter_cell jupyter_container docutils container">
+<div class="cell_input code_cell docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">estyp.linear_model.stepwise</span> <span class="kn">import</span> <span class="n">both_selection</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
+    <span class="s2">&quot;x1&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
+    <span class="s2">&quot;x2&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
+<span class="p">})</span>
+<span class="n">formula</span> <span class="o">=</span> <span class="s2">&quot;y ~ x1 + x2&quot;</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span>
+
+<span class="n">final_formula</span> <span class="o">=</span> <span class="n">both_selection</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">final_formula</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Made by Esteban Rucán. Contact me in LinkedIn: https://www.linkedin.com/in/estebanrucan/
+</pre></div>
+</div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Este proceso tarda un buen tiempo ¡Paciencia! Momento de cuestionarte si eres feliz.
+AIC Inicial: -329.74
+Iteración 1 Finalizada | AIC Actual: -332.38
+=========================
+|| Fin de la selección ||
+=========================
+AIC Obtenido: -332.38
+Variables eliminadas: [&#39;x2&#39;]
+Variables agregadas: Ninguna
+Fórmula obtenida: y ~ x1
+y ~ x1
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</dd></dl>
+
+</section>
+<section id="forward-variable-selection">
+<h2>Forward Variable Selection<a class="headerlink" href="#forward-variable-selection" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="forward_selection">
+<span class="sig-name descname"><span class="pre">forward_selection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#forward_selection" title="Permalink to this definition"></a></dt>
+<dd><section id="forward-variable-selection-for-glm-s">
+<h3>Forward Variable Selection for GLM’s<a class="headerlink" href="#forward-variable-selection-for-glm-s" title="Permalink to this heading"></a></h3>
+<p>This function performs forward variable selection using p-values calculated from nested models testing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">param y<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A string containing the name of the dependent variable (target) to be predicted.</p>
+</dd>
+<dt class="field-even">type y<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+<dt class="field-odd">param data<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The pandas DataFrame containing both the target variable ‘y’ and the predictor variables for model training.</p>
+</dd>
+<dt class="field-even">type data<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame</p>
+</dd>
+<dt class="field-odd">param model<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A statsmodels model class. The statistical model to be used for model fitting and evaluation. Defaults to <code class="code docutils literal notranslate"><span class="pre">sm.OLS</span></code>.</p>
+</dd>
+<dt class="field-even">type model<span class="colon">:</span></dt>
+<dd class="field-even"><p>Union[GLM, OLS, Logit, LogisticRegression]</p>
+</dd>
+<dt class="field-odd">param alpha<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A number between 0 and 1. The significance level for feature selection. A feature is added to the model if its p-value is less than this alpha value. Defaults to 0.05.</p>
+</dd>
+<dt class="field-even">type alpha<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+<dt class="field-odd">param formula_kwargs<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Additional keyword arguments to be passed to the model.from_formula() method. Defaults to <code class="code docutils literal notranslate"><span class="pre">{}</span></code>.</p>
+</dd>
+<dt class="field-even">type formula_kwargs<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+<dt class="field-odd">param fit_kwargs<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Additional keyword arguments to be passed to the fit() method. Defaults to <code class="code docutils literal notranslate"><span class="pre">{&quot;disp&quot;:</span> <span class="pre">0}</span></code>.</p>
+</dd>
+<dt class="field-even">type fit_kwargs<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+<dt class="field-odd">return<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A string representing the final model formula.</p>
+</dd>
+<dt class="field-even">rtype<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+<div class="jupyter_cell jupyter_container docutils container">
+<div class="cell_input code_cell docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
+<span class="kn">from</span> <span class="nn">estyp.linear_model.stepwise</span> <span class="kn">import</span> <span class="n">forward_selection</span>
+
+<span class="c1"># Create sample DataFrame</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
+    <span class="s1">&#39;X1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span>
+    <span class="s1">&#39;X2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+    <span class="s1">&#39;X3&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="p">})</span>
+
+<span class="c1"># Perform the forward variable selection</span>
+<span class="n">formula</span> <span class="o">=</span> <span class="n">forward_selection</span><span class="p">(</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">,</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="p">,</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>
+<span class="p">)</span>
+
+<span class="c1"># Fit the model using the selected formula</span>
+<span class="n">selected_model</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">selected_model</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Variable agregada: X1                             | valor-p: 0.0004
+=========================
+|| Fin de la selección ||
+=========================
+Fórmula obtenida: y ~ X1
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                      y   R-squared:                       0.990
+Model:                            OLS   Adj. R-squared:                  0.986
+Method:                 Least Squares   F-statistic:                     289.0
+Date:                Mon, 07 Aug 2023   Prob (F-statistic):           0.000443
+Time:                        21:50:18   Log-Likelihood:                 2.6178
+No. Observations:                   5   AIC:                            -1.236
+Df Residuals:                       3   BIC:                            -2.017
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept     -0.1438      0.203     -0.710      0.529      -0.789       0.501
+X1             0.5822      0.034     17.000      0.000       0.473       0.691
+==============================================================================
+Omnibus:                          nan   Durbin-Watson:                   2.488
+Prob(Omnibus):                    nan   Jarque-Bera (JB):                0.336
+Skew:                           0.389   Prob(JB):                        0.845
+Kurtosis:                       1.998   Cond. No.                         14.8
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="estyp.linear_model.html" class="btn btn-neutral float-left" title="The linear_model module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="estyp.testing.html" class="btn btn-neutral float-right" title="The testing module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Esteban Rucán Carrasco.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
