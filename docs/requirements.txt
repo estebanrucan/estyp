@@ -1,7 +1,7 @@
 sphinx_rtd_theme
 jupyter-sphinx
 jupyter
-sklearn_extra
+sklearn-extra
 estyp
 numpy >= 1.22.3
 scikit-learn >= 1.3.0
