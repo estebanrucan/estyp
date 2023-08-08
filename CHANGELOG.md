@@ -1,5 +1,20 @@
 # CHANGELOG
 
+### V0.5.1 (Preparing for docs)
+
+* Added CHANGELOG.md file.
+* Added .readthedocs.yml file.
+* Changed library description in README.md.
+* All functions and classes have a reviewed docstring.
+* Added `tqmd >= 4.65.0` as a depedency of the library.
+* Fixed some bugs in `testing.TestResults()` class.
+* Fixed some bugs in `cluster.NClusterSearch()` class.
+* Fixed some bugs in `linear_model.LogisticRegression()` class.
+* Now `linear_model.LogisticRegression()` has a `deviance` attribute.
+* `testing.nested_models_test()` function now accepts `linear_model.LogisticRegression()` instances.
+* `linear_model.stepwise.forward_selection()` function now accepts `linear_model.LogisticRegression()` instances.
+* `linear_model.stepwise.both_selection()` and `linear_model.stepwise.backward_selection()` functions now accepts `verbose`, `formula_kwargs` and `fit_kwargs`  parameters.
+
 ### V0.5.0
 
 * Added `testing.chisq_test()` function to perform a chi-squared test.

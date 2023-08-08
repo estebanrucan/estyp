@@ -8,6 +8,22 @@ ESTYP (Extended Statistical Toolkit Yet Practical) is a Python library that serv
 
 Actually, the name comes from the way my friends call me (Esti), plus "p" which is the initial of `python`.
 
+## Installation
+
+To install this library, you can use PyPI:
+
+```bash
+pip install estyp
+```
+
+## Documentation
+
+You can have a friendly introduction to this library in the [documentation](https://estyp.readthedocs.io/en/latest/).
+
+## Changelog
+
+You can see the changelog [here](./CHANGELOG.md)
+
 ## Features
 
 ### `testing` module
@@ -31,18 +47,10 @@ Actually, the name comes from the way my friends call me (Esti), plus "p" which 
 * `cluster.NClusterSearch`: A helper class to identify the optimal number of clusters for clustering algorithms with elbow or silhuette methods.
 
 
-## Installation
-
-To install this library, you can use PyPI:
-
-```bash
-pip install estyp
-```
-
 ## License
 
 This library is under the MIT license.
 
 ## Contact
 
-If you have any questions about this library, you can contact me at [errucan@gmail.com](mailto:errucan@gmail.com).
+If you have any questions about this library, you can contact me at [LinkedIn](https://www.linkedin.com/in/estebanrucan/).
