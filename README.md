@@ -46,7 +46,6 @@ You can see the changelog [here](./CHANGELOG.md)
 
 * `cluster.NClusterSearch`: A helper class to identify the optimal number of clusters for clustering algorithms with elbow or silhuette methods.
 
-
 ## License
 
 This library is under the MIT license.
