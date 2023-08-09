@@ -106,7 +106,7 @@ Logistic Regression
 
       Returns the estimated covariance matrix for model parameters.
 
-   .. attribute::residuals:
+   .. attribute:: residuals
 
       Returns the deviance of the models
 
