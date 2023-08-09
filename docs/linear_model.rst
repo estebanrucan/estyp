@@ -104,7 +104,15 @@ Logistic Regression
 
    .. attribute:: cov_matrix
 
-      Returns the covariance matrix for model parameters.
+      Returns the estimated covariance matrix for model parameters.
+
+   .. attribute::residuals:
+
+      Returns the deviance of the models
+
+   .. attribute:: deviance_residuals
+
+      Returns the deviance residuals.
 
 
 
