@@ -1,5 +1,12 @@
 # CHANGELOG
 
+### V0.7.0
+
+* Added a new library import message.
+* Changed LogisticRegresion.deviance_residuals() method to a property.
+* Added deviance and deviance_residuals properties from LogisticRegression class to documentation.
+* Added correct link to access to changelog from documentation.
+
 ### V0.6.0
 
 * I'm glad to announce that this library have it own documentation in [Read the Docs](https://estyp.readthedocs.io/en/latest/).
