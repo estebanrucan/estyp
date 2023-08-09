@@ -46,7 +46,9 @@ Properties
 - `params`: Returns the estimated values for model parameters.
 - `aic`: Calculates the Akaike information criterion (AIC) for the model.
 - `bic`: Calculates the Bayesian information criterion (BIC) for the model.
-- `cov_matrix`: Returns the covariance matrix for model parámetres.
+- `cov_matrix`: Returns the covariance matrix for model parametres.
+- `deviance`: Returns the deviance of the model.
+- `deviance_residuals`: Returns the deviance residuals.
 
 Methods
 -------
@@ -168,7 +170,8 @@ Examples
     def bic(self):
         bic = -2 * self.__log_likelihood() + np.log(self.X.shape[0]) * (self.coef_.shape[0] - 1)
         return bic.item()
-    
+
+    @property
     def deviance_residuals(self):
         p = self.predict_proba(self.X)[:, 1]
         residuals = -2 * (self.y * np.log(p) + (1 - self.y) * np.log(1 - p))
@@ -176,8 +179,7 @@ Examples
     
     @property
     def deviance(self):
-        residuals = self.deviance_residuals()
-        return np.sum(residuals).item()
+        return np.sum(self.deviance_residuals).item()
     
     
     def __repr__(self) -> str:
