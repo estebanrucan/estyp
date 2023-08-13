@@ -70,6 +70,8 @@
 <li class="toctree-l4"><a class="reference internal" href="#LogisticRegression.aic"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.aic</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#LogisticRegression.bic"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.bic</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#LogisticRegression.cov_matrix"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.cov_matrix</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#LogisticRegression.residuals"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.residuals</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#LogisticRegression.deviance_residuals"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.deviance_residuals</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -220,7 +222,19 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="LogisticRegression.cov_matrix">
 <span class="sig-name descname"><span class="pre">cov_matrix</span></span><a class="headerlink" href="#LogisticRegression.cov_matrix" title="Permalink to this definition"></a></dt>
-<dd><p>Returns the covariance matrix for model parameters.</p>
+<dd><p>Returns the estimated covariance matrix for model parameters.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="LogisticRegression.residuals">
+<span class="sig-name descname"><span class="pre">residuals</span></span><a class="headerlink" href="#LogisticRegression.residuals" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the deviance of the models</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="LogisticRegression.deviance_residuals">
+<span class="sig-name descname"><span class="pre">deviance_residuals</span></span><a class="headerlink" href="#LogisticRegression.deviance_residuals" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the deviance residuals.</p>
 </dd></dl>
 
 <section id="examples">
@@ -247,7 +261,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Made by Esteban Rucán. Contact me in LinkedIn: https://www.linkedin.com/in/estebanrucan/
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Looking for help? Visit the ESTYP documentation: https://estyp.readthedocs.io/
 </pre></div>
 </div>
 <div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>           Estimate      S.E.         z  Pr(&gt;|z|)   [Lower,    Upper]

@@ -108,7 +108,7 @@ Logistic Regression
 
    .. attribute:: residuals
 
-      Returns the deviance of the models
+      Returns the deviance of the model.
 
    .. attribute:: deviance_residuals
 
