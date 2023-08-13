@@ -163,7 +163,7 @@ Examples
     
     @property
     def aic(self):
-        aic = -2 * self.__log_likelihood() + 2 * self.coef_.shape[0] - 1
+        aic = -2 * self.__log_likelihood() + 2 * (self.coef_.shape[0] - 1)
         return aic.item()
     
     @property
