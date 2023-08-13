@@ -16,6 +16,14 @@ To install this library, you can use PyPI:
 pip install estyp
 ```
 
+Also, you can install it from the source code:
+
+```bash
+git clone https://github.com/estebanrucan/estyp.git
+cd estyp
+pip install -e .
+```
+
 ## Documentation
 
 You can have a friendly introduction to this library in the [documentation](https://estyp.readthedocs.io/en/latest/).
