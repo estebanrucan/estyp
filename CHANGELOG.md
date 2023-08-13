@@ -2,10 +2,13 @@
 
 ### V0.7.0
 
-* Added a new library import message.
-* Changed LogisticRegresion.deviance_residuals() method to a property.
-* Added deviance and deviance_residuals properties from LogisticRegression class to documentation.
-* Added correct link to access to changelog from documentation.
+* Added a new library import message that derives to documentation.
+* Changed `LogisticRegresion.deviance_residuals()` method to a property.
+* Fixed AIC calculation in `LogisticRegression` class.
+* Added deviance and deviance_residuals properties from `LogisticRegression` class to documentation.
+* Added Dockerfile to create a docker image to build the package.
+* Added tests to check if functionalities works properly. The tests are in the `test` folder and runs with GitHub Actions in every push.
+* Changed pyproject.toml to a setup.py file.
 
 ### V0.6.0
 
