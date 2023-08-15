@@ -7,7 +7,16 @@ You can install the ESTYP library using PyPI:
 
     pip install estyp
 
-The lastest version of the library is:
+Also, you can install it from the source code:
+
+.. code-block:: console
+    
+    git clone https://github.com/estebanrucan/estyp.git
+    cd estyp
+    pip install -e .
+
+
+The lastest version of the library in PyPI is:
 
 .. jupyter-execute::
     :hide-code:
@@ -20,7 +29,7 @@ The lastest version of the library is:
 
     print(estyp.__version__)
 
-I recommend you to use this library with Python 3.9.12 or newer. The following dependencies will also be installed:
+The library was tested in the versions 3.9, 3.10 and 3.11 of Python. The following dependencies will also be installed:
 
 -  "numpy >= 1.22.3"
 -  "scikit-learn >= 1.3.0"
