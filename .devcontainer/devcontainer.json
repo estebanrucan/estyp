@@ -13,7 +13,8 @@
 				"GitHub.copilot",
 				"GitHub.copilot-chat",
 				"usernamehw.errorlens",
-				"ms-vscode.makefile-tools"
+				"ms-vscode.makefile-tools",
+				"eamodio.gitlens"
 			]
 		}
 	},

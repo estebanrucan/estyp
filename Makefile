@@ -11,4 +11,3 @@ dist:
 	docker run --name container my-package:latest
 	sudo docker cp container:/app/dist ./
 	docker rm container
-
