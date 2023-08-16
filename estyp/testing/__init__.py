@@ -2,8 +2,9 @@ from typing import List, Literal, Optional, Union
 
 import matplotlib.pyplot as plt
 import numpy as np
-from pandas import Series
+from pandas import Series, DataFrame
 from statsmodels.regression.linear_model import RegressionResultsWrapper
+from statsmodels.api import OLS
 
 from estyp.testing.__base import (
     TestResults,
@@ -17,6 +18,7 @@ from estyp.testing.__base import (
     __var_test,
     __cor_test,
     __chisq_test,
+    _dw_test,
 )
 
 
@@ -220,6 +222,7 @@ dict
 def var_test(
     x: Union[List, np.ndarray, Series],
     y: Union[List, np.ndarray, Series],
+    *,
     ratio: Union[float, int] = 1,
     alternative: Literal["two-sided", "less", "greater"] = "two-sided",
     conf_level=0.95,
@@ -275,6 +278,7 @@ Examples
 def t_test(
     x: Union[List, np.ndarray, Series],
     y: Union[List, np.ndarray, Series] = None,
+    *,
     alternative: Literal["two-sided", "less", "greater"] = "two-sided",
     mu: Union[float, int] = 0,
     paired=False,
@@ -416,6 +420,7 @@ Example 3: With GLM
 
 def prop_test(
     x: Union[List, np.ndarray, Series],
+    *,
     n: Optional[Union[List, np.ndarray, Series]] = None,
     p: Optional[Union[float, List, np.ndarray]] = None,
     alternative: str = "two-sided",
@@ -491,7 +496,7 @@ Examples
 >>> from scipy import stats
 >>> x = np.array([83, 90, 129, 70])
 >>> n = np.array([86, 93, 136, 82])
->>> result = prop_test(x, n)
+>>> result = prop_test(x, n=n)
 >>> print(result)
     """
     return __prop_test(x, n, p, alternative, conf_level, correct)
@@ -500,6 +505,7 @@ Examples
 def cor_test(
     x: Union[List, np.ndarray, Series],
     y: Union[List, np.ndarray, Series],
+    *,
     method: Literal["pearson", "kendall", "spearman"] = "pearson",
     alternative: Literal["two-sided", "less", "greater"] = "two-sided",
     conf_level: float = 0.95,
@@ -539,14 +545,15 @@ Arguments
 Returns
 -------
 A `TestResults` instance containing the following atributes:
-    - `statistic`: the value of the test statistic.
-    - `df` (if applicable): the degrees of freedom of the test statistic.
-    - `p_value`: the p-value of the test.
-    - `estimate`: the estimated measure of association.
-    - `null_value`: the value of the association measure under the null hypothesis, always 0.
-    - `alternative`: a string describing the alternative hypothesis.
-    - `method`: a string indicating how the association was measured.
-    - `conf_int` (if applicable): a confidence interval for the measure of association.
+
+- `statistic`: the value of the test statistic.
+- `df` (if applicable): the degrees of freedom of the test statistic.
+- `p_value`: the p-value of the test.
+- `estimate`: the estimated measure of association.
+- `null_value`: the value of the association measure under the null hypothesis, always 0.
+- `alternative`: a string describing the alternative hypothesis.
+- `method`: a string indicating how the association was measured.
+- `conf_int` (if applicable): a confidence interval for the measure of association.
 
 Details
 -------
@@ -579,6 +586,7 @@ Using the iris dataset to test the association between sepal length and petal le
 
 def chisq_test(
     x: Union[List, np.ndarray, Series],
+    *,
     y: Union[List, np.ndarray, Series, None] = None,
     p: Union[List, np.ndarray, Series, None] = None,
     correct: bool = True,
@@ -679,8 +687,96 @@ Goodness of fit
 
 >>> x = [1, 2, 3, 4, 5, 6]
 >>> y = [6, 1, 2, 3, 4, 5]
->>> result4 = chisq_test(x, y)
+>>> result4 = chisq_test(x, y=y)
 >>> print(result4)
     """
 
     return __chisq_test(x, y, p, correct, rescale_p)
+
+def dw_test(
+        input_obj: Union[str, OLS, RegressionResultsWrapper],
+        *,
+        order_by:Union[Series, np.ndarray] = None,
+        alternative: Literal["two-sided", "greater", "less"] = "greater",
+        data: DataFrame = None
+) -> TestResults:
+    """
+Durbin-Watson Test
+==================
+
+View this in the [online documentation](https://estyp.readthedocs.io/en/latest/testing.html#durbin-watson-test-for-autocorrelation).
+
+Description
+-----------
+
+Performs the Durbin-Watson test for autocorrelation of disturbances. Includes an approximated p-value taken from the `lmtest::dwtest()` function in R.
+
+
+Parameters:
+-----------
+
+`input_obj`: One of str, OLS, or a fitted OLS object. 
+        A formula description for the model to be tested (or a OLS object or a fitted OLS object).
+`order_by`: Series, np.ndarray, optional
+        The observations in the model are ordered by z. 
+        If set to None (the default) the observations are assumed to be ordered (e.g., a time series).
+`alternative`: str, optional.
+        A character string specifying the alternative hypothesis. One of "greater" (default), "two-sided", or "less".
+`data` : pd.DataFrame, optional 
+        An optional pandas DataFrame containing the variables in the model.
+
+Details
+-------
+
+The Durbin-Watson test has the null hypothesis that the autocorrelation of the disturbances is 0. 
+It is possible to test against the alternative that it is greater than, not equal to, or less than 0, respectively. 
+This can be specified by the alternative parameter.
+
+For large sample sizes the algorithm might fail to compute the p value; in that case a warning is printed 
+and an approximate p value will be given; this p value is computed using a normal approximation 
+with mean and variance of the Durbin-Watson test statistic.
+
+Returns
+-------
+
+A `TestResults` instance containing:
+
+- `statistic`: the test statistic.
+- `method`: a character string with the method used.
+- `alternative`: a character string describing the alternative hypothesis.
+- `p_value`: the corresponding p-value.
+` `estimate`: the estimate of the autocorrelation of firt order of the residuals obtained from DW statistic.
+
+References
+----------
+
+- J. Durbin & G.S. Watson (1950), Testing for Serial Correlation in Least Squares Regression I. Biometrika 37, 409–428.
+- J. Durbin & G.S. Watson (1951), Testing for Serial Correlation in Least Squares Regression II. Biometrika 38, 159–177.
+- J. Durbin & G.S. Watson (1971), Testing for Serial Correlation in Least Squares Regression III. Biometrika 58, 1–19.
+- R.W. Farebrother (1980), Pan's Procedure for the Tail Probabilities of the Durbin-Watson Statistic. 
+    Applied Statistics 29, 224–227.
+- W. Krämer & H. Sonnberger (1986), The Linear Regression Model under Test. Heidelberg: Physica.
+
+Examples
+--------
+
+Generate two AR(1) error terms with parameter rho = 0 (white noise) and rho = 0.9 respectively
+
+- rho = 0:
+
+>>> import numpy as np
+>>> err1 = np.random.randn(100)
+>>> ## generate regressor and dependent variable
+>>> x = np.tile([-1, 1], 50)
+>>> y1 = 1 + x + err1
+>>> ## perform Durbin-Watson test
+>>> dw_test('y1 ~ x', data=pd.DataFrame({'y1': y1, 'x': x}))
+
+- rho = 0.9:
+
+>>> from statsmodels.tsa.filters.filtertools import recursive_filter
+>>> err2 = recursive_filter(err1, 0.9)
+>>> y2 = 1 + x + err2
+>>> dw_test('y2 ~ x', data=pd.DataFrame({'y2': y2, 'x': x}))
+    """
+    return _dw_test(input_obj, order_by, alternative, data)

@@ -5,6 +5,7 @@ import numpy as np
 import scipy.stats as stats
 import statsmodels.api as sm
 from pandas import DataFrame, Series, crosstab
+from scipy.linalg import solve_triangular
 from scipy.stats import chi2
 from scipy.stats import f as fisher
 from scipy.stats import (kstest, norm, probplot, shapiro, ttest_1samp,
@@ -15,10 +16,8 @@ from statsmodels.stats.diagnostic import (acorr_breusch_godfrey,
                                           acorr_ljungbox, het_breuschpagan,
                                           het_goldfeldquandt, het_white)
 from statsmodels.stats.outliers_influence import variance_inflation_factor
-from statsmodels.stats.stattools import (durbin_watson, jarque_bera,
+from statsmodels.stats.stattools import (jarque_bera,
                                          omni_normtest)
-from estyp.linear_model import LogisticRegression
-
 
 class bcolors:
     HEADER = "\033[95m"
@@ -28,7 +27,157 @@ class bcolors:
     ENDC = "\033[0m"
     BOLD = "\033[1m"
     UNDERLINE = "\033[4m"
+
+
+
+class TestResults:
+    def __init__(self, res: dict, names: dict):
+        self.__dict__.update(res)
+        self.__names = names
+
+    def __repr__(self):
+        # p-value
+        p_value = self.p_value
+        if p_value < 0.0001:
+            p_value = "<0.0001"
+        else:
+            p_value = f"{p_value:0.4f}"
+        # df
+        if self.__dict__.get("df") is not None:
+            df = self.df
+            if isinstance(df, (float, int)):
+                if df == float(int(df)):
+                    df = int(df)
+                else:
+                    df = f"{df:0.2f}"
+            elif isinstance(df, dict):
+                df = {k: round(v, 2) for k, v in df.items()}
+            elif isinstance(df, float):
+                df = f"{df:0.2f}"
+        else:
+            df = None
+        # estimates
+        if self.__dict__.get("estimate") is not None:
+            estimate = self.estimate
+            if isinstance(estimate, (list, np.ndarray)):
+                estimate = [float(f"{e:0.6f}") for e in estimate]
+            elif estimate == float(int(estimate)):
+                estimate = int(estimate)
+            elif isinstance(estimate, float):
+                estimate = f"{estimate:0.6f}"
+
+        string = f"""
+    {bcolors.BOLD + bcolors.UNDERLINE + self.method + bcolors.ENDC}
+    {self.__names['statistic']} = {self.statistic:0.4f} |{' df: ' + str(df) + ' |' if df is not None else ''} p-value = {p_value}
+    alternative hypothesis: {self.__names["alternative"]}"""
+        if self.__dict__.get("conf_int") is not None:
+            if self.conf_int is not None:
+                cl = self.conf_level * 100
+                if cl == float(int(cl)):
+                    cl = int(cl)
+                string += f"""
+    {cl} percent confidence interval:
+    {" "}{self.conf_int[0]:0.6f} {self.conf_int[1]:0.6f}"""
+        if self.__dict__.get("estimate") is not None:
+            string += f"""
+    sample estimates:
+    {" " * 2}{self.__names["estimate"]}: {estimate}
+    """
+        return string
+
+def _dw_test(input_obj, order_by, alternative, data):
+
+    if alternative not in ["two-sided", "greater", "less"]:
+        raise ValueError("Invalid alternative. Must be one of 'two-sided', 'greater', or 'less'")
+
+    if data is not None and not isinstance(data, DataFrame):
+        raise ValueError("data must be a pandas DataFrame")
+
+    if isinstance(input_obj, str):
+        if "~" not in input_obj:
+            raise ValueError("if str, input_obj must be written as formula syntax.")
+        formula = input_obj
+        dependent_var = formula.split("~")[0].strip()
+        independent_vars = [var.strip() for var in formula.split("~")[1].split("+")]
+        y = data[dependent_var].values
+        X = sm.add_constant(data[independent_vars]).values
+        model = sm.OLS(y, X).fit()
+        res = model.resid
+    elif isinstance(input_obj, sm.OLS):
+        model = input_obj
+        X = model.exog
+        y = model.endog
+        model = model.fit()
+        res = model.resid
+    elif isinstance(input_obj, sm.regression.linear_model.RegressionResultsWrapper):
+        model = input_obj
+        X = model.model.exog
+        y = model.model.endog
+        model = input_obj
+        res = model.resid
+    else:
+        try:
+            X = model.model.exog
+            y = model.model.endog
+            model = input_obj
+            res = model.resid
+        except:
+            raise ValueError("Not implemented yet.")
     
+    if order_by:
+        order_index = data[order_by].argsort().values
+        X = X[order_index]
+        y = y[order_index]
+        
+    n, k = X.shape
+
+    dw = np.sum(np.diff(res)**2) / np.sum(res**2)
+    r = - (dw / 2 - 1)
+    
+    Q1 = solve_triangular(np.linalg.qr(X)[1], np.eye(k), lower=False)
+    
+    if n < 3:
+        pval = 1
+        warnings.warn("sample size is too small to perform Durbin-Watson test")
+    else:
+        if n < max(5, k):
+            pval = 1
+            warnings.warn("sample size is too small to perform Durbin-Watson test")
+        else:
+            AX = np.diff(X, axis=0)
+            AX = np.vstack([X[0] - X[1], AX])
+            AX[-1] += X[-1] - X[-2]
+            XAXQ = X.T @ AX @ Q1
+            P = 2 * (n - 1) - np.trace(XAXQ)
+            Q = 2 * (3 * n - 4) - 2 * np.trace(AX.T @ AX @ Q1) + np.trace(XAXQ @ XAXQ)
+            dmean = P / (n - k)
+            dvar = 2 / ((n - k) * (n - k + 2)) * (Q - P * dmean)
+            if alternative == "two-sided":
+                pval = 2 * norm.sf(np.abs(dw - dmean), scale=np.sqrt(dvar))
+            elif alternative == "less":
+                pval = norm.sf(dw, loc=dmean, scale=np.sqrt(dvar))
+            elif alternative == "greater":
+                pval = norm.cdf(dw, loc=dmean, scale=np.sqrt(dvar))
+    
+    direction = "not" if alternative == "two-sided" else f"{alternative} than"
+
+    names = {
+        "statistic": "DW",
+        "estimate": "r",
+        "alternative": f"true autocorrelation is {direction} 0"
+    }
+
+    res = {
+        "method": "Durbin-Watson test",
+        "statistic": dw,
+        "estimate": r,
+        "p_value": pval,
+        "alternative": alternative,
+    }
+
+    return TestResults(res, names)
+
+
 class _CheckNormality:
     def __init__(self, fitted_model):
         self.model = fitted_model
@@ -156,10 +305,8 @@ class _CheckIndependence:
         return fig, ax
 
     def test(self, sign_level=0.05):
-        dw_stat = durbin_watson(self.__e)
-        pval_bp = acorr_ljungbox(self.__e, boxpierce=True, auto_lag=True)[
-            "bp_pvalue"
-        ].min()
+        pval_dw = _dw_test(self.model, None, "two-sided", None).p_value
+        pval_bp = acorr_ljungbox(self.__e, boxpierce=True, auto_lag=True)["bp_pvalue"].min()
         *_, pval_bg = acorr_breusch_godfrey(self.model)
         text_ok = (
             lambda name, p: f"- Residuals appear to be independent and not autocorrelated according to {name} test (p-value = {p:0.3f})."
@@ -167,8 +314,8 @@ class _CheckIndependence:
         test_no = (
             lambda name, p: f"- Autocorrelated residuals detected according to {name} test (p-value = {p:0.3f})."
         )
-        names = ["Durbin-Watson Stat", "Box-Pierce", "Breusch-Godfrey"]
-        pvals = [dw_stat, pval_bp, pval_bg]
+        names = ["Durbin-Watson", "Box-Pierce", "Breusch-Godfrey"]
+        pvals = [pval_dw, pval_bp, pval_bg]
 
         print(
             bcolors.BOLD
@@ -177,20 +324,7 @@ class _CheckIndependence:
             + bcolors.ENDC
         )
 
-        if 1.5 <= dw_stat <= 2.5:
-            print(
-                bcolors.OKGREEN
-                + f"- Residuals appear to be independent and not autocorrelated according to DW test (DW-Statistic = {dw_stat:0.3f})"
-                + bcolors.ENDC
-            )
-        else:
-            print(
-                bcolors.FAIL
-                + f"- Autocorrelated residuals detected according to DW test (DW-Statistic = {dw_stat:0.3f})"
-                + bcolors.ENDC
-            )
-
-        for name, pval in zip(names[1:], pvals[1:]):
+        for name, pval in zip(names, pvals):
             if pval >= sign_level:
                 print(bcolors.OKGREEN + text_ok(name, pval) + bcolors.ENDC)
             else:
@@ -270,63 +404,6 @@ class _CheckMulticollinearity:
         )
         ax.spines[["right", "top"]].set_visible(False)
         return fig, ax
-
-
-class TestResults:
-    def __init__(self, res: dict, names: dict):
-        self.__dict__.update(res)
-        self.__names = names
-
-    def __repr__(self):
-        # p-value
-        p_value = self.p_value
-        if p_value < 0.0001:
-            p_value = "<0.0001"
-        else:
-            p_value = f"{p_value:0.4f}"
-        # df
-        if self.__dict__.get("df") is not None:
-            df = self.df
-            if isinstance(df, (float, int)):
-                if df == float(int(df)):
-                    df = int(df)
-                else:
-                    df = f"{df:0.2f}"
-            elif isinstance(df, dict):
-                df = {k: round(v, 2) for k, v in df.items()}
-            elif isinstance(df, float):
-                df = f"{df:0.2f}"
-        else:
-            df = None
-        # estimates
-        if self.__dict__.get("estimate") is not None:
-            estimate = self.estimate
-            if isinstance(estimate, (list, np.ndarray)):
-                estimate = [float(f"{e:0.6f}") for e in estimate]
-            elif estimate == float(int(estimate)):
-                estimate = int(estimate)
-            elif isinstance(estimate, float):
-                estimate = f"{estimate:0.6f}"
-
-        string = f"""
-    {bcolors.BOLD + bcolors.UNDERLINE + self.method + bcolors.ENDC}
-    {self.__names['statistic']} = {self.statistic:0.4f} |{' df: ' + str(df) + ' |' if df is not None else ''} p-value = {p_value}
-    alternative hypothesis: {self.__names["alternative"]}"""
-        if self.__dict__.get("conf_int") is not None:
-            if self.conf_int is not None:
-                cl = self.conf_level * 100
-                if cl == float(int(cl)):
-                    cl = int(cl)
-                string += f"""
-    {cl} percent confidence interval:
-    {" "}{self.conf_int[0]:0.6f} {self.conf_int[1]:0.6f}"""
-        if self.__dict__.get("estimate") is not None:
-            string += f"""
-    sample estimates:
-    {" " * 2}{self.__names["estimate"]}: {estimate}
-    """
-        return string
-
 
 def __var_test(x, y, ratio, alternative, conf_level):
     if not (isinstance(ratio, float) or isinstance(ratio, int)):
@@ -508,7 +585,7 @@ def __nested_models_test(fitted_small_model, fitted_big_model):
     names = {
         "statistic": "F",
         "estimate": "Difference in deviances between models",
-        "alternative": "big model is true",
+        "alternative": "bigger model is true",
     }
 
     res = {
@@ -530,8 +607,7 @@ def __prop_test(x, n, p, alternative, conf_level, correct):
         x = x.values
     if isinstance(x, (int, float)):
         x = np.array([x])
-
-    
+   
     if n is None and len(x.shape) == 1:
         if x.shape[0] != 2:
             raise ValueError("'x' should have 2 entries")
@@ -729,7 +805,6 @@ def __cor_test(x, y, method, alternative, conf_level, continuity):
         else:  # two-sided
             p_value = 2 * min(stats.t.cdf(t_statistic, df), 1 - stats.t.cdf(t_statistic, df))
         
-        
         names = {
             "statistic": "t",
             "estimate": "cor",
@@ -768,7 +843,6 @@ def __cor_test(x, y, method, alternative, conf_level, continuity):
         
         return TestResults(res, names)
     
-    
     elif method == "kendall":
         tau, p_value = stats.kendalltau(x, y, alternative=alternative)
         
@@ -805,7 +879,6 @@ def __cor_test(x, y, method, alternative, conf_level, continuity):
             "statistic": z_statistic,
             "p_value": p_value
         })
-        
         
         return TestResults(res, names)
 
@@ -908,3 +981,6 @@ def __chisq_test(x, y, p, correct, rescale_p):
     }
     
     return TestResults(res, names)
+
+
+    

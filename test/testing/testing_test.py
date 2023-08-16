@@ -12,6 +12,7 @@ from estyp.testing import (
     prop_test,
     t_test,
     var_test,
+    dw_test,
 )
 
 @pytest.mark.filterwarnings("ignore")
@@ -72,12 +73,12 @@ def test_prop_test():
     # Caso con proporciones iguales
     x = [50, 25]
     n = [100, 50]
-    result = prop_test(x, n)
+    result = prop_test(x, n=n)
     assert result.p_value > 0.99
 
     # Caso con proporciones diferentes
     x = [50, 10]
-    result = prop_test(x, n)
+    result = prop_test(x, n=n)
     assert result.p_value < 0.05
 
     # Otro caso de proporciones diferentes
@@ -117,3 +118,22 @@ def test_chisq_test():
     M = [[43, 8], [14, 50]]
     result = chisq_test(M)
     assert result.p_value < 0.05
+
+def test_dw_test():
+    np.random.seed(2023)
+    x = np.linspace(0, 1, 120)
+
+    y1 = 2 * x + np.tile([0.2, -0.2, -0.1, 0.1, 0.05, -0.07], 20)
+    model1 = sm.OLS(y1, sm.add_constant(x))
+    result_example_1 = dw_test(model1, alternative="less")
+    assert result_example_1.p_value < 0.05
+
+    y2 = 2 * x + np.tile([0.2, -0.2, -0.1, 0.1], 30)
+    model2 = sm.OLS(y2, sm.add_constant(x)).fit()
+    result_example_2 = dw_test(model2, alternative="two-sided")
+    assert result_example_2.p_value > 0.05
+
+    y3 = np.random.normal(size=120)
+    df_example_3 = pd.DataFrame({"x": x, "y": y3})
+    result_example_3 = dw_test("y ~ x", data=df_example_3, alternative="greater")
+    assert result_example_3.p_value > 0.05

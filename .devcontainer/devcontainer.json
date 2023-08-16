@@ -14,9 +14,13 @@
 				"GitHub.copilot-chat",
 				"usernamehw.errorlens",
 				"ms-vscode.makefile-tools",
-				"eamodio.gitlens"
+				"eamodio.gitlens",
+				"Equinusocio.vsc-community-material-theme",
+				"equinusocio.vsc-material-theme-icons",
+				"ms-python.isort",
+				"ritwickdey.LiveServer"
 			]
 		}
 	},
-	"postCreateCommand": "pip install build twine ipython pytest=7.4.0 pylint scikit-learn-extra==0.2.0"
+	"postCreateCommand": "pip install build twine ipython pytest=7.4.0 scikit-learn-extra==0.2.0 statsmodels sphinx==6.2.1 jupyter-sphinx sphinx-rtd-theme"
 }

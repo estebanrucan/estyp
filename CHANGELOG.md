@@ -1,5 +1,13 @@
 # CHANGELOG
 
+### V0.8.0
+
+* Added `testing.dw_test()` to perform Durbin-Watson test with an aproximatted p-value.
+* Updated the `testing.CheckModel` class to use the `testing.dw_test()` function.
+* Fixed some displaying problems in the documentation.
+* Now some functions of the `testing` module forces to use named parameters instead of positional ones.
+* Replaced ":" for "=" in the `TestResults` class display.
+
 ### V0.7.0
 
 * Added a new library import message that derives to documentation.

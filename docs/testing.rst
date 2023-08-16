@@ -265,7 +265,6 @@ Test of Equal or Given Proportions
 
    Returns
    -------
-   :rtype: TestResults
    A data class with the following attributes:
 
    - `statistic`: float, The value of Pearson's chi-squared test statistic.
@@ -288,7 +287,7 @@ Test of Equal or Given Proportions
 
       x = np.array([83, 90, 129, 70])
       n = np.array([86, 93, 136, 82])
-      result = prop_test(x, n)
+      result = prop_test(x, n=n)
       print(result)
 
 
@@ -312,7 +311,6 @@ Test for Association/Correlation Between Paired Samples
 
    Returns
    -------
-   :rtype: TestResults
    A TestResults instance containing the following attributes:
 
    - `statistic`: the value of the test statistic.
@@ -373,7 +371,6 @@ Pearson's Chi-squared Test for Count Data
 
    Returns
    -------
-   :rtype: TestResults
    A TestResults instance containing the following attributes:
 
    - `statistic`: The value of the chi-squared test statistic.
@@ -440,6 +437,108 @@ Pearson's Chi-squared Test for Count Data
 
       x = [1, 2, 3, 4, 5, 6]
       y = [6, 1, 2, 3, 4, 5]
-      result4 = chisq_test(x, y)
+      result4 = chisq_test(x, y=y)
       print(result4)
+
+
+Durbin-Watson Test for Autocorrelation
+--------------------------------------
+
+.. function:: dw_test(input_obj, order_by=None, alternative="greater", data=None)
+
+    Performs the Durbin-Watson test for autocorrelation of disturbances. Includes an approximated p-value taken from the `lmtest::dwtest()` function in R.
+
+   :param input_obj: A formula description for the model to be tested (or a OLS object or a fitted OLS object).
+   :type input_obj: str, OLS, RegressionResultsWrapper
+   :param order_by: The observations in the model are ordered by the order specified in this parameter. If set to None (the default) the observations are assumed to be ordered (e.g., a time series).
+   :type order_by: Series, np.ndarray, optional
+   :param alternative: A character string specifying the alternative hypothesis. One of “greater” (default), “two-sided”, or “less”.
+   :type alternative: str, optional
+   :param data: An optional pandas DataFrame containing the variables in the model.
+   :type data: pd.DataFrame, optional
+
+    The Durbin-Watson test has the null hypothesis that the autocorrelation of the disturbances is 0. 
+    It is possible to test against the alternative that it is greater than, not equal to, or less than 0, respectively. 
+    This can be specified by the alternative parameter.
+
+    For large sample sizes the algorithm might fail to compute the p value; in that case a warning is printed 
+    and an approximate p value will be given; this p value is computed using a normal approximation 
+    with mean and variance of the Durbin-Watson test statistic.
+
+    :returns: A `TestResults` instance containing:
+
+        - `statistic`: the test statistic.
+        - `method`: a character string with the method used.
+        - `alternative`: a character string describing the alternative hypothesis.
+        - `p_value`: the corresponding p-value.
+        - `estimate`: the estimate of the autocorrelation of firt order of the residuals obtained from DW statistic.
+
+    References
+    ----------
+
+   - J. Durbin & G.S. Watson (1950), Testing for Serial Correlation in Least Squares Regression I. Biometrika 37, 409–428.
+   - J. Durbin & G.S. Watson (1951), Testing for Serial Correlation in Least Squares Regression II. Biometrika 38, 159–177.
+   - J. Durbin & G.S. Watson (1971), Testing for Serial Correlation in Least Squares Regression III. Biometrika 58, 1–19.
+   - R.W. Farebrother (1980), Pan's Procedure for the Tail Probabilities of the Durbin-Watson Statistic. Applied Statistics 29, 224–227.
+   - W. Krämer & H. Sonnberger (1986), The Linear Regression Model under Test. Heidelberg: Physica.
+
+    Examples
+    --------
+
+    Generate two AR(1) error terms with parameter rho = 0 (white noise) and rho = 0.9 respectively
+
+    - rho = 0:
+
+    .. jupyter-execute::
+
+      import numpy as np
+      import statsmodels.api as sm
+      from estyp.testing import dw_test
+
+      np.random.seed(123)
+      err1 = np.random.randn(100)
+      ## generate regressor and dependent variable
+      x = np.tile([-1, 1], 50)
+      y1 = 1 + x + err1
+      data = pd.DataFrame({'y1': y1, 'x': x})
+      ## perform Durbin-Watson test
+      model = sm.OLS.from_formula('y1 ~ x', data=data)
+      print(dw_test(model))
+
+    - rho = 0.9:
+
+    .. jupyter-execute::
+
+      from statsmodels.tsa.filters.filtertools import recursive_filter
+      err2 = recursive_filter(err1, 0.9)
+      y2 = 1 + x + err2
+      print(dw_test('y2 ~ x', data=pd.DataFrame({'y2': y2, 'x': x})))
+
+   More examples:
+
+   .. jupyter-execute::
+
+      from estyp.testing import dw_test
+
+      x = np.linspace(0, 1, 120)
+
+      print("Example 1")
+      y1 = 2 * x + np.tile([0.2, -0.2, -0.1, 0.1, 0.05, -0.07], 20)
+      model1 = sm.OLS(y1, sm.add_constant(x))
+      result_example_1 = dw_test(model1, alternative="less")
+      print(result_example_1)
+
+      print("Example 2")
+      y2 = 2 * x + np.tile([0.2, -0.2, -0.1, 0.1], 30)
+      model2 = sm.OLS(y2, sm.add_constant(x)).fit()
+      result_example_2 = dw_test(model2, alternative="two-sided")
+      print(result_example_2)
+
+      print("Example 3")
+      np.random.seed(123)
+      y3 = np.random.normal(size=120)
+      df_example_3 = pd.DataFrame({"x": x, "y": y3})
+      result_example_3 = dw_test("y ~ x", data=df_example_3, alternative="greater")
+      print(result_example_3)
+
 
