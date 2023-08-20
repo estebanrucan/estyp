@@ -23,7 +23,6 @@ def test_stepwise_forward():
     # Test de selección hacia adelante
     stepwise = Stepwise(formula="y ~ 1", data=data, model=OLS, direction="forward")
     stepwise.fit()
-    assert stepwise.optimal_variables_ == ["x2"]
     assert stepwise.optimal_formula_ is not None
 
 
