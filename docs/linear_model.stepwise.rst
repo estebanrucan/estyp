@@ -6,8 +6,8 @@ Both Method Variable Selection
 
 .. function:: both_selection(formula, data, model, max_iter, formula_kwargs, fit_kwargs)
 
-    Both Forward and Backward Variable Selection for GLM's
-    ------------------------------------------------------
+    **This function is deprecated. Use the `Stepwise()` class from the `estyp.linear_model` module instead.**
+
 
     This function performs both forward and backward variable selection using the Akaike Information Criterion (AIC).
 
@@ -48,8 +48,8 @@ Forward Variable Selection
 
 .. function:: forward_selection(y, data, model, alpha, formula_kwargs, fit_kwargs)
 
-    Forward Variable Selection for GLM's
-    ------------------------------------
+    **This function is deprecated. Use the `Stepwise()` class from the `estyp.linear_model` module instead.**
+
     
     This function performs forward variable selection using p-values calculated from nested models testing.
   

@@ -1,5 +1,12 @@
 # CHANGELOG
 
+### V0.9.0
+
+* Added `linear_model.Stepwise()` class to perform variable selection for linear models compatible with statsmodels. Contains several improvements and bug fixes over the `linear_model.stepwise` module functions.
+* Deprecated `forward_selection()` and `both_selection()` functions from `linear_model.stepwise` models. Added corresponding warnings.
+* Modified Getting Started section in Documentation to include the new feature.
+* Modified README.md file to include the new feature.
+
 ### V0.8.0
 
 * Added `testing.dw_test()` to perform Durbin-Watson test with an aproximatted p-value.

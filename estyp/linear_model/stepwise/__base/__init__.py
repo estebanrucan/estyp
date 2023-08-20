@@ -1,8 +1,10 @@
 from scipy.stats import f as fisher
 from estyp.testing.__base import __nested_models_test
-
+import warnings
 
 def __both_selection(formula, data, model, max_iter, verbose, formula_kwargs, fit_kwargs) -> str:
+    
+    warnings.warn("This function is deprecated. Use estyp.linear_model.Stepwise() instead.", DeprecationWarning, stacklevel=2)
     
     if verbose:
         print("Este proceso tarda un buen tiempo ¡Paciencia! Momento de cuestionarte si eres feliz.")
@@ -100,6 +102,9 @@ def __both_selection(formula, data, model, max_iter, verbose, formula_kwargs, fi
 
 
 def __forward_selection(y, data, model, alpha, verbose, formula_kwargs, fit_kwargs):
+    
+    warnings.warn("This function is deprecated. Use estyp.linear_model.Stepwise() instead.", DeprecationWarning, stacklevel=2)
+    
     preds = data.columns.to_list()
     preds.remove(y)
 

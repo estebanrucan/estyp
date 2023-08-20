@@ -23,31 +23,33 @@ First, we load the data:
     data["y"] = (content.target == 1).astype(int)
     print(data.head())
 
-Then, we run a model selection process with forward and both (forward and backward) steps:
+Then, we run a model selection process with forward and backward steps:
 
-Review `LogisticRegression() <./linear_model.html#LogisticRegression>`_, `forward_selection() <./linear_model.stepwise.html#forward-variable-selection>`_ and `both_selection() <./linear_model.stepwise.html#both-method-variable-selection>`_ documentation for more information and other parameters.
+Review `LogisticRegression() <./linear_model.html#LogisticRegression>`_ and `Stepwise() <./linear_model.html#stepwise-selection-for-linear-models>`_ documentation for more information and other parameters.
 
 .. jupyter-execute::
 
-    from estyp.linear_model.stepwise import forward_selection, both_selection
+    from estyp.linear_model import Stepwise
     from estyp.linear_model import LogisticRegression
 
-    formula = "y ~ x1 + x2 + x3 + x4"
-
-    ff1 = forward_selection(
-        y       = "y",
+    selection1 = Stepwise(
+        formula = "y ~ 1",
         data    = data,
         model   = LogisticRegression,
-        verbose = False,
+        direction = "forward",
+        criterion = "f-test"
     )
-    ff2 = both_selection(
-        formula = formula,
+    print("Model 1 Selection:")
+    selection1.fit()
+    selection2 = Stepwise(
+        formula = "y ~ x1 + x2 + x3 + x4",
         data    = data,
         model   = LogisticRegression,
-        verbose = False
+        direction = "backward",
+        criterion = "aic"
     )
-    print("- Forward result:", ff1)
-    print("- Both result   :", ff2)
+    print("\nModel 2 Selection:")
+    selection2.fit()
 
 Now we choose between the two resultant models using nested models test:
 
@@ -57,8 +59,8 @@ View `nested_models_test() <./testing.html#nested-models-f-test-function>`_ docu
 
     from estyp.testing import nested_models_test
 
-    model1 = LogisticRegression.from_formula(ff1, data).fit()
-    model2 = LogisticRegression.from_formula(ff2, data).fit()
+    model1 = selection1.optimal_model_
+    model2 = selection2.optimal_model_
 
     nested_models_test(model1, model2) # First model is nested in the second one
 

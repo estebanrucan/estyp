@@ -47,8 +47,8 @@ You can see the changelog [here](./CHANGELOG.md)
 ### `linear_model` module
 
 * `linear_model.LogisticRegression()`: This class implements a logistic regression model. It inherits from the `LogisticRegression()` class from `scikit-learn`, but adds additional methods for calculating confidence intervals, p-values, and model summaries like `Logit` class in `statsmodels`.
-* `linear_model.stepwise.both_selection()`: This function performs both forward and backward variable selection using the Akaike Information Criterion (AIC). 
-* `linear_model.stepwise.forward_selection()`: This function performs forward variable selection based on p-values.
+* `linear_model.Stepwise()`:  Provides a implementation to add or remove predictors based on their significance, AIC or BIC in a model.
+
 
 ### `cluster` module
 

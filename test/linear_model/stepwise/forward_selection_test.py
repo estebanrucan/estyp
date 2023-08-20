@@ -15,15 +15,18 @@ def data():
 
 def test_forward_selection_ols(data):
     model = sm.OLS
-    final_formula = forward_selection(y="x1", data=data, model=model)
+    with pytest.deprecated_call():
+        final_formula = forward_selection(y="x1", data=data, model=model)
     assert final_formula == "x1 ~ x3 + x2 + x4", "Formula doesn't match expected"
 
 def test_forward_selection_logit(data):
     model = sm.Logit
-    final_formula = forward_selection(y="y", data=data, model=model)
+    with pytest.deprecated_call():
+        final_formula = forward_selection(y="y", data=data, model=model)
     assert final_formula == "y ~ x2", "Formula doesn't match expected"
     
 def test_forward_selection_logisticregression(data):
     model = LogisticRegression
-    final_formula = forward_selection(y="y", data=data, model=model)
+    with pytest.deprecated_call():
+        final_formula = forward_selection(y="y", data=data, model=model)
     assert final_formula == "y ~ x2", "Formula doesn't match expected"

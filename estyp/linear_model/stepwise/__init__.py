@@ -1,8 +1,11 @@
-from statsmodels.api import GLM, OLS, Logit
-from pandas import DataFrame
-from estyp.linear_model.stepwise.__base import __both_selection, __forward_selection
-from estyp.linear_model import LogisticRegression
 from typing import Union
+
+from pandas import DataFrame
+from statsmodels.api import GLM, OLS, Logit
+
+from estyp.linear_model import LogisticRegression
+from estyp.linear_model.stepwise.__base import (__both_selection,
+                                                __forward_selection)
 
 
 def both_selection(
@@ -16,8 +19,10 @@ def both_selection(
     fit_kwargs:dict = {"disp": 0}
 ) -> str:
     """
-Both Forward and Backward Variable Selection for GLM's
+[Deprecated] Both Forward and Backward Variable Selection for GLM's
 ======================================================
+
+This function is deprecated. Use the `Stepwise()` class from the `estyp.linear_model` module instead.
 
 View this in the [online documentation](https://estyp.readthedocs.io/en/latest/linear_model.stepwise.html#both-method-variable-selection).
 
@@ -69,8 +74,10 @@ def forward_selection(
     fit_kwargs:dict = {"disp": 0}
 ):
     """
-Forward Variable Selection for GLM's
+[Deprecated] Forward Variable Selection for GLM's
 ====================================
+
+This function is deprecated. Use the `Stepwise()` class from the `estyp.linear_model` module instead.
 
 View this in the [online documentation](https://estyp.readthedocs.io/en/latest/linear_model.stepwise.html#forward-variable-selection-for-glm-s).
 
