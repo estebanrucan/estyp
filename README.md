@@ -30,7 +30,7 @@ You can have a friendly introduction to this library in the [documentation](http
 
 ## Changelog
 
-You can see the changelog [here](./CHANGELOG.md)
+You can see the full changelog [here](./CHANGELOG.md).
 
 ## Features
 
@@ -43,6 +43,7 @@ You can see the changelog [here](./CHANGELOG.md)
 * `testing.chisq_test()`: Performs a chi-squared test of independence of variables in a contingency table. This function is inspired by the `chisq.test()` function of the R software.
 * `testing.cor_test()`: Performs a correlation test with Pearson, Spearman or Kendall method. This function is inspired by the `cor.test()` function of the R software.
 * `testing.nested_models_test()`: Performs a nested models test to compare two nested models using deviance criterion.
+* `testing.dw_test()`: Performs the Durbin-Watson test for autocorrelation of disturbances (includes a p-value). Inspired by the `lmtest::dwtest()` function of the R software.
 
 ### `linear_model` module
 

@@ -7,6 +7,7 @@ test:
 	pytest test/
 
 dist:
+	sudo rm -rf dist
 	docker build -t my-package:latest . --no-cache
 	docker run --name container my-package:latest
 	sudo docker cp container:/app/dist ./
