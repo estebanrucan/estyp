@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setup(
     name                          = "estyp",
-    version                       = "0.9.0",
+    version                       = "0.9.2",
     author                        = "estebanrucan",
     author_email                  = "errucan@gmail.com",
     description                   = "Extended Statistical Toolkit Yet Practical",
@@ -31,7 +31,8 @@ setup(
         "statsmodels >= 0.13.5",
         "scipy >= 1.10.1",
         "kmodes >= 0.12.2",
-        "tqdm >= 4.65.0"
+        "tqdm >= 4.65.0",
+        "joblib >= 1.3.1",
     ],
     license              = "MIT",
     include_package_data = True,

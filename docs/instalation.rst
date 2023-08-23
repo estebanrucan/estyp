@@ -1,5 +1,5 @@
-Instalation
-===========
+Instalation Guide
+=================
 
 You can install the ESTYP library using PyPI:
 
@@ -39,6 +39,7 @@ The library was tested in the versions 3.9, 3.10 and 3.11 of Python. The followi
 -  "scipy >= 1.10.1"
 -  "kmodes >= 0.12.2"
 -  "tqdm >= 4.65.0"
+-  "joblib >= 1.13.1"
 
 You can view the last changes of the library in the `CHANGELOG.md <https://github.com/estebanrucan/estyp/blob/main/CHANGELOG.md>`_ file from the GitHub repository.
 

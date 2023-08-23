@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from kmodes.kprototypes import matching_dissim, euclidean_dissim
 from sklearn.metrics import silhouette_score
 from typing import Literal
+from joblib import Parallel, delayed
 
 
 class NClusterSearch:
@@ -25,8 +26,8 @@ supports KMeans, KMedoids, KModes, and KPrototypes as estimators.
 Parameters:
 -----------
 `estimator` : instance of clustering model
-    The clustering algorithm for which you want to find the optimal number of clusters.
-    Supported estimators: `KMeans`, `KMedoids`, `KModes`, `KPrototypes`.
+    The clustering algorithm for which you want to find the optimal number of clusters. Also can be a Pipeline object with the last step being a clustering algorithm.
+    Supported algorithms: `KMeans`, `KMedoids`, `KModes`, `KPrototypes`.
 
 `method` : str, optional (default = 'elbow')
     The method used to determine the optimal number of clusters.
@@ -43,6 +44,9 @@ Parameters:
 
 `random_state` : int, optional (default = 123)
     Random seed for reproducibility.
+    
+`n_jobs` : int, optional (default = 1)
+    The number of jobs to run in parallel for the search. If -1, then the number of jobs is set to the number of CPU cores.
 
 `verbose` : bool, optional (default = False)
     If True, the process will print details as it proceeds.
@@ -108,6 +112,35 @@ Example 5: Using the silhouette method with KPrototypes and custom alpha for dis
 >>> searcher = NClusterSearch(estimator=KPrototypes(), method='silhouette')
 >>> searcher.fit(data, categorical=[0, 1, 2, 3], alpha=0.1)
 >>> searcher.plot()
+
+Example 6: Using the elbow method with a pipeline of with standard scaler and Kprototypes and parallel processing.
+
+>>> import pandas as pd
+>>> from sklearn.datasets import load_iris
+>>> from sklearn.preprocessing import StandardScaler
+>>> from sklearn.compose import make_column_transformer
+>>> from sklearn.pipeline import make_pipeline
+>>> from kmodes.kprototypes import KPrototypes
+>>> from estyp.cluster import NClusterSearch
+>>> X, y = load_iris(return_X_y=True)
+>>> df = pd.DataFrame(X)
+>>> df.columns = df.columns.astype(str)
+>>> df["y"] = y
+>>> transformer = make_column_transformer(
+...     (StandardScaler(), [0, 1, 2, 3]),
+...     remainder='passthrough'
+... )
+>>> kproto = KPrototypes(init='Huang')
+>>> model = make_pipeline(transformer, kproto)
+>>> searcher = NClusterSearch(
+...     estimator    = model,
+...     method       = "elbow",
+...     min_clusters = 1,
+...     max_clusters = 10,
+...     n_jobs       = -1
+... )
+>>> searcher.fit(df, kprototypes__categorical = [4])
+>>> searcher.plot() 
     """
 
     def __init__(
@@ -119,6 +152,7 @@ Example 5: Using the silhouette method with KPrototypes and custom alpha for dis
         max_clusters: int = 10,
         step: int = 1,
         random_state: int = 123,
+        n_jobs=1,
         verbose: bool = False,
     ):
         self.estimator = estimator
@@ -129,16 +163,22 @@ Example 5: Using the silhouette method with KPrototypes and custom alpha for dis
         self.max_clusters = max_clusters
         self.step = step
         self.random_state = random_state
-        self.__range = list(range(self.min_clusters, self.max_clusters + 1, self.step))
+        self.__range = list(
+            range(self.min_clusters, self.max_clusters + 1, self.step))
+        self.n_jobs = n_jobs
         self.verbose = verbose
 
-        if type(self.estimator).__name__ in ["KMeans", "KMedoids"]:
+        self.__is_pipeline = type(self.estimator).__name__ == "Pipeline"
+
+        self.__model_name = type(
+            self.estimator[-1]).__name__ if self.__is_pipeline else type(self.estimator).__name__
+        if self.__model_name in ["KMeans", "KMedoids"]:
             self.__cost = "inertia_"
-        elif type(self.estimator).__name__ in ["KModes", "KPrototypes"]:
+        elif self.__model_name in ["KModes", "KPrototypes"]:
             self.__cost = "cost_"
         else:
-            raise Exception(
-                f"The estimator '{type(self.estimator).__name__}' is not implemented yet."
+            raise ValueError(
+                f"The estimator \"{self.__model_name}\" is not implemented yet."
             )
 
         if self.min_clusters > self.max_clusters:
@@ -147,10 +187,14 @@ Example 5: Using the silhouette method with KPrototypes and custom alpha for dis
             )
 
         if self.estimator.__dict__.get("random_state") is None:
-            self.estimator.set_params(random_state=self.random_state)
+            if self.__is_pipeline:
+                self.estimator[-1].set_params(random_state=self.random_state)
+            else:
+                self.estimator.set_params(random_state=self.random_state)
 
         if self.method not in ["elbow", "silhouette"]:
-            raise Exception(f"The method '{self.method}' is not implemented yet.")
+            raise Exception(
+                f"The method '{self.method}' is not implemented yet.")
 
     def fit(self, X, **kwargs):
         """
@@ -160,7 +204,7 @@ Parameters:
 -----------
 `X` : array-like, shape (n_samples, n_features)
     The data to determine the optimal number of clusters for.
-    
+
 `**kwargs` : Additional keyword arguments to be passed to the estimator's fit method.
 
 Returns:
@@ -224,9 +268,13 @@ Example:
             raise Exception(
                 "The model is not fitted yet. Call 'fit' with appropriate arguments before using this property."
             )
-        return self.estimator.set_params(n_clusters=self.optimal_clusters_).fit(
-            self.__X, **self.__kwargs
-        )
+        if self.__is_pipeline:
+            self.estimator[-1].set_params(n_clusters=self.optimal_clusters_)
+            return self.estimator.fit(self.__X, **self.__kwargs)
+        else:
+            return self.estimator.set_params(n_clusters=self.optimal_clusters_).fit(
+                self.__X, **self.__kwargs
+            )
 
     def __compute_elbow_point(self, sse):
         # Calculate the line from first to last point
@@ -242,25 +290,41 @@ Example:
         # Return the index of point with max distance
         return np.argmax(distance)
 
-    def __elbow_method(self):
-        self.__costs = []
-        iterable = tqdm(self.__range) if self.verbose else self.__range
-        if self.verbose:
-            print("Calculating costs...")
-        for n_clusters in iterable:
+    def _elbow_method_for_content(self, n_clusters):
+        if self.__is_pipeline:
+            self.estimator[-1].set_params(n_clusters=n_clusters)
+            self.estimator.fit(self.__X, **self.__kwargs)
+            return self.estimator[-1].__getattribute__(self.__cost)
+        else:
             self.estimator.set_params(n_clusters=n_clusters)
             self.estimator.fit(self.__X, **self.__kwargs)
-            self.__costs.append(self.estimator.__getattribute__(self.__cost))
+            return self.estimator.__getattribute__(self.__cost)
 
-        self.optimal_clusters_ = self.__range[self.__compute_elbow_point(self.__costs)]
+    def __elbow_method(self):
+        if self.verbose:
+            print("Calculating costs...")
+        self.__costs = []
+        iterable = tqdm(self.__range) if (
+            self.verbose and self.n_jobs == 1) else self.__range
+        if self.n_jobs == 1:
+            for n_clusters in iterable:
+                cost = self._elbow_method_for_content(n_clusters)
+                self.__costs.append(cost)
+        else:
+            self.__costs = Parallel(n_jobs=self.n_jobs, verbose=False)(
+                delayed(self._elbow_method_for_content)(n_clusters) for n_clusters in iterable
+            )
+
+        self.optimal_clusters_ = self.__range[self.__compute_elbow_point(
+            self.__costs)]
         self.estimator.n_clusters = self.optimal_clusters_
 
     def __create_dm__kmodes(self, dataset):
+        if self.verbose:
+            print("Creating distance matrix...")
         if type(dataset).__name__ == "DataFrame":
             dataset = dataset.values
         lenDataset = len(dataset)
-        if self.verbose:
-            print("Creating distance matrix...")
         distance_matrix = np.zeros(lenDataset * lenDataset).reshape(
             lenDataset, lenDataset
         )
@@ -274,11 +338,11 @@ Example:
         return distance_matrix
 
     def __mixed_distance__kproto(self, a, b, alpha=0.01):
-        if self.__kwargs["categorical"] is None:
+        if self.__kwargs[self.__cat_name[0]] is None:
             num_score = euclidean_dissim(a, b)
             return num_score
         else:
-            cat_index = self.__kwargs["categorical"]
+            cat_index = self.__kwargs[self.__cat_name[0]]
             a_cat = []
             b_cat = []
             for index in cat_index:
@@ -318,50 +382,80 @@ Example:
                 distance_matrix[j, i] = distance[0]
         return distance_matrix
 
+    def _silhuette_method_for_kmeans_kmedoids(self, n_clusters):
+        if self.__is_pipeline:
+            self.estimator[-1].n_clusters = n_clusters
+            self.estimator.fit(self.__X, **self.__kwargs)
+            return silhouette_score(self.__X, self.estimator[-1].labels_)
+        else:
+            self.estimator.n_clusters = n_clusters
+            self.estimator.fit(self.__X, **self.__kwargs)
+            return silhouette_score(self.__X, self.estimator.labels_)
+        
+    def _silhuette_method_for_kmodes_kproto(self, n_clusters, distance_matrix):
+        if self.__is_pipeline:
+            self.estimator[-1].n_clusters = n_clusters
+            self.estimator.fit(self.__X, **self.__kwargs)
+            cluster_labels = self.estimator[-1].labels_
+        else:
+            self.estimator.n_clusters = n_clusters
+            self.estimator.fit(self.__X, **self.__kwargs)
+            cluster_labels = self.estimator.labels_
+        
+        return silhouette_score(
+            distance_matrix, cluster_labels, metric="precomputed"
+        )
+
     def __silhuette_method(self):
         self.__sils = []
-        iterable = tqdm(self.__range) if self.verbose else self.__range
+        iterable = tqdm(self.__range) if (self.verbose and self.n_jobs == 1) else self.__range
         if self.verbose:
             print("Calculating silhouette scores...")
-        if type(self.estimator).__name__ in ["KMeans", "KMedoids"]:
-            for n_clusters in iterable:
-                self.estimator.n_clusters = n_clusters
-                self.estimator.fit(self.__X, **self.__kwargs)
-                self.__sils.append(silhouette_score(self.__X, self.estimator.labels_))
-        elif type(self.estimator).__name__ == "KModes":
-            distance_matrix = self.__create_dm__kmodes(self.__X)
-            for n_clusters in iterable:
-                self.estimator.n_clusters = n_clusters
-                self.estimator.fit(self.__X, **self.__kwargs)
-                cluster_labels = self.estimator.labels_
-                score = silhouette_score(
-                    distance_matrix, cluster_labels, metric="precomputed"
+        if self.__model_name in ["KMeans", "KMedoids"]:
+            if self.n_jobs == 1:
+                for n_clusters in iterable:
+                    sil = self._silhuette_method_for_kmeans_kmedoids(n_clusters)
+                    self.__sils.append(sil)
+            else:
+                self.__sils = Parallel(n_jobs=self.n_jobs, verbose=False)(
+                    delayed(self._silhuette_method_for_kmeans_kmedoids)(n_clusters) for n_clusters in iterable
                 )
-                self.__sils.append(score)
-        elif type(self.estimator).__name__ == "KPrototypes":
-            if not self.__kwargs.get("categorical"):
+        elif self.__model_name == "KModes":
+            distance_matrix = self.__create_dm__kmodes(self.__X)
+            if self.n_jobs == 1:
+                for n_clusters in iterable:
+                    score = self._silhuette_method_for_kmodes_kproto(n_clusters, distance_matrix)
+                    self.__sils.append(score)
+            else:
+                self.__sils = Parallel(n_jobs=self.n_jobs, verbose=False)(
+                    delayed(self._silhuette_method_for_kmodes_kproto)(n_clusters, distance_matrix) for n_clusters in iterable
+                )
+        elif self.__model_name == "KPrototypes":
+            self.__cat_name = [k for k in self.__kwargs.keys() if k.endswith("categorical")]
+            if len(self.__cat_name) == 0:
                 raise Exception(
                     "The argument 'categorical' is required for the KPrototypes estimator."
                 )
-            if not isinstance(self.__kwargs["categorical"], list):
+            if not isinstance(self.__kwargs[self.__cat_name[0]], list):
                 raise Exception("The argument 'categorical' must be a list.")
             if not self.__kwargs.get("alpha"):
                 self.__alpha = 0.01
             else:
                 self.__alpha = self.__kwargs["alpha"]
                 del self.__kwargs["alpha"]
-            distance_matrix = self.__create_dm__kproto(self.__X, alpha=self.__alpha)
-            for n_clusters in iterable:
-                self.estimator.n_clusters = n_clusters
-                self.estimator.fit(self.__X, **self.__kwargs)
-                cluster_labels = self.estimator.labels_
-                score = silhouette_score(
-                    distance_matrix, cluster_labels, metric="precomputed"
+            distance_matrix = self.__create_dm__kproto(
+                self.__X, alpha=self.__alpha)
+            if self.n_jobs == 1:
+                for n_clusters in iterable:
+                    score = self._silhuette_method_for_kmodes_kproto(n_clusters, distance_matrix)
+                    self.__sils.append(score)
+            else:
+                self.__sils = Parallel(n_jobs=self.n_jobs, verbose=False)(
+                    delayed(self._silhuette_method_for_kmodes_kproto)(n_clusters, distance_matrix) for n_clusters in iterable
                 )
-                self.__sils.append(score)
         else:
             raise Exception(
-                f"The estimator '{type(self.estimator).__name__}' is not implemented yet."
+                f"The estimator '{self.__model_name}' is not implemented yet."
             )
 
         self.optimal_clusters_ = self.__range[np.argmax(self.__sils)]
@@ -449,7 +543,8 @@ Example:
                 "The model is not fitted yet. Call 'fit' with appropriate arguments before using this method."
             )
         if ax is not None and not isinstance(ax, plt.Axes):
-            raise Exception("The argument 'ax' must be a matplotlib Axes object.")
+            raise ValueError(
+                "The argument 'ax' must be a matplotlib Axes object.")
         if self.method == "elbow":
             self.__plot_elbow(ax=ax)
         elif self.method == "silhouette":
@@ -463,7 +558,7 @@ Parameters:
 -----------
 `X` : array-like, shape (n_samples, n_features)
     New data to predict cluster labels.
-    
+
 `**kwargs` : Additional keyword arguments to be passed to the estimator's predict method.
 
 Returns:
@@ -485,7 +580,7 @@ Example:
             raise Exception(
                 "The model is not fitted yet. Call 'fit' with appropriate arguments before using this method."
             )
-        
+
         return self.best_estimator_.predict(X, **kwargs)
 
     @property

@@ -1,5 +1,11 @@
 # CHANGELOG
 
+### V0.9.2
+
+* Added options to accept pipelines and parallel processing in `cluster.NClusterSearch()` class.
+* Added `joblib >= 1.3.1` as a depedency of the library.
+* Minor fixes in README.md file.
+
 ### V0.9.0
 
 * Added `linear_model.Stepwise()` class to perform variable selection for linear models compatible with statsmodels. Contains several improvements and bug fixes over the `linear_model.stepwise` module functions.

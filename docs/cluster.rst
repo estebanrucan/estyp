@@ -9,7 +9,7 @@ The `cluster` module
 Optimal Number of Clusters Searcher
 ------------------------------------
 
-.. class:: NClusterSearch(estimator, method="elbow", *, min_clusters=1, max_clusters=10, step=1, random_state=123, verbose=False)
+.. class:: NClusterSearch(estimator, method="elbow", *, min_clusters=1, max_clusters=10, step=1, random_state=123, n_jobs=1, verbose=False)
 
    NClusterSearch
    --------------
@@ -18,7 +18,7 @@ Optimal Number of Clusters Searcher
 
    .. method:: __init__(estimator, method="elbow", *, min_clusters=1, max_clusters=10, step=1, random_state=123, verbose=False)
 
-      :param estimator: The clustering algorithm for which you want to find the optimal number of clusters. Supported estimators: `KMeans`, `KMedoids`, `KModes`, `KPrototypes`.
+      :param estimator:  The clustering algorithm for which you want to find the optimal number of clusters. Also can be a Pipeline object with the last step being a clustering algorithm. Supported estimators: `KMeans`, `KMedoids`, `KModes`, `KPrototypes`.
       :type estimator: object
       :param method: The method used to determine the optimal number of clusters. Accepted values: 'elbow', 'silhouette'. Default: "elbow".
       :type method: str
@@ -30,6 +30,8 @@ Optimal Number of Clusters Searcher
       :type step: int
       :param random_state: Random seed for reproducibility. Default: 123.
       :type random_state: int
+      :param n_jobs: The number of jobs to run in parallel for the search. If -1, then the number of jobs is set to the number of CPU cores. Default: 1.
+      :type n_jobs: int
       :param verbose: If True, the process will print details as it proceeds. Default: False.
       :type verbose: bool
 
@@ -157,4 +159,38 @@ Optimal Number of Clusters Searcher
       searcher = NClusterSearch(estimator=KPrototypes(), method='silhouette')
       searcher.fit(data, categorical=[0, 1, 2, 3], alpha=0.1)
       searcher.plot()
+
+   - Example 6: Using the elbow method with a pipeline of with standard scaler and Kprototypes and parallel processing.
+
+   .. jupyter-execute::
+
+      import pandas as pd
+      from sklearn.datasets import load_iris
+      from sklearn.preprocessing import StandardScaler
+      from sklearn.compose import make_column_transformer
+      from sklearn.pipeline import make_pipeline
+      from kmodes.kprototypes import KPrototypes
+      from estyp.cluster import NClusterSearch
+
+      X, y = load_iris(return_X_y=True)
+      df = pd.DataFrame(X)
+      df.columns = df.columns.astype(str)
+      df["y"] = y
+
+      transformer = make_column_transformer(
+          (StandardScaler(), [0, 1, 2, 3]),
+          remainder='passthrough'
+      )
+      kproto = KPrototypes(init='Huang')
+      model = make_pipeline(transformer, kproto)
+      
+      searcher = NClusterSearch(
+          estimator    = model,
+          method       = "elbow",
+          min_clusters = 1,
+          max_clusters = 10,
+          n_jobs       = -1
+      )
+      searcher.fit(df, kprototypes__categorical = [4])
+      searcher.plot() 
 
