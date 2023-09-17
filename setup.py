@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setup(
     name                          = "estyp",
-    version                       = "0.9.2",
+    version                       = "0.9.3",
     author                        = "estebanrucan",
     author_email                  = "errucan@gmail.com",
     description                   = "Extended Statistical Toolkit Yet Practical",

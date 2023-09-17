@@ -33,6 +33,14 @@ def test_fit(sample_data):
     fitted_model = model.fit()
     assert_almost_equal(fitted_model.coef_.flatten(), [-0.2, 0.03, 0.44], decimal=2) # Check with expected coefficients
 
+
+def test_sklearn_way_fit(sample_data):
+    X = sample_data[['x1', 'x2']]
+    y = sample_data['y']
+    model = LogisticRegression()
+    fitted_model = model.fit(X, y)
+    assert_almost_equal(fitted_model.coef_.flatten(), [-0.2, 0.03, 0.44], decimal=2)
+
 def test_predict(sample_data):
     formula = "y ~ x1 + x2"
     model = LogisticRegression.from_formula(formula, sample_data)

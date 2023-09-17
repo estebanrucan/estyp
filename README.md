@@ -47,7 +47,7 @@ You can see the full changelog [here](./CHANGELOG.md).
 
 ### `linear_model` module
 
-* `linear_model.LogisticRegression()`: This class implements a logistic regression model. It inherits from the `LogisticRegression()` class from `scikit-learn`, but adds additional methods for calculating confidence intervals, p-values, and model summaries like `Logit` class in `statsmodels`.
+* `linear_model.LogisticRegression()`: This class implements a logistic regression model. It is like the `LogisticRegression()` class from `scikit-learn`, but adds additional methods for calculating confidence intervals, p-values, and model summaries like `Logit` class in `statsmodels`.
 * `linear_model.Stepwise()`:  Provides a implementation to add or remove predictors based on their significance, AIC or BIC in a model.
 
 

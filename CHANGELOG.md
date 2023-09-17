@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### V0.9.3
+
+* The `linear_model.LogisticRegression()` class now can be used like the `sklearn.linear_model.LogisticRegression()` class when is fitted.
+
 ### V0.9.2
 
 * Added options to accept pipelines and parallel processing in `cluster.NClusterSearch()` class.

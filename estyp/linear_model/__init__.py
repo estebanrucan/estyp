@@ -5,6 +5,7 @@ import numpy as np
 from pandas import DataFrame, Series, concat
 from patsy import build_design_matrices, dmatrices
 from scipy.stats import norm
+from sklearn.base import BaseEstimator, ClassifierMixin
 from sklearn.linear_model import LogisticRegression as LogisticRegression_
 from statsmodels.api import GLM, OLS, Logit
 
@@ -12,7 +13,7 @@ from estyp.testing.__base import __nested_models_test as nested_models_test
 from estyp.testing.__base import bcolors
 
 
-class LogisticRegression(LogisticRegression_):
+class LogisticRegression(BaseEstimator, ClassifierMixin):
     """
     Logistic Regression
     ===================
@@ -22,7 +23,7 @@ class LogisticRegression(LogisticRegression_):
     Description
     -----------
 
-    This class implements a logistic regression model. It inherits from the `sklearn.linear_model.LogisticRegression` class, but adds additional methods for calculating confidence intervals, p-values, and model summaries.
+    This class implements a logistic regression model. It is like the `sklearn.linear_model.LogisticRegression` class, but adds additional methods for calculating confidence intervals, p-values, and model summaries.
 
     Parameters
     ----------
@@ -39,7 +40,6 @@ class LogisticRegression(LogisticRegression_):
     - `random_state`: The random seed.
     - `solver`: The solver to use. Can be one of `"lbfgs"` (default), `"liblinear"`, `"newton-cg"`, `"newton-cholesky"`, `"sag"`, or `"saga"`.
     - `max_iter`: The maximum number of iterations.
-    - `multi_class`: The type of multi-class classification to use. Can be one of `"auto"`, `"ovr"`, or `"multinomial"`.
     - `verbose`: The verbosity level.
     - `warm_start`: Whether to use the warm start.
     - `n_jobs`: The number of jobs to use for parallel processing.
@@ -58,7 +58,7 @@ class LogisticRegression(LogisticRegression_):
     Methods
     -------
 
-    - `fit()`: Fits the model to the data.
+    - `fit()`: Fits the model to the data. Can be used like the `sklearn.linear_model.LogisticRegression` class or with the `from_formula` class method from `statsmodels`.
     - `predict()`: Predicts the class labels for new data.
     - `conf_int()`: Calculates the confidence intervals for the model coefficients.
     - `se()`: Calculates the standard errors for the model coefficients.
@@ -68,6 +68,8 @@ class LogisticRegression(LogisticRegression_):
 
     Examples
     --------
+
+    - Example 1: Using the `LogisticRegression()` like the `statsmodels` `Logit` class.
 
     >>> import numpy as np
     >>> import pandas as pd
@@ -81,6 +83,16 @@ class LogisticRegression(LogisticRegression_):
     >>> spec = LogisticRegression.from_formula(formula, data)
     >>> model = spec.fit()
     >>> print(model.summary())
+
+    - Example 2: Using `LogisticRegression()` like the `sklearn.linear_model.LogisticRegression()` class.
+
+    >>> X = data.drop(columns="y")
+    >>> y = data["y"]
+    >>> model = LogisticRegression()
+    >>> model.fit(X, y)
+    >>> print(model.summary())
+
+
     """
 
     def __init__(
@@ -91,50 +103,55 @@ class LogisticRegression(LogisticRegression_):
         *,
         dual=False,
         tol=0.0001,
-        C=1,
-        fit_intercept=False,
+        C=1.0,
+        fit_intercept=True,
         intercept_scaling=1,
         class_weight=None,
-        random_state=2023,
+        random_state:int=None,
         solver: Literal[
             "lbfgs", "liblinear", "newton-cg", "newton-cholesky", "sag", "saga"
         ] = "lbfgs",
         max_iter=100,
-        multi_class: Literal["auto", "ovr", "multinomial"] = "auto",
         verbose=0,
         warm_start: bool = False,
-        n_jobs=-1,
+        n_jobs: int =None,
         l1_ratio=None,
     ):
-        super().__init__(
-            penalty=penalty,
-            dual=dual,
-            tol=tol,
-            C=C,
-            fit_intercept=fit_intercept,
-            intercept_scaling=intercept_scaling,
-            class_weight=class_weight,
-            random_state=random_state,
-            solver=solver,
-            max_iter=max_iter,
-            multi_class=multi_class,
-            verbose=verbose,
-            warm_start=warm_start,
-            n_jobs=n_jobs,
-            l1_ratio=l1_ratio,
-        )
+        self.fit_intercept = fit_intercept
+        self.__model = LogisticRegression_(penalty=penalty, dual=dual, tol=tol, C=C, fit_intercept=False, intercept_scaling=intercept_scaling, class_weight=class_weight,
+                                         random_state=random_state, solver=solver, max_iter=max_iter, verbose=verbose, warm_start=warm_start, n_jobs=n_jobs, l1_ratio=l1_ratio)
+        self.penalty = penalty
+        self.dual = dual
+        self.tol = tol
+        self.C = C
+        self.intercept_scaling = intercept_scaling
+        self.class_weight = class_weight
+        self.random_state = random_state
+        self.solver = solver
+        self.max_iter = max_iter
+        self.verbose = verbose
+        self.warm_start = warm_start
+        self.n_jobs = n_jobs
+        self.l1_ratio = l1_ratio
 
         if self.__dict__.get("X") is None and self.__dict__.get("y") is None:
             if isinstance(X, np.ndarray):
-                X = DataFrame(X, columns=[f"var_{i+1}" for i in range(X.shape[1])])
+                X = DataFrame(
+                    X, columns=[f"var_{i+1}" for i in range(X.shape[1])])
             if X is not None and y is not None:
+                if np.unique(y).shape[0] != 2:
+                    raise ValueError("y must be a binary variable")
                 data = concat([X, Series(y, name="y")], axis=1)
                 formula = (
                     f"y ~ {' + '.join(X.columns.tolist()) if X.columns.tolist() else 1}"
                 )
+                formula = formula if self.fit_intercept else formula + " - 1"
                 y, X = dmatrices(formula, data)
                 self.X = X
                 self.y = y.reshape(-1)
+            else:
+                self.X = None
+                self.y = None
 
     @classmethod
     def from_formula(cls, formula, data, **kwargs):
@@ -144,25 +161,49 @@ class LogisticRegression(LogisticRegression_):
             )
         y, X = dmatrices(formula, data)
         self_ = cls(**kwargs)
+        self_.__model.fit_intercept = False
         self_.y = y.reshape(-1)
         self_.X = X
         self_.formula = formula
         return self_
 
     def __log_likelihood(self):
-        z = np.dot(self.X, self.coef_.flatten())
+        z = np.dot(self.X, self.__model.coef_.flatten())
         log_likelihood = np.sum(self.y * z - np.log(1 + np.exp(z)))
         return log_likelihood
 
-    def fit(self, disp=None):
-        super().fit(self.X, self.y)
+    def fit(
+        self,
+        X: Union[DataFrame, np.ndarray] = None,
+        y: Union[Series, np.ndarray] = None,
+        sample_weigth=None,
+        disp=None
+    ):
+
+        if self.__dict__.get("X") is None and self.__dict__.get("y") is None:
+            if isinstance(X, np.ndarray):
+                X = DataFrame(
+                    X, columns=[f"var_{i+1}" for i in range(X.shape[1])])
+            if X is not None and y is not None:
+                if np.unique(y).shape[0] != 2:
+                    raise ValueError("y must be a binary variable")
+                data = concat([X, Series(y, name="y")], axis=1)
+                formula = (
+                    f"y ~ {' + '.join(X.columns.tolist()) if X.columns.tolist() else 1}"
+                )
+                formula = formula if self.fit_intercept else formula + " - 1"
+                y, X = dmatrices(formula, data)
+                self.X = X
+                self.y = y.reshape(-1)
+        self.__model.fit(X=self.X, y=self.y, sample_weight=sample_weigth)
+        self.coef_ = self.__model.coef_
         return self
 
     def conf_int(self, conf_level=0.95):
         z_score = norm.ppf(1 - (1 - conf_level) / 2)
         standard_errors = np.sqrt(np.diag(self.cov_matrix))
-        lower_limits = self.coef_[0] - z_score * standard_errors
-        upper_limits = self.coef_[0] + z_score * standard_errors
+        lower_limits = self.__model.coef_[0] - z_score * standard_errors
+        upper_limits = self.__model.coef_[0] + z_score * standard_errors
         ci = DataFrame(
             {"[Lower,": lower_limits, "Upper]": upper_limits},
             index=self.X.design_info.column_names,
@@ -177,7 +218,7 @@ class LogisticRegression(LogisticRegression_):
         )
 
     def z_values(self):
-        z_est = self.coef_[0] / self.se()
+        z_est = self.__model.coef_[0] / self.se()
         return Series(z_est, index=self.X.design_info.column_names, name="z")
 
     def p_values(self):
@@ -199,11 +240,11 @@ class LogisticRegression(LogisticRegression_):
 
     def predict(self, new_data: DataFrame):
         dsg = build_design_matrices([self.X.design_info], new_data)[0].view()
-        return super().predict_proba(dsg)[:, 1]
+        return self.__model.predict_proba(dsg)[:, 1]
 
     @property
     def cov_matrix(self):
-        p = self.predict_proba(self.X)[:, 1]
+        p = self.__model.predict_proba(self.X)[:, 1]
         hess_matrix = np.dot(self.X.T, np.dot(np.diag(p * (1 - p)), self.X))
         cov_matrix = np.linalg.inv(hess_matrix)
         return cov_matrix
@@ -211,26 +252,27 @@ class LogisticRegression(LogisticRegression_):
     @property
     def params(self):
         return Series(
-            self.coef_.flatten().tolist(),
+            self.__model.coef_.flatten().tolist(),
             index=self.X.design_info.column_names,
             name="Estimate",
         )
 
     @property
     def aic(self):
-        aic = -2 * self.__log_likelihood() + 2 * (self.coef_.shape[0] - 1)
+        aic = -2 * self.__log_likelihood() + 2 * \
+            (self.__model.coef_.shape[0] - 1)
         return aic.item()
 
     @property
     def bic(self):
         bic = -2 * self.__log_likelihood() + np.log(self.X.shape[0]) * (
-            self.coef_.shape[0] - 1
+            self.__model.coef_.shape[0] - 1
         )
         return bic.item()
 
     @property
     def deviance_residuals(self):
-        p = self.predict_proba(self.X)[:, 1]
+        p = self.__model.predict_proba(self.X)[:, 1]
         residuals = -2 * (self.y * np.log(p) + (1 - self.y) * np.log(1 - p))
         return residuals
 
@@ -238,17 +280,17 @@ class LogisticRegression(LogisticRegression_):
     def deviance(self):
         return np.sum(self.deviance_residuals).item()
 
-    def __repr__(self) -> str:
-        return "LogisticRegression()"
+    def __repr__(self, N_CHAR_MAX=700) -> str:
+        return self.__model.__repr__(N_CHAR_MAX)
 
 
 class Stepwise:
     """
     Stepwise Selection for Linear Models
     ======================================
-    
+
     View this in the [online documentation](https://estyp.readthedocs.io/en/latest/linear_model.html#stepwise-selection-for-linear-models).
-    
+
     Description
     -----------
 
@@ -356,7 +398,8 @@ class Stepwise:
         verbose: bool = True,
     ):
         if criterion not in ["aic", "bic", "f-test"]:
-            raise ValueError("criterion must be one of 'aic', 'bic', or 'f-test'")
+            raise ValueError(
+                "criterion must be one of 'aic', 'bic', or 'f-test'")
         if not isinstance(formula, str):
             raise TypeError("formula must be a string")
         if not isinstance(data, DataFrame):
@@ -458,7 +501,8 @@ class Stepwise:
                 ).fit(**self.fit_params)
             else:
                 self.alpha = (
-                    MIN_METRIC if self.criterion in ["aic", "bic"] else self.alpha
+                    MIN_METRIC if self.criterion in [
+                        "aic", "bic"] else self.alpha
                 )
                 var_min = remaining_preds[METRICS.index(MIN_METRIC)]
                 f_actual = f"{f_actual} + {var_min}"
@@ -478,7 +522,8 @@ class Stepwise:
 
         if self.verbose:
             mm_display = (
-                f"{MIN_METRIC:0.4f}" if isinstance(MIN_METRIC, float) else MIN_METRIC
+                f"{MIN_METRIC:0.4f}" if isinstance(
+                    MIN_METRIC, float) else MIN_METRIC
             )
             print(
                 bcolors.OKGREEN
@@ -491,7 +536,8 @@ class Stepwise:
                 print(f"- Obtained {self.__metric_name}: {mm_display}")
             print(
                 "- Added terms:",
-                cant_preds - len(remaining_preds) if remaining_preds else "None",
+                cant_preds -
+                len(remaining_preds) if remaining_preds else "None",
             )
             try:
                 print(f'- Obtained formula: "{m_actual.model.formula}"')
@@ -560,7 +606,8 @@ class Stepwise:
                 self.__BEST_METRICS.append(mm)
                 self.optimal_metric_ = mm
                 self.alpha = (
-                    MIN_METRIC if self.criterion in ["aic", "bic"] else self.alpha
+                    MIN_METRIC if self.criterion in [
+                        "aic", "bic"] else self.alpha
                 )
                 var_min = remaining_preds[METRICS.index(MIN_METRIC)]
                 remaining_preds.remove(var_min)
@@ -583,7 +630,8 @@ class Stepwise:
 
         if self.verbose:
             mm_display = (
-                f"{MIN_METRIC:0.4f}" if isinstance(MIN_METRIC, float) else MIN_METRIC
+                f"{MIN_METRIC:0.4f}" if isinstance(
+                    MIN_METRIC, float) else MIN_METRIC
             )
             print(
                 bcolors.OKGREEN
@@ -718,7 +766,8 @@ class Stepwise:
                             + "Both selection completed"
                             + bcolors.ENDC
                         )
-                        print(f"- Obtained {self.criterion.upper()}: {METRICF:0.4f}")
+                        print(
+                            f"- Obtained {self.criterion.upper()}: {METRICF:0.4f}")
                         print("- Dropped terms:", len(var_el))
                         print("- Added terms:", len(var_ag))
                         print(f'- Obtained formula: "{ff}"')

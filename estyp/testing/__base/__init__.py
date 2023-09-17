@@ -68,7 +68,7 @@ class TestResults:
 
         string = f"""
     {bcolors.BOLD + bcolors.UNDERLINE + self.method + bcolors.ENDC}
-    {self.__names['statistic']} = {self.statistic:0.4f} |{' df: ' + str(df) + ' |' if df is not None else ''} p-value = {p_value}
+    {self.__names['statistic']} = {self.statistic:0.4f} |{' df = ' + str(df) + ' |' if df is not None else ''} p-value = {p_value}
     alternative hypothesis: {self.__names["alternative"]}"""
         if self.__dict__.get("conf_int") is not None:
             if self.conf_int is not None:

@@ -14,12 +14,12 @@ Module contents
 Logistic Regression
 -------------------
 
-.. class:: LogisticRegression(X, y, penalty, dual, tol, C, fit_intercept, intercept_scaling, class_weight, random_state, solver, max_iter, multi_class, verbose, warm_start, n_jobs, l1_ratio)
+.. class:: LogisticRegression(X, y, penalty, dual, tol, C, fit_intercept, intercept_scaling, class_weight, random_state, solver, max_iter, verbose, warm_start, n_jobs, l1_ratio)
 
 
-   This class implements a logistic regression model. It inherits from the `sklearn.linear_model.LogisticRegression` class, but adds additional methods for calculating confidence intervals, p-values, and model summaries.
+   This class implements a logistic regression model. It is like the `sklearn.linear_model.LogisticRegression` class, but adds additional methods for calculating confidence intervals, p-values, and model summaries.
 
-   .. method:: __init__(X, y, penalty, dual, tol, C, fit_intercept, intercept_scaling, class_weight, random_state, solver, max_iter, multi_class, verbose, warm_start, n_jobs, l1_ratio)
+   .. method:: __init__(X, y, penalty, dual, tol, C, fit_intercept, intercept_scaling, class_weight, random_state, solver, max_iter, verbose, warm_start, n_jobs, l1_ratio)
 
       :param X: A Pandas DataFrame or a NumPy array containing the model predictors.
       :type X: Union[DataFrame, ndarray, None]
@@ -45,8 +45,6 @@ Logistic Regression
       :type solver: Literal['lbfgs', 'liblinear', 'newton-cg', 'newton-cholesky', 'sag', 'saga']
       :param max_iter: The maximum number of iterations.
       :type max_iter: int
-      :param multi_class: The type of multi-class classification to use. Can be one of ``"auto"``, ``"ovr"``, or ``"multinomial"``.
-      :type multi_class: Literal['auto', 'ovr', 'multinomial']
       :param verbose: The verbosity level.
       :type verbose: int
       :param warm_start: Whether to use the warm start.
@@ -60,7 +58,7 @@ Logistic Regression
 
    .. method:: fit()
 
-      Fits the model to the data.
+      Fits the model to the data. Can be used like the `sklearn.linear_model.LogisticRegression` class or with the `from_formula` class method from `statsmodels`.
 
    .. method:: predict(new_data: DataFrame)
 
@@ -119,6 +117,8 @@ Logistic Regression
    Examples
    --------
 
+   - **Example 1:** Using the `LogisticRegression()` like the `statsmodels` `Logit` class.
+
    .. jupyter-execute::
 
       import numpy as np
@@ -138,6 +138,19 @@ Logistic Regression
 
       print(model.summary())
 
+   - **Example 2:** Using `LogisticRegression()` like the `sklearn.linear_model.LogisticRegression()` class.
+
+   .. jupyter-execute::
+
+      from estyp.linear_model import LogisticRegression
+
+      X = data.drop(columns="y")
+      y = data["y"]
+
+      model = LogisticRegression()
+      model.fit(X, y)
+
+      print(model.summary())
 
 
 Stepwise Selection for Linear Models
